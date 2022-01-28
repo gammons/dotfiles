@@ -1,0 +1,3 @@
+PATH=$HOME/bin:$PATH
+eval $(keychain --eval --quiet id_rsa)
+. $HOME/.asdf/asdf.sh

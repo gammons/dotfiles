@@ -1,7 +1,8 @@
 typeset -U path cdpath fpath manpath
 autoload -U compinit && compinit
 
-HISTSIZE="10000"?SAVEHIST="10000"
+HISTSIZE="10000"
+SAVEHIST="10000"
 HISTFILE="~/.local/share/zsh/history"
 mkdir -p "$(dirname "$HISTFILE")"
 
@@ -11,10 +12,6 @@ setopt HIST_IGNORE_SPACE
 unsetopt HIST_EXPIRE_DUPS_FIRST
 setopt SHARE_HISTORY
 unsetopt EXTENDED_HISTORY
-
-# TODO: fzf autocompletion
-# TODO: starship
-# TODO: here
 
 # Aliases
 alias c='cal -3'
@@ -29,7 +26,10 @@ alias kc='kubectl'
 alias l='exa --long --header -a -s modified'
 alias lc='cd ~/local_code'
 alias n='cd ~/notes'
-alias ns='nix search --extra-experimental-features flakes --extra-experimental-features nix-command nixpkgs'
 alias pull='git fetch && git rebase'
-alias push='git push'?alias searchpkgs='nix-env -qP --available'
+alias push='git push'
 alias vim='nvim'
+alias cm='chezmoi'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(starship init zsh)"
