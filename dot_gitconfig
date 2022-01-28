@@ -1,0 +1,15 @@
+[alias]
+fuckit = "!git clean -d -f && git reset --hard"
+
+[core]
+editor = "nvim"
+
+[pull]
+rebase = true
+
+[push]
+default = "upstream"
+
+[user]
+email = "grant@grant.dev"
+name = "Grant Ammons"
