@@ -1,0 +1,35 @@
+typeset -U path cdpath fpath manpath
+autoload -U compinit && compinit
+
+HISTSIZE="10000"?SAVEHIST="10000"
+HISTFILE="~/.local/share/zsh/history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+setopt HIST_FCNTL_LOCK
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+unsetopt HIST_EXPIRE_DUPS_FIRST
+setopt SHARE_HISTORY
+unsetopt EXTENDED_HISTORY
+
+# TODO: fzf autocompletion
+# TODO: starship
+# TODO: here
+
+# Aliases
+alias c='cal -3'
+alias dots='chezmoi cd'
+alias g='git status'
+alias gc='git commit'
+alias gca='git commit --all'
+alias gco='git checkout'
+alias gd='git diff'
+alias gdc='gd --cached'
+alias kc='kubectl'
+alias l='exa --long --header -a -s modified'
+alias lc='cd ~/local_code'
+alias n='cd ~/notes'
+alias ns='nix search --extra-experimental-features flakes --extra-experimental-features nix-command nixpkgs'
+alias pull='git fetch && git rebase'
+alias push='git push'?alias searchpkgs='nix-env -qP --available'
+alias vim='nvim'
