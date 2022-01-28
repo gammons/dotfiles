@@ -8,6 +8,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - starship
 - neovim
 - tig
+- tmux
 - htop
 - ag
 - fd
