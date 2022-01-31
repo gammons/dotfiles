@@ -15,7 +15,8 @@ Simple dotfiles, rebooted for the umpteenth time.
 - fzf
 - exa
 - jq
-- killall
 - unzip
 - keychain
+- hammerspoon
+- scroll-reverser
 
