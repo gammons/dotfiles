@@ -31,6 +31,7 @@ alias pull='git fetch && git rebase'
 alias push='git push'
 alias vim='nvim'
 alias cm='chezmoi'
+alias fn='fishnet'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(starship init zsh)"
