@@ -33,7 +33,7 @@ hs.hotkey.bind({"cmd"}, "3", function()
   hs.application.launchOrFocus("/Applications/Kitty.app")
 end)
 
-hs.hotkey.bind({"cmd"}, "m", function()
+hs.hotkey.bind({"cmd", "shift"}, "m", function()
   local app = hs.application.frontmostApplication()
   app:mainWindow():moveToUnit'[20,0,70,70]'
 end)
