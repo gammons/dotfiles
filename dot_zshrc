@@ -16,7 +16,7 @@ unsetopt EXTENDED_HISTORY
 
 # Aliases
 alias c='cal -3'
-alias dots='chezmoi cd'
+alias dots='cd ~/.local/share/chezmoi'
 alias g='git status'
 alias gc='git commit'
 alias gca='git commit --all'
