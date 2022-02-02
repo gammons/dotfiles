@@ -37,3 +37,15 @@ hs.hotkey.bind({"cmd", "shift"}, "m", function()
   local app = hs.application.frontmostApplication()
   app:mainWindow():moveToUnit'[20,0,70,70]'
 end)
+
+hs.hotkey.bind({"cmd"}, "F4", function()
+  hs.spotify.previous()
+end)
+
+hs.hotkey.bind({"cmd"}, "F5", function()
+  hs.spotify.playpause()
+end)
+
+hs.hotkey.bind({"cmd"}, "F6", function()
+  hs.spotify.next()
+end)
