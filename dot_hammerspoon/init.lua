@@ -1,6 +1,5 @@
 hs.hotkey.bind({"cmd"}, "u", function()
   local app = hs.appfinder.appFromName("Alacritty")
-  local logger = hs.logger.new('i3','debug')
 
   if app then
     if app:isFrontmost() then
@@ -14,8 +13,7 @@ hs.hotkey.bind({"cmd"}, "u", function()
     app = hs.application.get("Alacritty")
   end
 
-  app:mainWindow():moveToUnit'[70,70,30,30]'
-  app:mainWindow().setShadows(false)
+  app:mainWindow():moveToUnit'[30,30,70,70]'
 end)
 
 hs.hotkey.bind({"cmd"}, "1", function()
