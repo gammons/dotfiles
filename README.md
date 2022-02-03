@@ -19,4 +19,6 @@ Simple dotfiles, rebooted for the umpteenth time.
 - keychain
 - hammerspoon
 - scroll-reverser
+- asdf
+- stats
 
