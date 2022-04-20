@@ -2,4 +2,3 @@ PATH=$HOME/bin:$PATH
 PATH=/opt/homebrew/bin:$PATH
 PATH=/usr/local/bin:$PATH
 eval $(keychain --eval --quiet id_rsa)
-. /usr/local/opt/asdf/libexec/asdf.sh
