@@ -140,7 +140,11 @@ vim.api.nvim_set_keymap('', '<leader>w', "<cmd>wq!<cr>", {noremap = true, silent
 
 -------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
-ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
+ts.setup {
+  ensure_installed = 'all',
+  ignore_install = { "phpdoc" },
+  highlight = {enable = true},
+}
 
 -------------------- Prettier ------------------------------
 vim.cmd("let g:prettier#autoformat_config_present = 1")
