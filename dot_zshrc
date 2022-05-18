@@ -15,6 +15,7 @@ setopt SHARE_HISTORY
 unsetopt EXTENDED_HISTORY
 
 # Aliases
+alias be='bundle exec'
 alias c='cal -3'
 alias dots='cd ~/.local/share/chezmoi'
 alias g='git status'
