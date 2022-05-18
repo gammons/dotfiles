@@ -13,3 +13,5 @@ default = "upstream"
 [user]
 email = "grant@grant.dev"
 name = "Grant Ammons"
+[init]
+	defaultBranch = main
