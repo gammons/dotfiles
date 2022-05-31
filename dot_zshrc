@@ -1,9 +1,9 @@
 typeset -U path cdpath fpath manpath
 autoload -U compinit && compinit
 
-HISTSIZE="10000"
-SAVEHIST="10000"
-HISTFILE="~/.local/share/zsh/history"
+HISTSIZE="100000"
+SAVEHIST="100000"
+HISTFILE="~/.history"
 TERM=xterm-256color
 mkdir -p "$(dirname "$HISTFILE")"
 
