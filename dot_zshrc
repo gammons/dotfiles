@@ -13,6 +13,8 @@ unsetopt HIST_EXPIRE_DUPS_FIRST
 setopt SHARE_HISTORY
 unsetopt EXTENDED_HISTORY
 
+set -o vi
+
 # Aliases
 alias be='bundle exec'
 alias c='cal -3'
