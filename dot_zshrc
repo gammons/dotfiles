@@ -35,8 +35,11 @@ alias vim='nvim'
 alias cm='chezmoi'
 alias fn='fishnet'
 alias irb='irb -r active_support/all'
+alias cat='bat -p'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(starship init zsh)"
 
 . $HOME/.asdf/asdf.sh
+
+source /Users/grantammons/.config/broot/launcher/bash/br

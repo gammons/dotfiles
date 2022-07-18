@@ -17,9 +17,13 @@ Simple dotfiles, rebooted for the umpteenth time.
 - jq
 - unzip
 - keychain
+
+### MacOS-specific stuff
+
 - hammerspoon
 - scroll-reverser
 - shottr - for screenshots
 - asdf
 - stats
+- bat
 
