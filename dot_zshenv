@@ -1,5 +1,5 @@
-EDITOR=nvim
-PATH=$HOME/bin:$PATH
-PATH=/opt/homebrew/bin:$PATH
-PATH=/usr/local/bin:$PATH
+export EDITOR=nvim
+export PATH=$HOME/bin:$PATH
+export PATH=/opt/homebrew/bin:$PATH
+export PATH=/usr/local/bin:$PATH
 eval $(keychain --eval --quiet id_rsa)
