@@ -1,5 +1,11 @@
-format = "$directory$git_branch$git_status$character"
+format = "$hostname$directory$git_branch$git_status$character"
 
 [character]
 success_symbol = "[➜](bold green)"
 error_symbol = "[➜](bold red)"
+
+[hostname]
+ssh_only = false
+format = "[$ssh_symbol](bold blue) on [$hostname](bold red) "
+trim_at = ".localdomain"
+disabled = false
