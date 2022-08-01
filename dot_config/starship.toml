@@ -6,6 +6,6 @@ error_symbol = "[➜](bold red)"
 
 [hostname]
 ssh_only = true
-format = "[$ssh_symbol](bold blue) [$hostname](green) "
+format = "[$ssh_symbol](bold blue)[$hostname](green) "
 trim_at = ".localdomain"
 disabled = false
