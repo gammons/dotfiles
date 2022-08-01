@@ -5,7 +5,7 @@ success_symbol = "[➜](bold green)"
 error_symbol = "[➜](bold red)"
 
 [hostname]
-ssh_only = false
-format = "[$ssh_symbol](bold blue) on [$hostname](bold red) "
+ssh_only = true
+format = "[$ssh_symbol](bold blue) [$hostname](green) "
 trim_at = ".localdomain"
 disabled = false
