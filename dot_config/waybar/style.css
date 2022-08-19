@@ -1,0 +1,40 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-size: 13px;
+  min-height: 0;
+}
+
+#window {
+}
+
+window#waybar {
+  background: #222222;
+  color: #eeeeee;
+}
+
+#workspaces button {
+  padding: 13px 10px;
+  color: #ffffff;
+}
+
+#workspaces button.focused {
+  background: #fff176;
+  color: #333;
+}
+
+#custom-weather {
+  font-family: "Weather Icons";
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#workspaces,
+#tray,
+#mode {
+  padding: 0 15px;
+}

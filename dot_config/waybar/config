@@ -1,0 +1,45 @@
+{
+  "layer": "top",
+    "modules-left": ["sway/workspaces"],
+    "modules-center": ["custom/weather"],
+    "modules-right": ["custom/power_now", "backlight", "battery", "custom/cpupower", "pulseaudio", "custom/mic", "custom/test", "clock", "tray"],
+    "sway/window": {
+      "max-length": 50
+    },
+    "sway/workspaces": {
+    },
+    "battery": {
+      "format": "{icon} {capacity}%",
+      "format-icons": ["", "", "", "", ""]
+    },
+    "backlight": {
+      "format": "{icon} {percent}",
+      "format-icons": ["🌕","🌔","🌓","🌒","🌑"]
+    },
+    "clock": {
+      "format": "{:%a, %d %b %H:%M}"
+    },
+    "pulseaudio": {
+      "format": " {volume}% {icon}"
+    },
+    "custom/cpupower": {
+      "format": "{}",
+      "interval": 5,
+      "exec": "~/.config/polybar/cpupower.sh"
+    },
+    "custom/power_now": {
+      "format": "{}",
+      "interval": 5,
+      "exec": "~/.config/polybar/power_now"
+    },
+    "custom/weather": {
+      "format": "{}",
+      "interval": 200,
+      "exec": "ruby ~/.config/polybar/polyweather.rb"
+    },
+    "custom/mic": {
+      "format": "{}",
+      "interval": 1,
+      "exec": "~/.config/polybar/waybar_mic"
+    }
+}

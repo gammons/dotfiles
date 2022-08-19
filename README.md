@@ -27,3 +27,8 @@ Simple dotfiles, rebooted for the umpteenth time.
 - stats
 - bat
 
+### arch-specific stuff
+
+- sway
+- xf86-video-intel
+
