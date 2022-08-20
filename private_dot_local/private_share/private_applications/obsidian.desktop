@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=Start Obsidian ozone
+Exec=obsidian --ozone-platform=wayland
+GenericName=Obsidian (wayland)
+Icon=obsidian
+Name=Obsidian (Wayland)
+Type=Application

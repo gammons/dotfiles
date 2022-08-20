@@ -17,6 +17,15 @@ Simple dotfiles, rebooted for the umpteenth time.
 - jq
 - unzip
 - keychain
+- broot
+- asdf-vm
+- bat
+
+### Applications
+- spotify
+- obsidian
+- slack
+
 
 ### MacOS-specific stuff
 
@@ -27,8 +36,14 @@ Simple dotfiles, rebooted for the umpteenth time.
 - stats
 - bat
 
-### arch-specific stuff
+### arch-specific WM stuff
 
 - sway
+- swaylock-effects
+- swayidle
 - xf86-video-intel
+- brightnessctl
+- k
+
+
 
