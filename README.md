@@ -20,12 +20,12 @@ Simple dotfiles, rebooted for the umpteenth time.
 - broot
 - asdf-vm
 - bat
+- gh # github cli
 
 ### Applications
 - spotify
 - obsidian
 - slack
-
 
 ### MacOS-specific stuff
 
@@ -43,7 +43,3 @@ Simple dotfiles, rebooted for the umpteenth time.
 - swayidle
 - xf86-video-intel
 - brightnessctl
-- k
-
-
-

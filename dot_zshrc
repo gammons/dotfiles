@@ -36,6 +36,7 @@ alias cm='chezmoi'
 alias fn='fishnet'
 alias irb='irb -r active_support/all'
 alias cat='bat -p'
+alias pr='gh pr create --fill'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(starship init zsh)"
