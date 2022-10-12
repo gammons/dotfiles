@@ -38,6 +38,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - asdf
 - stats
 - bat
+- bartender
 
 ## arch-specific WM stuff
 
