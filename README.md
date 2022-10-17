@@ -21,11 +21,13 @@ Simple dotfiles, rebooted for the umpteenth time.
 - asdf-vm
 - bat
 - gh # github cli
+- inetutils # for telnet
 
 ### Applications
 - spotify
 - obsidian
 - slack
+- tailscale
 
 ### MacOS-specific stuff
 
