@@ -2,7 +2,7 @@
   "layer": "top",
     "modules-left": ["sway/workspaces"],
     "modules-center": ["custom/weather"],
-    "modules-right": ["custom/power_now", "backlight", "battery", "custom/cpupower", "pulseaudio", "custom/mic", "custom/test", "clock", "tray"],
+    "modules-right": ["custom/power_now", "backlight", "battery", "custom/cpupower", "cpu", "pulseaudio", "custom/mic", "custom/test", "clock", "tray"],
     "sway/window": {
       "max-length": 50
     },
@@ -41,5 +41,10 @@
       "format": "{}",
       "interval": 1,
       "exec": "~/.config/polybar/waybar_mic"
-    }
+    },
+    "cpu": {
+      "interval": 1,
+      "format": "{load} {icon} {icon0} {icon1} {icon2} {icon3} {icon4} {icon5} {icon6} {icon7} {icon8} {icon9} {icon10} {icon11} {icon12} {icon13} {icon14} {icon15}",
+      "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    },
 }

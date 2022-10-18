@@ -1,4 +1,4 @@
-output eDP-1 scale 1.75 pos 0 0 res 3840x2400
+output eDP-1 scale 1.65 pos 0 0 res 3840x2400
 
 output DP-1 scale 1.0 pos 3840 0 res 3840x2160
 output DP-3 scale 1.0 pos 3840 0 res 3840x2160
@@ -48,6 +48,8 @@ bar {
 
 set $mod Mod1
 set $term kitty
+set $lockCmd "~/.config/sway/swaylock/lock.sh"
+set $sleepCmd "~/.config/sway/swaylock/sleep.sh"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -196,12 +198,11 @@ set $ruby ~/.rubies/ruby-2.6.1/bin/ruby
 # Exec this stuff
 ############################
 
-set $locker 'swaylock -c 1d2021 --incide-color 000000b3'
-
 exec --no-startup-id dunst -config $HOME/.dunstrc
-exec swayidle -w timeout 1800 $locker
+exec swayidle timeout 300 $lockCmd timeout 1800 $sleepCmd before-sleep $lockCmd
+
 exec swaybg --color=#000000
-exec --no-startup-id nm-applet
+exec --no-startup-id nm-applet --indicator
 
 ############################
 # Further customization
