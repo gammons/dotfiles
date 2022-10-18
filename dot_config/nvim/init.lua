@@ -133,7 +133,7 @@ map('', '<Leader>r', ":TestFile<CR>")
 map('', '<Leader>a', ":TestSuite<CR>")
 map('', '<Leader>t', ":TestNearest<CR>")
 cmd("nnoremap Y Y")
-
+cmd("tnoremap <Esc> <C-\\><C-n>")
 
 vim.api.nvim_set_keymap('', '<leader>n', "<cmd>NERDTreeToggle<cr>", {noremap = true, silent = false})
 vim.api.nvim_set_keymap('', '<leader>w', "<cmd>wq!<cr>", {noremap = true, silent = false})
@@ -232,7 +232,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float({scope="line"})<CR>', opts)
   buf_set_keymap('n', '<Leader>d', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 
-  if client.server_capabilities.document_formatting then
+  if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_command [[augroup Format]]
     vim.api.nvim_command [[autocmd! * <buffer>]]
     vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
