@@ -131,7 +131,7 @@ map('', '<Leader>s', ":split <C-R>=expand(\"%:p:h\") . '/'<CR>")
 -- testing
 map('', '<Leader>r', ":TestFile<CR>")
 map('', '<Leader>a', ":TestSuite<CR>")
-map('', '<Leader>t', ":TestSuite<CR>")
+map('', '<Leader>t', ":TestNearest<CR>")
 cmd("nnoremap Y Y")
 
 
@@ -155,6 +155,9 @@ vim.cmd("let g:vim_markdown_folding_disabled = 1")
 
 -------------------- Whitespace ------------------------------
 vim.cmd("let g:strip_whitespace_on_save=1")
+
+-------------------- testing options ------------------------
+--vim.cmd("let test#strategy ='neovim'")
 
 -------------------- Telescope ---------------------------
 require('telescope').setup{
@@ -226,10 +229,10 @@ local on_attach = function(client, bufnr)
   local opts = { noremap=true, silent=true }
 
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float({scope="line"})<CR>', opts)
   buf_set_keymap('n', '<Leader>d', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.document_formatting then
     vim.api.nvim_command [[augroup Format]]
     vim.api.nvim_command [[autocmd! * <buffer>]]
     vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
