@@ -157,7 +157,7 @@ vim.cmd("let g:vim_markdown_folding_disabled = 1")
 vim.cmd("let g:strip_whitespace_on_save=1")
 
 -------------------- testing options ------------------------
---vim.cmd("let test#strategy ='neovim'")
+vim.cmd("let test#strategy ='neovim'")
 
 -------------------- Telescope ---------------------------
 require('telescope').setup{
