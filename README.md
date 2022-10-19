@@ -45,3 +45,11 @@ Simple dotfiles, rebooted for the umpteenth time.
 - swayidle
 - xf86-video-intel
 - brightnessctl
+
+### post-install notes
+
+Run this to make sure vim lsp stuff works:
+
+```
+npm install -g diagnostic-languageserver
+```
