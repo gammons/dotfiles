@@ -14,6 +14,9 @@ local function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -------------------- PLUGINS -------------------------------
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
@@ -35,6 +38,8 @@ require('packer').startup(function()
 
   -- Essential plugins
   use 'scrooloose/nerdTree'
+  use 'nvim-tree/nvim-web-devicons'
+  use 'nvim-tree/nvim-tree.lua'
   use 'itchyny/lightline.vim'
 
   -- Tpope things
@@ -49,12 +54,34 @@ require('packer').startup(function()
   -- highlight whitesace
   use 'ntpeters/vim-better-whitespace'
 
-  use {'prettier/vim-prettier', run = 'yarn install'}
-
   -- testing made easy
   use 'janko-m/vim-test'
+
+  use 'othree/html5.vim'
+  use 'pangloss/vim-javascript'
+  use 'evanleck/vim-svelte'
 end)
 
+-- nvim tree
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    adaptive_size = true,
+    mappings = {
+      list = {
+        { key = "u", action = "dir_up" },
+        { key = "i", action = "split" },
+        { key = "s", action = "vsplit" },
+      },
+    },
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
 
 -------------------- OPTIONS -------------------------------
 cmd 'colorscheme base16-default-dark'            -- Put your favorite colorscheme here
@@ -80,7 +107,7 @@ opt.termguicolors = true            -- True color support
 opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
 opt.wrap = true                    -- Disable line wrap
 
-vim.cmd("let NERDTreeShowHidden=1") -- show hidden files in NERD
+--vim.cmd("let NERDTreeShowHidden=1") -- show hidden files in NERD
 
 -------------------- Completion ------------------------------
 
@@ -135,7 +162,7 @@ map('', '<Leader>t', ":TestNearest<CR>")
 cmd("nnoremap Y Y")
 cmd("tnoremap <Esc> <C-\\><C-n>")
 
-vim.api.nvim_set_keymap('', '<leader>n', "<cmd>NERDTreeToggle<cr>", {noremap = true, silent = false})
+vim.api.nvim_set_keymap('', '<leader>n', "<cmd>NvimTreeToggle<cr>", {noremap = true, silent = false})
 vim.api.nvim_set_keymap('', '<leader>w', "<cmd>wq!<cr>", {noremap = true, silent = false})
 
 -------------------- TREE-SITTER ---------------------------
