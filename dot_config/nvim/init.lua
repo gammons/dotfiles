@@ -60,6 +60,7 @@ require('packer').startup(function()
   use 'othree/html5.vim'
   use 'pangloss/vim-javascript'
   use 'evanleck/vim-svelte'
+  use 'jkramer/vim-checkbox'
 end)
 
 -- nvim tree
