@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=Start Slack ozone
+Exec=slack --ozone-platform=wayland
+GenericName=Slack (wayland)
+Icon=slack
+Name=Slack (Wayland)
+Type=Application
+
