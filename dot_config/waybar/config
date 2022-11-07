@@ -25,22 +25,22 @@
     "custom/cpupower": {
       "format": "{}",
       "interval": 5,
-      "exec": "~/.config/polybar/cpupower.sh"
+      "exec": "~/.config/waybar/cpupower.sh"
     },
     "custom/power_now": {
       "format": "{}",
       "interval": 5,
-      "exec": "~/.config/polybar/power_now"
+      "exec": "~/.config/waybar/power_now"
     },
     "custom/weather": {
       "format": "{}",
       "interval": 200,
-      "exec": "ruby ~/.config/polybar/polyweather.rb"
+      "exec": "ruby ~/.config/waybar/polyweather.rb"
     },
     "custom/mic": {
       "format": "{}",
       "interval": 1,
-      "exec": "~/.config/polybar/waybar_mic"
+      "exec": "~/.config/waybar/waybar_mic"
     },
     "cpu": {
       "interval": 1,
