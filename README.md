@@ -47,6 +47,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - brightnessctl
 - nerd-fonts-complete
 - github-cli
+- gammastep
 
 - slurp
 - grim
