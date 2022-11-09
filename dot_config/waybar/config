@@ -2,7 +2,7 @@
   "layer": "top",
     "modules-left": ["sway/workspaces"],
     "modules-center": ["custom/weather"],
-    "modules-right": ["custom/power_now", "backlight", "battery", "custom/cpupower", "cpu", "pulseaudio", "custom/mic", "custom/test", "clock", "tray"],
+    "modules-right": ["custom/power_now", "backlight", "battery", "custom/cpupower", "cpu", "pulseaudio", "custom/test", "clock", "tray"],
     "sway/window": {
       "max-length": 50
     },
@@ -36,11 +36,6 @@
       "format": "{}",
       "interval": 200,
       "exec": "ruby ~/.config/waybar/polyweather.rb"
-    },
-    "custom/mic": {
-      "format": "{}",
-      "interval": 1,
-      "exec": "~/.config/waybar/waybar_mic"
     },
     "cpu": {
       "interval": 1,

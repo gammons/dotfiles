@@ -1,12 +1,14 @@
 * {
   border: none;
   border-radius: 0;
-  font-size: 13px;
+  font-size: 14px;
+  font-family: "Ubuntu Nerd Font";
   min-height: 0;
-  color: #eeeeee;
 }
 
-#window {
+label {
+  background: #222222;
+  color: #eeeeee;
 }
 
 window#waybar {
@@ -16,7 +18,6 @@ window#waybar {
 
 #workspaces button {
   padding: 13px 10px;
-  color: #ffffff;
 }
 
 #workspaces button.focused {
@@ -24,8 +25,17 @@ window#waybar {
   color: #333;
 }
 
+#workspaces button.focused label {
+  background: #fff176;
+  color: #333;
+}
+
 #custom-weather {
   font-family: "Weather Icons";
+}
+
+#clock {
+  font-weight: bold;
 }
 
 #clock,
