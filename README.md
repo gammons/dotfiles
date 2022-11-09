@@ -2,7 +2,7 @@
 
 Simple dotfiles, rebooted for the umpteenth time.
 
-### Required programs
+## Required programs
 
 - git
 - starship
@@ -20,16 +20,16 @@ Simple dotfiles, rebooted for the umpteenth time.
 - broot
 - asdf-vm
 - bat
-- gh # github cli
 - inetutils # for telnet
 
-### Applications
+## Applications
 - spotify
 - obsidian
 - slack
 - tailscale
+- zoom
 
-### MacOS-specific stuff
+## MacOS-specific stuff
 
 - hammerspoon
 - scroll-reverser
@@ -38,13 +38,19 @@ Simple dotfiles, rebooted for the umpteenth time.
 - stats
 - bat
 
-### arch-specific WM stuff
+## arch-specific WM stuff
 
 - sway
 - swaylock-effects
 - swayidle
 - xf86-video-intel
 - brightnessctl
+- nerd-fonts-complete
+- github-cli
+
+- slurp
+- grim
+- wl-clipboard
 
 ### post-install notes
 
