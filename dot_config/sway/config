@@ -208,6 +208,7 @@ exec swayidle timeout 300 $lockCmd timeout 1800 $sleepCmd before-sleep $lockCmd
 
 exec swaybg --color=#000000
 exec --no-startup-id nm-applet --indicator
+exec --no-startup-id gammastep-indicator
 
 ############################
 # Further customization

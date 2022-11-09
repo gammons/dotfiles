@@ -48,6 +48,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - nerd-fonts-complete
 - github-cli
 - gammastep
+- swaybg
 
 - slurp
 - grim
