@@ -11,6 +11,20 @@ label {
   color: #eeeeee;
 }
 
+menuitem {
+  background: #222222;
+  color: #eeeeee;
+}
+
+menuitem:hover, menuitem:hover > label, menuitem:hover > box > label {
+  background: #eeeeee;
+  color: #222222;
+}
+
+separator {
+  color: #666;
+}
+
 window#waybar {
   background: #222222;
   color: #eeeeee;
