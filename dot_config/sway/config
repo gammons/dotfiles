@@ -224,7 +224,7 @@ hide_edge_borders smart
 ############################
 
 bindsym $mod+c exec --no-startup-id zenity --calendar
-bindsym --release F12 exec --no-startup-id slurp | grim -g - - | wl-copy
+bindsym --release F10 exec --no-startup-id slurp | grim -g - - | wl-copy
 
 bindsym $mod+u [title="dropdown-terminal"] scratchpad show; move position center
 bindsym $mod+shift+u exec --no-startup-id $term --title=dropdown-terminal
