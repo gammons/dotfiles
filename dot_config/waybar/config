@@ -35,7 +35,7 @@
     "custom/weather": {
       "format": "{}",
       "interval": 200,
-      "exec": "ruby ~/.config/waybar/polyweather.rb"
+      "exec": "~/.config/waybar/polyweather KPNE"
     },
     "cpu": {
       "interval": 1,
