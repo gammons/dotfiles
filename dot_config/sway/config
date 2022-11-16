@@ -256,9 +256,7 @@ bindsym $mod+shift+F11 exec --no-startup-id /usr/bin/brightnessctl set +5%
 
 bindsym $mod+z exec --no-startup-id swaylock -c 333333
 
-bindsym $mod+i exec --no-startup-id $ruby $HOME/.bin/openzoom 9849040235
-bindsym $mod+o exec --no-startup-id $ruby $HOME/.bin/openzoom 4283094446
-bindsym $mod+Shift+o exec --no-startup-id $HOME/.bin/killzoom
+bindsym --to-code $mod+m floating enable; resize set 40ppt 40ppt; move position 30ppt 0
 
 ############################
 # Window behaviors
@@ -272,6 +270,8 @@ for_window [class="zoom"] floating enable
 for_window [class="Gpick"] floating enable
 for_window [title="^Zoom - Pro Account$"] sticky enable
 for_window [class="VirtualBox"] floating enable
+for_window [title="Connect to VPN"] floating enable
+for_window [title="Calendar selection"] floating enable
 
 assign [class="Slack"] 3
 assign [class="Spotify"] 4
@@ -302,8 +302,8 @@ default_border pixel 2
 ############################
 
 for_window [title="dropdown-terminal"] floating enable
+
 for_window [title="dropdown-terminal"] resize set 925 700
 for_window [title="dropdown-terminal"] move position center
 for_window [title="dropdown-terminal"] move scratchpad
-for_window [title="Meet - "] sticky enable
 exec --no-startup-id $term --title=dropdown-terminal
