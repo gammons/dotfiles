@@ -61,3 +61,7 @@ Run this to make sure vim lsp stuff works:
 ```
 npm install -g diagnostic-languageserver
 ```
+
+### app store
+
+- get easyres to change resolution of screen
