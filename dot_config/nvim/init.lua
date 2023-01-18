@@ -61,6 +61,8 @@ require('packer').startup(function()
   use 'pangloss/vim-javascript'
   use 'evanleck/vim-svelte'
   use 'jkramer/vim-checkbox'
+
+  use 'github/copilot.vim'
 end)
 
 -- nvim tree
