@@ -21,6 +21,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - asdf-vm
 - bat
 - inetutils # for telnet
+- github-cli
 
 ## Applications
 - spotify
