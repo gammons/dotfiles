@@ -1,7 +1,10 @@
 export EDITOR=nvim
+
 export PATH=$HOME/bin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:$(go env GOPATH)/bin
+export PATH=$HOME/.asdf/shims
 
 eval $(keychain --eval --quiet id_rsa)
+. "$HOME/.cargo/env"
