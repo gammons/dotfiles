@@ -77,6 +77,10 @@ Run this to make sure vim lsp stuff works:
 npm install -g diagnostic-languageserver
 ```
 
+### set chrome as default opener
+
+xdg-settings set default-web-browser chrome.desktop
+
 ### app store
 
 - get easyres to change resolution of screen

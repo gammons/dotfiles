@@ -5,3 +5,4 @@ GenericName=Google Chrome (wayland)
 Icon=chrome
 Name=Google Chrome (Wayland)
 Type=Application
+MimeType=x-scheme-handler/unknown;x-scheme-handler/about;x-scheme-handler/https;x-scheme-handler/http;text/html;
