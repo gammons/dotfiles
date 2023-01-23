@@ -1,6 +1,6 @@
 [Desktop Entry]
 Comment=Start google chrome ozone
-Exec=google-chrome-stable --ozone-platform=wayland --enable-features=Vulkan,UseSkiaRenderer
+Exec=google-chrome-stable --ozone-platform=wayland
 GenericName=Google Chrome (wayland)
 Icon=chrome
 Name=Google Chrome (Wayland)
