@@ -49,7 +49,11 @@ Simple dotfiles, rebooted for the umpteenth time.
 - waybar
 - wofi
 - cpupower
+
 - pavucontrol
+- pulseaudio-bluetooth
+- bluez
+- bluez-utils
 
 - sway
 - swaylock-effects
