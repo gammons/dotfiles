@@ -42,6 +42,15 @@ Simple dotfiles, rebooted for the umpteenth time.
 
 ## arch-specific WM stuff
 
+- polkit
+- kitty
+- dunst
+- networkmanager (be sure to enable it with systemd
+- waybar
+- wofi
+- cpupower
+- pavucontrol
+
 - sway
 - swaylock-effects
 - swayidle
