@@ -1,4 +1,4 @@
-output eDP-1 scale 1.65 pos 0 0 res 3840x2400
+output eDP-1 scale 1.4 pos 0 0 res 2880x1800
 
 output DP-1 scale 1.0 pos 3840 0 res 3840x2160
 output DP-3 scale 1.0 pos 3840 0 res 3840x2160
@@ -17,7 +17,7 @@ input "*" {
 # Touchpad
 ############################
 
-input "1267:12572:DELL097D:00_04F3:311C_Touchpad" {
+input "1267:12729:ASUE140D:00_04F3:31B9_Touchpad" {
  natural_scroll enabled
  dwt enabled
  scroll_method two_finger
