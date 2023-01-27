@@ -76,6 +76,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 
 (archcraft-specific)
 - foot
+- mpd
 
 ### post-install notes
 
