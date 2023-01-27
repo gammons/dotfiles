@@ -46,6 +46,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - kitty
 - dunst
 - networkmanager (be sure to enable it with systemd
+- network-manager-applet
 - waybar
 - wofi
 - cpupower
