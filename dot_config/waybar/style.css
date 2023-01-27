@@ -1,47 +1,16 @@
 * {
+  font-family: "JetBrains Mono", "Iosevka Nerd Font", archcraft, sans-serif;
+  font-size: 14px;
   border: none;
   border-radius: 0;
-  font-size: 14px;
-  font-family: "Ubuntu Nerd Font";
   min-height: 0;
 }
 
-label {
-  background: #222222;
-  color: #eeeeee;
-}
-
-menuitem {
-  background: #222222;
-  color: #eeeeee;
-}
-
-menuitem:hover, menuitem:hover > label, menuitem:hover > box > label {
-  background: #eeeeee;
-  color: #222222;
-}
-
-separator {
-  color: #666;
-}
-
 window#waybar {
-  background: #222222;
-  color: #eeeeee;
-}
-
-#workspaces button {
-  padding: 13px 10px;
-}
-
-#workspaces button.focused {
-  background: #fff176;
-  color: #333;
-}
-
-#workspaces button.focused label {
-  background: #fff176;
-  color: #333;
+  background-color: transparent;
+  color: #ddd;
+  transition-property: background-color;
+  transition-duration: .5s;
 }
 
 #custom-weather {
@@ -53,13 +22,109 @@ window#waybar {
 }
 
 #clock,
+#backlight,
 #battery,
 #cpu,
+#custom-cpupower,
+#custom-weather,
+#custom-power_now,
 #memory,
+#mpd,
 #network,
 #pulseaudio,
 #workspaces,
 #tray,
 #mode {
-  padding: 0 15px;
+	background-color: #2F333C;
+	border-radius: 12px;
+	margin: 6px 10px;
+	padding: 2px 10px;
 }
+
+#backlight {
+}
+
+#workspaces {
+	background-color: #2F333C;
+	color: #FFFFFF;
+	border-radius: 0px 12px 0px 0px;
+	padding: 4px;
+}
+
+#workspaces button {
+	color: #FFFFFF;
+	padding: 2px 6px;
+}
+
+#workspaces button:hover {
+	background-color: #1B1F28;
+	color: #FFFFFF;
+	border: 0px solid #1B1F28;
+	border-radius: 12px;
+	padding: 2px 6px;
+}
+
+#workspaces button.visible {
+	background-image: linear-gradient(to right, #62AEEF , #98C379);
+}
+
+#workspaces button.focused {
+	background-image: linear-gradient(to right, #E06B74 , #C778DD);
+}
+
+#workspaces button.urgent {
+	background-image: linear-gradient(to right, #E06B74 , #E5C07A);
+}
+
+#workspaces button.persistent {
+	background-image: linear-gradient(to right, #E5C07A , #C778DD);
+}
+
+#workspaces button.visible,
+#workspaces button.focused,
+#workspaces button.urgent,
+#workspaces button.persistent {
+	color: #1B1F28;
+	border-radius: 12px;
+	padding: 2px 6px;
+}
+
+#workspaces button.current_output {
+}
+
+#workspaces button#sway-workspace-1 {
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#window {
+	background-color: #2A2E37;
+	color: #FFFFFF;
+}
+window#waybar.empty #window {
+	background-color: transparent;
+}
+
+
+#tray {
+	background-color: #2F333C;
+	border-radius: 12px 0px 0px 0px;
+	padding: 4px 6px;
+}
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+#tray > .active {
+}
+
