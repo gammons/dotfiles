@@ -1,5 +1,7 @@
+############################
+# Outputs
+############################
 output eDP-1 scale 1.4 pos 0 0 res 2880x1800
-
 output DP-1 scale 1.0 pos 3840 0 res 3840x2160@144Hz
 output DP-3 scale 1.0 pos 3840 0 res 3840x2160@144Hz
 
@@ -32,7 +34,7 @@ input "1267:12729:ASUE140D:00_04F3:31B9_Touchpad" {
 # Desktop mouse
 ############################
 input "5426:123:Razer_Razer_Viper_Ultimate_Dongle"  {
-  scroll_factor 3.0
+  scroll_factor 2.0
   pointer_accel -0.4
 }
 
@@ -48,7 +50,7 @@ bar {
 ############################
 
 set $mod Mod1
-set $term kitty
+set $term foot
 set $lockCmd "~/.config/sway/swaylock/lock.sh"
 set $sleepCmd "~/.config/sway/swaylock/sleep.sh"
 
@@ -223,36 +225,42 @@ hide_edge_borders smart
 # My binds
 ############################
 
-bindsym $mod+c exec --no-startup-id zenity --calendar
+set $brightnessUpCmd /usr/bin/brightnessctl set 5%- 2&>1 > /tmp/brightness
+set $brightnessDownCmd /usr/bin/brightnessctl set +5%
+
 bindsym --release F10 exec --no-startup-id slurp | grim -g - - | wl-copy
 
 bindsym $mod+u [title="dropdown-terminal"] scratchpad show; move position center
 bindsym $mod+shift+u exec --no-startup-id $term --title=dropdown-terminal
 
-bindsym $mod+Shift+f exec nautilus
-
 bindsym $mod+w exec --no-startup-id $wallpaper_script
 bindsym $mod+q workspace back_and_forth
 
-# Mute script and zoom window finder
-bindsym F2 exec --no-startup-id $HOME/.bin/mic_toggle
-bindsym F3 exec --no-startup-id $ruby $HOME/.bin/zoom_toggle
-
-# Volume control
+# Volume and music control
 bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 0 -5% > /tmp/pactl 2>&1
 bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 0 +5% > /tmp/pactl 2>&1
 
-# Music control
-bindsym $mod+F4 exec --no-startup-id playerctl previous
-bindsym $mod+F5 exec --no-startup-id playerctl play-pause
-bindsym $mod+F6 exec --no-startup-id playerctl next
+bindsym XF86AudioRaiseVolume 	exec "$volume --inc"
+bindsym XF86AudioLowerVolume 	exec "$volume --dec"
+bindsym XF86AudioMute 			exec "$volume --toggle"
+bindsym XF86AudioMicMute 		exec "$volume --toggle-mic"
+bindsym XF86AudioNext 			exec "mpc next"
+bindsym XF86AudioPrev 			exec "mpc prev"
+bindsym XF86AudioPlay 			exec "mpc toggle"
+bindsym XF86AudioStop 			exec "mpc stop"
+
+bindsym $mod+F4 exec --no-startup-id mpc prev
+bindsym $mod+F5 exec --no-startup-id mpc toggle
+bindsym $mod+F6 exec --no-startup-id mpc next
 
 bindsym $mod+F7 exec --no-startup-id $HOME/.bin/laptop.sh
 bindsym $mod+F8 exec --no-startup-id $HOME/.bin/desktop.sh
 
 # Brightness
-bindsym $mod+F11 exec --no-startup-id /usr/bin/brightnessctl set 5%- 2&>1 > /tmp/brightness
-bindsym $mod+shift+F11 exec --no-startup-id /usr/bin/brightnessctl set +5%
+bindsym $mod+F11 exec $brightnessUpCmd
+bindsym $mod+shift+F11 exec $brightnessDownCmd
+bindsym XF86MonBrightnessDown exec $brightnessUpCmd
+bindsym XF86MonBrightnessUp exec $brightnessDownCmd
 
 bindsym $mod+z exec --no-startup-id swaylock -c 333333
 
@@ -302,8 +310,9 @@ default_border pixel 2
 # Scratchpad
 ############################
 
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
 for_window [title="dropdown-terminal"] floating enable
-
 for_window [title="dropdown-terminal"] resize set 925 700
 for_window [title="dropdown-terminal"] move position center
 for_window [title="dropdown-terminal"] move scratchpad
