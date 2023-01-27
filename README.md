@@ -66,9 +66,16 @@ Simple dotfiles, rebooted for the umpteenth time.
 - gammastep
 - swaybg
 
+- vulkan-radeon
+- libva-mesa-driver
+- light
+
 - slurp
 - grim
 - wl-clipboard
+
+(archcraft-specific)
+- foot
 
 ### post-install notes
 
