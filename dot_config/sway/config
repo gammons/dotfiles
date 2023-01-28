@@ -50,7 +50,7 @@ bar {
 ############################
 
 set $mod Mod1
-set $term foot
+set $term kitty
 set $menu ~/.config/sway/scripts/menu
 set $lockCmd "~/.config/sway/swaylock/lock.sh"
 set $sleepCmd "~/.config/sway/swaylock/sleep.sh"
