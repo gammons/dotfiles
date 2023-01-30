@@ -98,8 +98,8 @@ xdg-settings set default-web-browser chrome.desktop
 ### Things to get done
 
 
-- [ ] vim background should be black to take advantage of oled
-- [ ] mpd in swaybar - change to playerctl
+- [x] vim background should be black to take advantage of oled
+- [x] mpd in swaybar - change to playerctl
 - [ ] networkmanager vpn issues
 - [ ] scratchpad in Hyprland
 - [ ] swaybar spaces switcher in hyprland doesn't work
