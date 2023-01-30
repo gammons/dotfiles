@@ -3,7 +3,7 @@
   "mode": "dock",
   "exclusive": true,
   "passthrough": false,
-  "modules-left": ["sway/workspaces"],
+  "modules-left": ["wlr/workspaces"],
   "modules-center": ["custom/weather", "custom/playing_now"],
   "modules-right": ["custom/power_now", "backlight", "battery", "pulseaudio", "cpu", "network", "clock", "tray"],
   "sway/window": {

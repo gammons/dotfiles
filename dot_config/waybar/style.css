@@ -73,6 +73,10 @@ window#waybar {
 	background-image: linear-gradient(to right, #E06B74 , #C778DD);
 }
 
+#workspaces button.active {
+	background-image: linear-gradient(to right, #E06B74 , #C778DD);
+}
+
 #workspaces button.urgent {
 	background-image: linear-gradient(to right, #E06B74 , #E5C07A);
 }
