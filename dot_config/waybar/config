@@ -4,12 +4,13 @@
   "exclusive": true,
   "passthrough": false,
   "modules-left": ["sway/workspaces"],
-  "modules-center": ["custom/weather", "mpd"],
+  "modules-center": ["custom/weather", "custom/playing_now"],
   "modules-right": ["custom/power_now", "backlight", "battery", "pulseaudio", "cpu", "network", "clock", "tray"],
   "sway/window": {
     "max-length": 50
   },
   "sway/workspaces": {
+    "all-outputs": true,
   },
   "battery": {
     "interval": 60,
@@ -76,6 +77,11 @@
     "interval": 1,
     "format": "{icon} {load}",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+  },
+  "custom/playing_now": {
+    "format": " {}",
+    "interval": 5,
+    "exec": "~/.config/waybar/playing_now"
   },
   "mpd": {
     "interval": 2,
