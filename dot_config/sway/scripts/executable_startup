@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2022 Aditya Shakya <adi1090x@gmail.com>
+##
+## Autostart Programs
+
+# Kill already running process
+_ps=(waybar dunst xfce-polkit)
+for _prs in "${_ps[@]}"; do
+	if [[ `pidof ${_prs}` ]]; then
+		killall -9 ${_prs}
+	fi
+done
+
+# Polkit agent
+/usr/lib/xfce-polkit/xfce-polkit &
+
+# Lauch notification daemon (mako)
+dunst & #-config $HOME/.dunstrc &
+
+# Start network manager applet
+nm-applet --indicator &
+# gammastep-indicator &
+waybar &

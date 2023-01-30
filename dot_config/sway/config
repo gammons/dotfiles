@@ -206,12 +206,10 @@ set $ruby ~/.rubies/ruby-2.6.1/bin/ruby
 # Exec this stuff
 ############################
 
-exec --no-startup-id dunst -config $HOME/.dunstrc
-exec swayidle timeout 300 $lockCmd timeout 1800 $sleepCmd before-sleep $lockCmd
+exec ~/.config/sway/scripts/startup
 
+exec swayidle timeout 300 $lockCmd timeout 1800 $sleepCmd before-sleep $lockCmd
 exec swaybg --color=#000000
-exec --no-startup-id nm-applet --indicator
-exec --no-startup-id gammastep-indicator
 
 ############################
 # Further customization
