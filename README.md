@@ -102,7 +102,11 @@ xdg-settings set default-web-browser chrome.desktop
 - [x] mpd in swaybar - change to playerctl
 - [ ] networkmanager vpn issues
 - [ ] scratchpad in Hyprland
+- [ ] locker script
+
 - [ ] swaybar spaces switcher in hyprland doesn't work
 - [ ] gammastep
+- [ ] thinkorswim
+- [ ] hyprland black background
 
 
