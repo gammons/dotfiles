@@ -32,3 +32,5 @@ nm-applet --indicator &
 
 # idle locker / sleeper
 swayidle timeout 300 ~/.config/sway/swaylock/lock.sh timeout 1800 ~/.config/sway/swaylock/sleep.sh before-sleep ~/.config/sway/swayLock/lock.sh &
+
+swaybg --color=#000000 &
