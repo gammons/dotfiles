@@ -77,6 +77,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 (archcraft-specific)
 - foot
 - mpd
+- qt5-wayland
 
 ### post-install notes
 
@@ -93,3 +94,15 @@ xdg-settings set default-web-browser chrome.desktop
 ### app store
 
 - get easyres to change resolution of screen
+
+### Things to get done
+
+
+- [ ] vim background should be black to take advantage of oled
+- [ ] mpd in swaybar - change to playerctl
+- [ ] networkmanager vpn issues
+- [ ] scratchpad in Hyprland
+- [ ] swaybar spaces switcher in hyprland doesn't work
+- [ ] gammastep
+
+
