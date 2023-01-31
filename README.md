@@ -100,13 +100,13 @@ xdg-settings set default-web-browser chrome.desktop
 
 - [x] vim background should be black to take advantage of oled
 - [x] mpd in swaybar - change to playerctl
+- [x] hyprland black background
+- [x] locker script
+- [x] thinkorswim
+- [x] swaybar spaces switcher in hyprland doesn't work
 - [ ] networkmanager vpn issues
-- [ ] scratchpad in Hyprland
-- [ ] locker script
+- [x] scratchpad in Hyprland
 
-- [ ] swaybar spaces switcher in hyprland doesn't work
 - [ ] gammastep
-- [ ] thinkorswim
-- [ ] hyprland black background
 
 
