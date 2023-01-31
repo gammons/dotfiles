@@ -43,4 +43,4 @@ eval "$(starship init zsh)"
 
 . $HOME/.asdf/asdf.sh
 
-source ~/.config/broot/launcher/bash/br
+source ${HOME}/.config/broot/launcher/bash/br
