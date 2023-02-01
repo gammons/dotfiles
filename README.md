@@ -106,7 +106,9 @@ xdg-settings set default-web-browser chrome.desktop
 - [x] swaybar spaces switcher in hyprland doesn't work
 - [ ] networkmanager vpn issues
 - [x] scratchpad in Hyprland
+- [ ] resize windows with keyboard
 
 - [ ] gammastep
+- [x] fix tpm error
 
 
