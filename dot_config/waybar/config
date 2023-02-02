@@ -12,6 +12,10 @@
   "sway/workspaces": {
     "all-outputs": true,
   },
+  "wlr/workspaces": {
+    "on-click": "activate",
+    "all-outputs": true,
+  },
   "battery": {
     "interval": 60,
     "align": 0,
