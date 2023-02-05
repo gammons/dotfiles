@@ -63,6 +63,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - brightnessctl
 - nerd-fonts-complete
 - github-cli
+- python-gobject (for gammastep-indicator)
 - gammastep
 - swaybg
 
