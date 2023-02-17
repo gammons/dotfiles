@@ -87,7 +87,7 @@ require("nvim-tree").setup({
 })
 
 -------------------- OPTIONS -------------------------------
-cmd 'colorscheme base16-da-one-black'            -- Put your favorite colorscheme here
+cmd 'colorscheme base16-default-dark'            -- Put your favorite colorscheme here
 opt.completeopt = "menuone,noselect"
 opt.expandtab = true                -- Use spaces instead of tabs
 opt.hidden = true                   -- Enable background buffers
