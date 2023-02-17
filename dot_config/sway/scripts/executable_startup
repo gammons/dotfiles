@@ -20,5 +20,5 @@ dunst & #-config $HOME/.dunstrc &
 
 # Start network manager applet
 nm-applet --indicator &
-# gammastep-indicator &
-waybar &
+gammastep-indicator &
+waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css &
