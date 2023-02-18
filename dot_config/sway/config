@@ -245,6 +245,9 @@ bindsym $mod+F4 exec --no-startup-id mpc prev
 bindsym $mod+F5 exec --no-startup-id mpc toggle
 bindsym $mod+F6 exec --no-startup-id mpc next
 
+bindsym $mod+F7 exec --no-startup-id swaymsg output eDP-1 disable
+bindsym $mod+F8 exec --no-startup-id swaymsg output eDP-1 enable
+
 # Brightness
 bindsym $mod+F11 exec $brightnessUpCmd
 bindsym $mod+shift+F11 exec $brightnessDownCmd
