@@ -3,6 +3,7 @@
 ############################
 output eDP-1 scale 1.4 pos 0 0 res 2880x1800
 output DP-1 scale 1.0 pos 3840 0 res 3840x2160@144Hz
+output DP-2 scale 1.0 pos 3840 0 res 3840x2160@144Hz
 output DP-3 scale 1.0 pos 3840 0 res 3840x2160@144Hz
 
 ############################
@@ -45,8 +46,6 @@ input "5426:123:Razer_Razer_Viper_Ultimate_Dongle"  {
 set $mod Mod1
 set $term kitty
 set $menu ~/.config/sway/scripts/menu
-set $lockCmd "~/.config/sway/swaylock/lock.sh"
-set $sleepCmd "~/.config/sway/swaylock/sleep.sh"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -201,7 +200,6 @@ set $ruby ~/.rubies/ruby-2.6.1/bin/ruby
 
 exec ~/.config/sway/scripts/startup
 
-exec swayidle timeout 300 $lockCmd timeout 1800 $sleepCmd before-sleep $lockCmd
 exec swaybg --color=#000000
 
 ############################
@@ -241,9 +239,9 @@ bindsym XF86AudioPrev 			exec "mpc prev"
 bindsym XF86AudioPlay 			exec "mpc toggle"
 bindsym XF86AudioStop 			exec "mpc stop"
 
-bindsym $mod+F4 exec --no-startup-id mpc prev
-bindsym $mod+F5 exec --no-startup-id mpc toggle
-bindsym $mod+F6 exec --no-startup-id mpc next
+bindsym $mod+F4 exec --no-startup-id playerctl previous
+bindsym $mod+F5 exec --no-startup-id playerctl play-pause
+bindsym $mod+F6 exec --no-startup-id playerctl next
 
 bindsym $mod+F7 exec --no-startup-id swaymsg output eDP-1 disable
 bindsym $mod+F8 exec --no-startup-id swaymsg output eDP-1 enable
@@ -309,3 +307,7 @@ for_window [title="dropdown-terminal"] resize set 925 700
 for_window [title="dropdown-terminal"] move position center
 for_window [title="dropdown-terminal"] move scratchpad
 exec --no-startup-id $term --title=dropdown-terminal
+
+set $laptop eDP-1
+bindswitch lid:on output $laptop disable
+bindswitch lid:off output $laptop enable

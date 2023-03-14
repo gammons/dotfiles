@@ -22,3 +22,5 @@ dunst & #-config $HOME/.dunstrc &
 nm-applet --indicator &
 gammastep-indicator &
 waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css &
+
+~/.config/sway/scripts/swayidle.sh &
