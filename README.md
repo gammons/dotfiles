@@ -67,6 +67,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - python-gobject (for gammastep-indicator)
 - gammastep
 - swaybg
+- xdg-desktop-portal-wlr # for screen sharing in chrome, zoom
 
 - vulkan-radeon
 - libva-mesa-driver

@@ -15,6 +15,9 @@ done
 # Polkit agent
 /usr/lib/xfce-polkit/xfce-polkit &
 
+# xdg desktop wlr thing for screen sharing
+/usr/lib/xdg-desktop-portal-wlr &
+
 # Lauch notification daemon (mako)
 dunst & #-config $HOME/.dunstrc &
 
