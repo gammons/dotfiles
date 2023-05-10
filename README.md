@@ -27,7 +27,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 ## Applications
 - spotify
 - obsidian
-- slack
+- slack-desktop-wayland
 - tailscale
 - zoom
 
