@@ -51,6 +51,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - waybar
 - wofi
 - cpupower
+- ntp
 
 - pavucontrol
 - pulseaudio-bluetooth
@@ -89,6 +90,8 @@ Run this to make sure vim lsp stuff works:
 ```
 npm install -g diagnostic-languageserver
 ```
+
+systemctl enable systemd-timesyncd
 
 ### set chrome as default opener
 
