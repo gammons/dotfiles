@@ -45,3 +45,5 @@ eval "$(starship init zsh)"
 . $HOME/.asdf/asdf.sh
 
 source ${HOME}/.config/broot/launcher/bash/br
+
+eval "$(atuin init zsh --disable-up-arrow)"
