@@ -78,6 +78,8 @@ Simple dotfiles, rebooted for the umpteenth time.
 - grim
 - wl-clipboard
 
+- postgresql-libs
+
 (archcraft-specific)
 - foot
 - mpd
