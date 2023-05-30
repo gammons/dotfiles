@@ -5,6 +5,7 @@
 lvim.plugins = {
   { "lunarvim/colorschemes" },
   { "janko/vim-test" },
+  { "tpope/vim-fugitive" },
   { "ntpeters/vim-better-whitespace" },
   {
     "zbirenbaum/copilot.lua",
