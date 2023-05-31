@@ -34,6 +34,8 @@ lvim.leader = ","
 vim.cmd("nnoremap Y Y")
 vim.cmd("let g:strip_whitespace_on_save=1")
 
+lvim.builtin.project.active = false -- causes issues with fzf searching reverting to home dir
+
 --------------------------------
 -- Testing
 --------------------------------
