@@ -23,6 +23,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - inetutils # for telnet
 - github-cli
 - dnsutils
+- nnn
 
 ## Applications
 - spotify
