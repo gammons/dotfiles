@@ -17,7 +17,6 @@ Simple dotfiles, rebooted for the umpteenth time.
 - jq
 - unzip
 - keychain
-- broot
 - asdf-vm
 - bat
 - inetutils # for telnet
