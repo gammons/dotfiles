@@ -8,21 +8,16 @@ lvim.plugins = {
   { "tpope/vim-fugitive" },
   { "ntpeters/vim-better-whitespace" },
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
+    "zbirenbaum/copilot-cmp",
     event = "InsertEnter",
+    dependencies = { "zbirenbaum/copilot.lua" },
     config = function()
-      require("copilot").setup({
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          keymap = {
-            accept = "<C-l>",
-          }
-        },
-      })
+      vim.defer_fn(function()
+        require("copilot").setup()     -- https://github.com/zbirenbaum/copilot.lua/blob/master/README.md#setup-and-configuration
+        require("copilot_cmp").setup() -- https://github.com/zbirenbaum/copilot-cmp/blob/master/README.md#configuration
+      end, 100)
     end,
-  },
+  }
 }
 --------------------------------
 -- General config
