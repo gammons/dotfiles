@@ -26,6 +26,9 @@ lvim.plugins = {
 lvim.colorscheme = "tomorrow"
 lvim.format_on_save = true
 lvim.leader = ","
+vim.opt.wrap = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
 vim.cmd("nnoremap Y Y")
 vim.cmd("let g:strip_whitespace_on_save=1")
 
