@@ -6,6 +6,7 @@ lvim.plugins = {
   { "lunarvim/colorschemes" },
   { "janko/vim-test" },
   { "tpope/vim-fugitive" },
+  { "tpope/vim-endwise" },
   { "ntpeters/vim-better-whitespace" },
   {
     "zbirenbaum/copilot-cmp",
@@ -50,6 +51,7 @@ vim.cmd("nnoremap Y Y")
 vim.cmd("let g:strip_whitespace_on_save=1")
 
 lvim.keys.normal_mode["<cr>"] = ":nohlsearch<cr>"
+lvim.keys.normal_mode["<C-p>"] = "<cmd>Telescope find_files<cr>"
 
 lvim.builtin.project.active = false -- causes issues with fzf searching reverting to home dir
 
