@@ -69,6 +69,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - gammastep
 - swaybg
 - xdg-desktop-portal-wlr # for screen sharing in chrome, zoom
+- noto-fonts-emoji
 
 - vulkan-radeon
 - libva-mesa-driver
