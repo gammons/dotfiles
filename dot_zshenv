@@ -10,5 +10,4 @@ export PATH=~/.local/bin:$PATH
 export PATH=$PATH:$(go env GOPATH)/bin
 export PATH=$PATH:$HOME/.asdf/shims
 
-eval $(keychain --eval --quiet id_rsa)
 . "$HOME/.cargo/env"
