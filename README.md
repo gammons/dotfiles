@@ -120,4 +120,6 @@ xdg-settings set default-web-browser chrome.desktop
 - [ ] gammastep
 - [x] fix tpm error
 
+### Laptop TLP settings
 
+https://knowledgebase.frame.work/en_us/optimizing-fedora-battery-life-r1baXZh
