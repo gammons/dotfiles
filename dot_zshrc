@@ -31,13 +31,14 @@ alias lc='cd ~/local_code'
 alias n='cd ~/notes'
 alias pull='git fetch && git rebase'
 alias push='git push'
-alias vim='lvim'
+alias vim='nvim'
 alias cm='chezmoi'
 alias tf='terraform'
 alias fn='fishnet'
 alias irb='irb -r active_support/all'
 alias cat='bat -p'
 alias pr='gh pr create'
+alias mus='cd ~/local_code/musashi'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(starship init zsh)"
