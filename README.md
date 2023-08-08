@@ -79,7 +79,13 @@ Simple dotfiles, rebooted for the umpteenth time.
 - grim
 - wl-clipboard
 
+## Developer-y stuff
+
 - postgresql-libs
+- mysql-clients
+- docker
+- docker-compose
+- docker-buildx
 
 (archcraft-specific)
 - foot
