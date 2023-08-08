@@ -10,4 +10,8 @@ export PATH=~/.local/bin:$PATH
 export PATH=$PATH:$(go env GOPATH)/bin
 export PATH=$PATH:$HOME/.asdf/shims
 
+if [ x"${DESKTOP_SESSION}" != "gnome" ]; then
+  eval $(keychain --eval --quiet id_rsa)
+fi
+
 . "$HOME/.cargo/env"
