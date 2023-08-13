@@ -1,2 +1,2 @@
-~/.config/sway/swaylock/inhibit.sh && systemctl suspend -i
+~/.config/hypr/scripts/inhibit.sh && systemctl suspend -i
 
