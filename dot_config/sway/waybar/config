@@ -29,7 +29,7 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon} {capacity}%",
+    "format": "{icon}  {capacity}%",
     "format-charging": " {capacity}%",
     "format-plugged": " {capacity}%",
     "format-full": "{icon} Full",
@@ -52,9 +52,9 @@
     "format": " {volume}% {icon}",
   },
   "network": {
-    "interval": 5,
+    "interval": 30,
     //"interface": "wlan*", // (Optional) To force the use of this interface, set it for netspeed to work
-    "format-wifi": " {essid}",
+    "format-wifi": "  {essid}",
     "format-ethernet": " {ipaddr}/{cidr}",
     "format-linked": " {ifname} (No IP)",
     "format-disconnected": "睊 Disconnected",
@@ -83,7 +83,7 @@
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
   },
   "custom/playing_now": {
-    "format": " {}",
+    "format": "  {}",
     "interval": 5,
     "exec": "~/.config/sway/waybar/playing_now"
   },
