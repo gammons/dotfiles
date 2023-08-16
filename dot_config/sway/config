@@ -35,7 +35,7 @@ input "type:touchpad" {
 # Desktop mouse
 ############################
 input "5426:123:Razer_Razer_Viper_Ultimate_Dongle"  {
-  scroll_factor 2.0
+  scroll_factor 1.5
   pointer_accel -0.4
 }
 
