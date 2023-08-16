@@ -144,7 +144,6 @@ bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -156,7 +155,6 @@ bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -315,3 +313,13 @@ exec --no-startup-id $term --title=dropdown-terminal
 set $laptop eDP-1
 bindswitch lid:on output $laptop disable
 bindswitch lid:off output $laptop enable
+
+############################
+# screenshare workaround
+############################
+
+output HEADLESS-1 resolution 1280x720 position 0,1080
+output HEADLESS-1 bg "#220900" solid_color
+workspace 0 output HEADLESS-1
+bindsym $mod+0 workspace number 0
+bindsym $mod+Shift+0 move container to workspace number 0
