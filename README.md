@@ -129,3 +129,7 @@ xdg-settings set default-web-browser chrome.desktop
 ### Laptop TLP settings
 
 https://knowledgebase.frame.work/en_us/optimizing-fedora-battery-life-r1baXZh
+
+### nvim gets screwed up
+
+If you're seeing errors like "invalid node type at position 195 for language bash" - run `TSUpdate` which fixed it last time
