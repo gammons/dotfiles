@@ -62,6 +62,8 @@ require('packer').startup(function()
   use 'jkramer/vim-checkbox'
 
   use 'github/copilot.vim'
+
+  use { 'kkoomen/vim-doge', run = ':call doge#install()' }
 end)
 
 -- nvim tree
