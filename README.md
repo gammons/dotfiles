@@ -133,3 +133,8 @@ https://knowledgebase.frame.work/en_us/optimizing-fedora-battery-life-r1baXZh
 ### nvim gets screwed up
 
 If you're seeing errors like "invalid node type at position 195 for language bash" - run `TSUpdate` which fixed it last time
+
+### Set the correct time
+
+    sudo systemctl enable systemd-timesyncd
+    sudo systemctl start systemd-timesyncd
