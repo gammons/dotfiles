@@ -2,9 +2,14 @@
 # Outputs
 ############################
 output eDP-1 scale 1.4 pos 0 0 res 2880x1800
-output DP-1 scale 1.0 pos 0 0 res 3840x2160@144Hz
+output DP-1 scale 1.0 pos 3840 0 res 3840x2160@144Hz
 output DP-2 scale 1.0 pos 3840 0 res 3840x2160@144Hz
 output DP-3 scale 1.0 pos 3840 0 res 3840x2160@144Hz
+
+workspace 5 output eDP-1
+workspace 1 output DP-1
+workspace 1 output DP-2
+workspace 1 output DP-3
 
 ############################
 # Keyboard
