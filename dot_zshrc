@@ -39,6 +39,8 @@ alias irb='irb -r active_support/all'
 alias cat='bat -p'
 alias pr='gh pr create'
 alias mus='cd ~/local_code/musashi'
+alias de="docker exec -it musashi-web-1 "
+alias deb="docker exec -it musashi-web-1 bundle exec "
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(starship init zsh)"
