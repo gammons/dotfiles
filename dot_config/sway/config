@@ -315,9 +315,8 @@ for_window [title="dropdown-terminal"] move position center
 for_window [title="dropdown-terminal"] move scratchpad
 exec --no-startup-id $term --title=dropdown-terminal
 
-set $laptop eDP-1
-bindswitch lid:on output $laptop disable
-bindswitch lid:off output $laptop enable
+bindswitch lid:on exec ~/.config/sway/scripts/lid_on.sh
+bindswitch lid:off exec ~/.config/sway/scripts/lid_off.sh
 
 ############################
 # screenshare workaround
