@@ -185,7 +185,7 @@ vim.cmd("let g:strip_whitespace_on_save=1")
 -------------------- testing options ------------------------
 vim.cmd("let test#strategy ='neovim'")
 
-if vim.loop.cwd() ~= "musashi" then
+if string.match(vim.fn.getcwd(), "musashi") then
   vim.cmd("let test#ruby#rspec#executable = 'docker exec -it musashi-web-1 bundle exec rspec'")
 end
 
