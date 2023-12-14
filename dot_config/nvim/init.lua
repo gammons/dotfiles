@@ -91,7 +91,7 @@ g["prettier#autoformat_require_pragma"] = 0
 g["prettier#trailing_comma"] = "all"
 g["prettier#single_quote"] = 1
 
-cmd "au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json PrettierAsync"
+cmd "au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json,*.vue PrettierAsync"
 
 -------------------- OPTIONS -------------------------------
 cmd 'colorscheme base16-default-dark'            -- Put your favorite colorscheme here
@@ -209,14 +209,15 @@ lsp.ccls.setup {}
 -- root_dir is where the LSP server will start: here at the project root otherwise in current folder
 
 lsp.diagnosticls.setup {
-  filetypes = {"javascript", "javascriptreact", "typescript", "typescriptreact", "css", "svelte"},
+  filetypes = {"javascript", "javascriptreact", "typescript", "typescriptreact", "css", "svelte", "vue"},
   init_options = {
     filetypes = {
       javascript = "eslint",
       typescript = "eslint",
       javascriptreact = "eslint",
       typescriptreact = "eslint",
-      svelte = "eslint"
+      svelte = "eslint",
+      vue = "eslint"
     },
     linters = {
       eslint = {
@@ -224,6 +225,7 @@ lsp.diagnosticls.setup {
 	command = "./node_modules/.bin/eslint",
 	rootPatterns = {
 	  ".eslitrc.js",
+	  ".eslitrc.json",
 	  "package.json"
 	},
 	debounce = 100,
