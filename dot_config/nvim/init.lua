@@ -56,8 +56,11 @@ require('packer').startup(function()
   -- testing made easy
   use 'janko-m/vim-test'
 
+  use 'prettier/vim-prettier'
+
   use 'othree/html5.vim'
   use 'pangloss/vim-javascript'
+  use 'leafgarland/typescript-vim'
   use 'evanleck/vim-svelte'
   use 'jkramer/vim-checkbox'
 
@@ -82,6 +85,14 @@ require("nvim-tree").setup({
   },
 })
 
+-- prettier config
+g["prettier#autoformat_config_present"] = 1
+g["prettier#autoformat_require_pragma"] = 0
+g["prettier#trailing_comma"] = "all"
+g["prettier#single_quote"] = 1
+
+cmd "au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json PrettierAsync"
+
 -------------------- OPTIONS -------------------------------
 cmd 'colorscheme base16-default-dark'            -- Put your favorite colorscheme here
 opt.completeopt = "menuone,noselect"
@@ -105,8 +116,6 @@ opt.tabstop = 2                     -- Number of spaces tabs count for
 opt.termguicolors = true            -- True color support
 opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
 opt.wrap = true                    -- Disable line wrap
-
---vim.cmd("let NERDTreeShowHidden=1") -- show hidden files in NERD
 
 -------------------- Completion ------------------------------
 
@@ -172,10 +181,6 @@ ts.setup {
   highlight = {enable = true},
 }
 
--------------------- Prettier ------------------------------
-vim.cmd("let g:prettier#autoformat_config_present = 1")
-vim.cmd("let g:prettier#autoformat_require_pragma = 0")
-
 -------------------- Markdown options ------------------------
 vim.cmd("let g:vim_markdown_folding_disabled = 1")
 
@@ -204,13 +209,14 @@ lsp.ccls.setup {}
 -- root_dir is where the LSP server will start: here at the project root otherwise in current folder
 
 lsp.diagnosticls.setup {
-  filetypes = {"javascript", "javascriptreact", "typescript", "typescriptreact", "css"},
+  filetypes = {"javascript", "javascriptreact", "typescript", "typescriptreact", "css", "svelte"},
   init_options = {
     filetypes = {
       javascript = "eslint",
       typescript = "eslint",
       javascriptreact = "eslint",
-      typescriptreact = "eslint"
+      typescriptreact = "eslint",
+      svelte = "eslint"
     },
     linters = {
       eslint = {
@@ -272,7 +278,7 @@ end
 
 
 local nvim_lsp = require 'lspconfig'
-local servers = { "gopls", "tsserver", "solargraph" }
+local servers = { "gopls", "tsserver", "solargraph", "eslint" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
