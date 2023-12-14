@@ -97,7 +97,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 Run this to make sure vim lsp stuff works:
 
 ```
-npm install -g diagnostic-languageserver
+npm install -g diagnostic-languageserver vscode-langservers-extracted
 ```
 
 systemctl enable systemd-timesyncd
