@@ -287,8 +287,8 @@ assign [class="Spotify"] 4
 ############################
 
 smart_gaps on
-gaps inner 15
-gaps outer 15
+gaps inner 5
+gaps outer 5
 
 set $mode_gaps Toggle gaps: (1)OFF (2)NORMAL (3)HUGE
 mode "$mode_gaps" {
