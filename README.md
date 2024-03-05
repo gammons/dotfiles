@@ -30,6 +30,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - slack-desktop-wayland
 - tailscale
 - zoom
+- pcmanfm-gtk3 # for a lightweight file manager
 
 ## MacOS-specific stuff
 
