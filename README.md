@@ -79,6 +79,11 @@ Simple dotfiles, rebooted for the umpteenth time.
 - grim
 - wl-clipboard
 
+## Hyprland
+
+- cpio
+- hyprpm
+
 ## Developer-y stuff
 
 - postgresql-libs
