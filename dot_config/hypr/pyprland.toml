@@ -1,0 +1,28 @@
+[pyprland]
+plugins = ["scratchpads"]
+
+[scratchpads.term]
+animation = "fromTop"
+command = "kitty --class kitty-dropterm"
+class = "kitty-dropterm"
+size = "75% 60%"
+max_size = "1920px 100%"
+margin = 50
+
+[scratchpads.volume]
+animation = "fromRight"
+command = "pavucontrol"
+class = "pavucontrol"
+size = "40% 90%"
+unfocus = "hide"
+lazy = true
+
+[scratchpads.meet]
+animation = "fromTop"
+command = "google-chrome-stable --app-id=kjgfgldnnfoeklkmfkjfagphfepbbdan --profile-directory=Default"
+class = "chrome-kjgfgldnnfoeklkmfkjfagphfepbbdan-Default"
+size = "40% 40%"
+max_size = "1920px 40%"
+# unfocus = "hide"
+process_tracking = false
+
