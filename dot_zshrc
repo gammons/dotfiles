@@ -26,6 +26,9 @@ alias gco='git checkout'
 alias gd='git diff'
 alias gdc='gd --cached'
 alias kc='kubectl'
+alias kamc="kamal app exec -i './bin/rails console'"
+alias kamb="kamal app exec -i '/bin/bash'"
+alias kamd='kamal deploy'
 alias l='exa --long --header -a -s modified'
 alias lc='cd ~/local_code'
 alias n='cd ~/notes'
@@ -39,6 +42,7 @@ alias irb='irb -r active_support/all'
 alias cat='bat -p'
 alias pr='gh pr create'
 alias mus='cd ~/local_code/musashi'
+alias tb='cd ~/local_code/truelist.io/backend'
 alias de="docker exec -it musashi-web-1 "
 alias deb="docker exec -it musashi-web-1 bundle exec "
 
