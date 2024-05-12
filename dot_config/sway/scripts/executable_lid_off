@@ -5,9 +5,7 @@ out = JSON.parse(`swaymsg -t get_outputs`)
 
 if out.length > 1
   `swaymsg output eDP-1 enable`
-  `swaymsg output DP-1 scale 1.0 pos 0 0 res 3840x2160@144Hz`
-  `swaymsg output DP-2 scale 1.0 pos 0 0 res 3840x2160@144Hz`
-  `swaymsg output DP-2 scale 1.0 pos 0 0 res 3840x2160@144Hz`
+  `swaymsg output DP-1 scale 1.0 pos 2880 0 res 3840x2160@144Hz`
+  `swaymsg output DP-2 scale 1.0 pos 2880 0 res 3840x2160@144Hz`
+  `swaymsg output DP-2 scale 1.0 pos 2880 0 res 3840x2160@144Hz`
 end
-
-
