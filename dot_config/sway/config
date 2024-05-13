@@ -226,7 +226,7 @@ hide_edge_borders smart
 set $brightnessUpCmd /usr/bin/brightnessctl set 5%- 2&>1 > /tmp/brightness
 set $brightnessDownCmd /usr/bin/brightnessctl set +5%
 
-bindsym --release F10 exec --no-startup-id slurp | grim -g - - | wl-copy
+bindsym --release F10 exec --no-startup-id grim -g "$(slurp)" - | swappy -f - -o - | wl-copy
 
 bindsym $mod+u [title="dropdown-terminal"] scratchpad show; move position center
 bindsym $mod+shift+u exec --no-startup-id $term --title=dropdown-terminal
