@@ -46,6 +46,9 @@ alias tb='cd ~/local_code/truelist.io/backend'
 alias de="docker exec -it musashi-web-1 "
 alias deb="docker exec -it musashi-web-1 bundle exec "
 
+alias dcu='docker-compose up'
+alias dcd='docker-compose down'
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(starship init zsh)"
 
