@@ -1,4 +1,4 @@
-if [ -f /tmp/inihibit ]; then
+if [ -f /tmp/inhibit ]; then
     # If the file exists, prevent sleep by exiting with status 1
     exit 1
 fi
