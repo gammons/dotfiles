@@ -216,7 +216,6 @@ lsp.diagnosticls.setup {
       typescript = "eslint",
       javascriptreact = "eslint",
       typescriptreact = "eslint",
-      svelte = "eslint",
       vue = "eslint"
     },
     linters = {
