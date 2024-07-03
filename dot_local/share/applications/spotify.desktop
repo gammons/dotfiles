@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Spotify
+Icon=spotify
+Exec=spotify --ozone-platform-hint=auto
