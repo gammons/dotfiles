@@ -28,3 +28,10 @@ max_size = "1920px 40%"
 # unfocus = "hide"
 process_tracking = false
 
+[scratchpads.obsidian]
+animation = "fromRight"
+command = "obsidian --ozone-platform-hint=auto"
+class = "obsidian"
+size = "50% 90%"
+max_size = "50% 90%"
+lazy = true
