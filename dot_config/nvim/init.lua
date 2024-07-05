@@ -269,12 +269,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float({scope="line"})<CR>', opts)
   buf_set_keymap('n', '<Leader>d', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 
-  if client.server_capabilities.documentFormattingProvider then
+  --if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_command [[augroup Format]]
     vim.api.nvim_command [[autocmd! * <buffer>]]
     vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
     vim.api.nvim_command [[augroup END]]
-  end
+  --end
 end
 
 

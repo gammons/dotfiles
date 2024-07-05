@@ -7,10 +7,11 @@
 
 LID="`ls /proc/acpi/button/lid | head -n1`"
 OUTPUT="eDP-1"
+echo $LID
 echo $OUTPUT
 
 if grep -q open /proc/acpi/button/lid/${LID}/state; then
-    swaymsg output ${OUTPUT} enable
+  hyprctl keyword monitor "eDP-1,2880x1800,0x0,1.5"
 else
-    swaymsg output ${OUTPUT} disable
+  hyprctl keyword monitor "eDP-1, disable"
 fi
