@@ -1,3 +1,10 @@
 #!/bin/sh
-waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css &
 
+_ps=(waybar)
+for _prs in "${_ps[@]}"; do
+	if [[ `pidof ${_prs}` ]]; then
+		killall -9 ${_prs}
+	fi
+done
+
+waybar -c ~/.config/hypr/waybar/config -s ~/.config/hypr/waybar/style.css &

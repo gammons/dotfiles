@@ -80,6 +80,10 @@ Simple dotfiles, rebooted for the umpteenth time.
 - grim
 - wl-clipboard
 
+- wireplumber
+- libwireplumber
+- xdg-desktop-portal-hyprland
+
 ## Hyprland
 
 - cpio

@@ -20,11 +20,12 @@ done
 
 # Lauch notification daemon (mako)
 swaync &
-hyprpaper &
 
 # Start network manager applet
 nm-applet --indicator &
 gammastep-indicator &
+~/.config/hypr/scripts/launch_waybar &
 waybar -c ~/.config/hypr/waybar/config -s ~/.config/hypr/waybar/style.css &
 
 ~/.config/hypr/scripts/swayidle.sh &
+~/.config/hypr/scripts/wallpaper_shuffle.sh &
