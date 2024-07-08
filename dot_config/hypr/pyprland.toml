@@ -5,14 +5,14 @@ plugins = ["scratchpads"]
 animation = "fromTop"
 command = "kitty --class kitty-dropterm"
 class = "kitty-dropterm"
-size = "75% 60%"
+size = "75% 30%"
 max_size = "1920px 100%"
 margin = 50
 lazy = true
 process_tracking = false
 
 [scratchpads.volume]
-animation = "fromRight"
+animation = "fromleft"
 command = "pavucontrol"
 class = "pavucontrol"
 size = "40% 90%"
