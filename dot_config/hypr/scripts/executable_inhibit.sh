@@ -1,2 +1,1 @@
-exit 0
-# pactl list | grep RUNNING && exit 1 || exit 0
+pactl list | grep RUNNING && exit 1 || exit 0
