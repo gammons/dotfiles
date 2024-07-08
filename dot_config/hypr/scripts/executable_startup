@@ -19,7 +19,8 @@ done
 /usr/lib/xdg-desktop-portal-wlr &
 
 # Lauch notification daemon (mako)
-dunst & #-config $HOME/.dunstrc &
+swaync &
+hyprpaper &
 
 # Start network manager applet
 nm-applet --indicator &
