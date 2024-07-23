@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-## Copyright (C) 2020-2022 Aditya Shakya <adi1090x@gmail.com>
-
-## Manage other monitors when lapton lid is open/close
-## Edit according to your setup
+# determines if the lid is open or closed, and then sets the laptop monitor accordingly
+# this script is run on system resume
 
 LID="`ls /proc/acpi/button/lid | head -n1`"
 OUTPUT="eDP-1"

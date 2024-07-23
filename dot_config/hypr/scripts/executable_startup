@@ -27,5 +27,5 @@ gammastep-indicator &
 ~/.config/hypr/scripts/launch_waybar &
 waybar -c ~/.config/hypr/waybar/config -s ~/.config/hypr/waybar/style.css &
 
-~/.config/hypr/scripts/swayidle.sh &
+hypridle &
 ~/.config/hypr/scripts/wallpaper_shuffle.sh &
