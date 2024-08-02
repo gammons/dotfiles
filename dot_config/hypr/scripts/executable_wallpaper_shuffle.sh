@@ -1,11 +1,9 @@
 
 #!/usr/bin/env bash
 
-swww-daemon &
-
 while true; do
 
-  f="`echo $HOME`/.config/hypr/images/`ls ~/.config/hypr/images | shuf -n 1`"
+  f="`echo $HOME`/.config/hypr/images/wallpapers/`ls ~/.config/hypr/images/wallpapers | shuf -n 1`"
   echo $f
   swww img $f
   sleep 600
