@@ -46,8 +46,8 @@ alias tb='cd ~/local_code/truelist.io/backend'
 alias de="docker exec -it musashi-web-1 "
 alias deb="docker exec -it musashi-web-1 bundle exec "
 alias dcu='docker compose up'
-alias prodb="heroku run /bin/bash -a musashi-production"
-alias prodc="heroku run bundle exec rails c -a musashi-production"
+alias prodb="npx heroku run --size=performance-l /bin/bash -a musashi-production"
+alias prodc="npx heroku run bundle exec rails c -a musashi-production"
 
 alias dcu='docker-compose up'
 alias dcd='docker-compose down'

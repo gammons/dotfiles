@@ -80,9 +80,8 @@ Simple dotfiles, rebooted for the umpteenth time.
 - grim
 - wl-clipboard
 
-- pipewire-media-session
-**Note**: do NOT use wireplumber - issues all over the place, bluetooth not working, issues with mic and pavucontrol
-
+- wireplumber
+- libwireplumber
 - xdg-desktop-portal-hyprland
 
 ## Hyprland
