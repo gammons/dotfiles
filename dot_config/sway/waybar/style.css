@@ -133,3 +133,11 @@ window#waybar.empty #window {
 #tray > .active {
 }
 
+#battery.critical:not(.charging) {
+  background-color: #E06B74;
+}
+
+#battery.low:not(.charging) {
+  background-color: #E5C07A;
+}
+
