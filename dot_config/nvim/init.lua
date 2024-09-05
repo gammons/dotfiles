@@ -23,6 +23,7 @@ require('packer').startup(function()
 
   -- Colors - base16 color schemes
   use 'RRethy/nvim-base16'
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- autocompletion
   use 'hrsh7th/nvim-compe'
@@ -94,7 +95,7 @@ g["prettier#single_quote"] = 1
 cmd "au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json,*.vue PrettierAsync"
 
 -------------------- OPTIONS -------------------------------
-cmd 'colorscheme base16-default-dark'            -- Put your favorite colorscheme here
+cmd 'colorscheme catppuccin'            -- Put your favorite colorscheme here
 opt.completeopt = "menuone,noselect"
 opt.expandtab = true                -- Use spaces instead of tabs
 opt.hidden = true                   -- Enable background buffers
