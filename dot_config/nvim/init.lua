@@ -40,7 +40,11 @@ require('packer').startup(function()
   -- Essential plugins
   use 'nvim-tree/nvim-web-devicons'
   use 'nvim-tree/nvim-tree.lua'
-  use 'itchyny/lightline.vim'
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  }
+
 
   -- Tpope things
   use 'tpope/vim-fugitive'
@@ -69,6 +73,23 @@ require('packer').startup(function()
 
   use { 'kkoomen/vim-doge', run = ':call doge#install()' }
 end)
+
+-- lualine
+require('lualine').setup {
+  options = {
+    theme = 'catppuccin',
+    section_separators = {'', ''},
+    component_separators = {'', ''},
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', {'diagnostics', sources = {'nvim_lsp'}}},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'},
+  },
+}
 
 -- nvim tree
 require "nvim_tree_on_attach"
@@ -280,7 +301,7 @@ end
 
 
 local nvim_lsp = require 'lspconfig'
-local servers = { "gopls", "tsserver", "solargraph", "eslint" }
+local servers = { "gopls", "ts_ls", "solargraph", "eslint" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
