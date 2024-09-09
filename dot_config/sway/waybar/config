@@ -5,7 +5,7 @@
   "passthrough": false,
   "modules-left": ["sway/workspaces"],
   "modules-center": ["custom/weather", "custom/playing_now"],
-  "modules-right": ["custom/power_now", "backlight", "battery", "pulseaudio", "cpu", "network", "clock", "tray"],
+  "modules-right": ["custom/bluetooth_battery", "custom/power_now", "backlight", "battery", "pulseaudio", "cpu", "network", "clock", "tray"],
   "sway/window": {
     "max-length": 50
   },
@@ -76,6 +76,11 @@
     "format": "{}",
     "interval": 200,
     "exec": "~/.config/sway/waybar/polyweather KPNE"
+  },
+  "custom/bluetooth_battery": {
+    "format": "🎧{}%",
+    "interval": 300,
+    "exec": "~/.config/sway/waybar/bluetooth_battery BC:87:FA:29:28:52"
   },
   "cpu": {
     "interval": 1,

@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+hex = ARGV.last.gsub(":", "_")
+result = `dbus-send --print-reply=literal --system --dest=org.bluez /org/bluez/hci0/dev_#{hex} org.freedesktop.DBus.Properties.Get string:"org.bluez.Battery1" string:"Percentage"`
+puts result.split(" ").last.to_i
