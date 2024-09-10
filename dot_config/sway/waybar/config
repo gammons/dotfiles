@@ -26,7 +26,7 @@
     "design-capacity": false,
     "states": {
       "good": 95,
-      "low": 20,
+      "warning": 30,
       "critical": 15
     },
     "format": "{icon}  {capacity}%",
