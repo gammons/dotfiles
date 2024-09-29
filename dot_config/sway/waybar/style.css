@@ -138,6 +138,7 @@ window#waybar.empty #window {
 }
 
 #battery.low:not(.charging) {
+	color: #2A2E37;
   background-color: #E5C07A;
 }
 
