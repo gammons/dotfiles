@@ -62,6 +62,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - sway
 - swaylock-effects
 - swayidle
+- swaync
 - xf86-video-intel
 - brightnessctl
 - nerd-fonts-complete
@@ -79,6 +80,7 @@ Simple dotfiles, rebooted for the umpteenth time.
 - slurp
 - grim
 - wl-clipboard
+- swappy
 
 - wireplumber
 - libwireplumber
@@ -101,6 +103,10 @@ Simple dotfiles, rebooted for the umpteenth time.
 - foot
 - mpd
 - qt5-wayland
+
+### stuff for ruby development
+
+make sure to run `gem install rubocop-performance rubocop-rails rubocop-rspec` or else the vim plugin will complain
 
 ### post-install notes
 
