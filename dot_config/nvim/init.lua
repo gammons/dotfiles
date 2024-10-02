@@ -61,7 +61,7 @@ require('packer').startup(function()
   -- testing made easy
   use 'janko-m/vim-test'
 
-  use 'prettier/vim-prettier'
+  use { 'prettier/vim-prettier', run = 'yarn install' }
 
   use 'othree/html5.vim'
   use 'pangloss/vim-javascript'
