@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 require 'json'
 
+`touch /tmp/lid_down`
+
 out = JSON.parse(`swaymsg -t get_outputs`)
 
 if out.length > 1
