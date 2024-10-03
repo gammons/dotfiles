@@ -228,7 +228,10 @@ set $brightnessDownCmd /usr/bin/brightnessctl set +5%
 
 bindsym --release F10 exec --no-startup-id grim -g "$(slurp)" - | swappy -f - -o - | wl-copy
 
-bindsym $mod+u [title="dropdown-terminal"] scratchpad show; move position center
+bindsym $mod+u exec swaymsg '[title="dropdown-terminal"] scratchpad show; \
+    [title="dropdown-terminal"] resize set 800 800; \
+    [title="dropdown-terminal"] move position center'
+
 bindsym $mod+shift+u exec --no-startup-id $term --title=dropdown-terminal
 
 bindsym $mod+w exec --no-startup-id $wallpaper_script
@@ -312,9 +315,10 @@ default_border pixel 2
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [title="dropdown-terminal"] floating enable
-for_window [title="dropdown-terminal"] resize set 925 700
+for_window [title="dropdown-terminal"] resize set 800 800
 for_window [title="dropdown-terminal"] move position center
 for_window [title="dropdown-terminal"] move scratchpad
+for_window [title="dropdown-terminal"] border pixel 2
 exec --no-startup-id $term --title=dropdown-terminal
 
 bindswitch lid:on exec ~/.config/sway/scripts/lid_down
