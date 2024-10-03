@@ -85,8 +85,6 @@ bindsym $mod+p exec $menu
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need thatLJKJK # installed. # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-bindsym $mod+i exec pavucontrol
-
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -231,6 +229,27 @@ bindsym --release F10 exec --no-startup-id grim -g "$(slurp)" - | swappy -f - -o
 bindsym $mod+u exec swaymsg '[title="dropdown-terminal"] scratchpad show; \
     [title="dropdown-terminal"] resize set 800 800; \
     [title="dropdown-terminal"] move position center'
+
+# Obsidian scratchpad configuration
+for_window [app_id="obsidian"] floating enable
+for_window [app_id="obsidian"] move scratchpad
+# for_window [app_id="obsidian"] border normal 2
+exec --no-startup-id obsidian
+
+# Keybinding to show/hide and resize Obsidian
+bindsym $mod+o exec swaymsg '[app_id="obsidian"] scratchpad show; \
+    [app_id="obsidian"] resize set 47ppt 96ppt; \
+    [app_id="obsidian"] move position 51ppt 2ppt;'
+
+# Pavucontrol scratchpad configuration
+for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
+for_window [app_id="org.pulseaudio.pavucontrol"] move scratchpad
+
+# Keybinding to show/hide and resize pavucontrol
+bindsym $mod+i exec swaymsg '\
+    [app_id="org.pulseaudio.pavucontrol"] scratchpad show; \
+    [app_id="org.pulseaudio.pavucontrol"] resize set 70ppt 70ppt; \
+    [app_id="org.pulseaudio.pavucontrol"] move position center'
 
 bindsym $mod+shift+u exec --no-startup-id $term --title=dropdown-terminal
 
