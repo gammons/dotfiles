@@ -3,4 +3,4 @@ if [ -f /tmp/inhibit ]; then
     exit 1
 fi
 
-pactl list | grep RUNNING && exit 1 || exit 0
+pactl list sink-inputs | grep "application.name = \"Google Chrome\"" && exit 1 || exit 0
