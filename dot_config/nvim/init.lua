@@ -72,6 +72,20 @@ require('packer').startup(function()
   use 'github/copilot.vim'
 
   use { 'kkoomen/vim-doge', run = ':call doge#install()' }
+
+  use {
+    'CopilotC-Nvim/CopilotChat.nvim',
+    branch = 'canary',
+    requires = {
+      'github/copilot.vim',
+      'nvim-lua/plenary.nvim',
+    }
+  }
+
+  -- copilot chat
+  require("CopilotChat").setup({
+    debug = true,
+  })
 end)
 
 -- lualine
