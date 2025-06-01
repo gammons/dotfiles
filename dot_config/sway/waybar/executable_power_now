@@ -1,4 +1,17 @@
- echo - | awk "{printf \" %.1fW     \", \
-$(( \
-  $(cat /sys/class/power_supply/BAT0/power_now) \
- )) / 1000000 }"
+#!/bin/bash
+
+# Detect laptop model and use appropriate power calculation
+if [[ -f /sys/class/power_supply/BAT0/power_now ]]; then
+    # Zenbook laptop - uses power_now directly
+    echo - | awk "{printf \" %.1fW     \", \
+    $(( \
+      $(cat /sys/class/power_supply/BAT0/power_now) \
+     )) / 1000000 }"
+else
+    # Lenovo laptop - calculate from current_now * voltage_now
+    echo - | awk "{printf \" %.1fW     \", \
+    $(( \
+      $(cat /sys/class/power_supply/BATT/current_now) * \
+      $(cat /sys/class/power_supply/BATT/voltage_now) \
+     )) / 1000000000000 }"
+fi

@@ -6,6 +6,9 @@ SAVEHIST="100000"
 HISTFILE=${ZDOTDIR:-$HOME}/.history
 COLORTERM=truecolor
 
+# Chrome Wayland flags
+export CHROME_FLAGS="--ozone-platform=wayland --enable-features=UseOzonePlatform"
+
 setopt HIST_FCNTL_LOCK
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
@@ -58,6 +61,8 @@ eval "$(starship init zsh)"
 
 . $HOME/.asdf/asdf.sh
 
-source /usr/share/nvm/init-nvm.sh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 eval "$(atuin init zsh --disable-up-arrow)"

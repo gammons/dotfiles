@@ -87,6 +87,34 @@ Simple dotfiles, rebooted for the umpteenth time.
 - libwireplumber
 - xdg-desktop-portal-hyprland
 
+## fedora-specific WM stuff
+
+```bash
+# Basic packages
+sudo dnf install -y git neovim tig tmux htop the_silver_searcher fd-find fzf jq unzip keychain bat gh bind-utils nnn
+
+# WM utilities and system tools
+sudo dnf install -y kitty dunst NetworkManager network-manager-applet waybar wofi cpupower chrony
+
+# Audio and bluetooth
+sudo dnf install -y pavucontrol pulseaudio-utils bluez bluez-tools
+
+# Sway and related packages
+sudo dnf install -y sway swaylock swayidle swaybg xdg-desktop-portal-wlr brightnessctl
+
+# Screenshot and display utilities
+sudo dnf install -y slurp grim wl-clipboard gammastep light
+
+# Fonts and additional utilities
+sudo dnf install -y google-noto-emoji-fonts google-noto-sans-fonts wireplumber polkit pcmanfm swappy
+
+# Install starship prompt
+mkdir -p ~/.local/bin
+curl -sS https://starship.rs/install.sh | sh -s -- --bin-dir ~/.local/bin --yes
+```
+
+Note: `eza` is the successor to `exa` and can be installed from cargo or built from source. A C compiler is required for building some packages.
+
 ## Hyprland
 
 - cpio
