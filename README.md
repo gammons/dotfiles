@@ -25,11 +25,18 @@ Simple dotfiles, rebooted for the umpteenth time.
 - nnn
 
 ## Applications
-- spotify
-- obsidian
-- slack-desktop-wayland
+
+### Fedora Flatpak apps
+```bash
+# Desktop applications
+flatpak install -y flathub com.slack.Slack
+flatpak install -y flathub md.obsidian.Obsidian  
+flatpak install -y flathub com.spotify.Client
+```
+
+### Other applications needed
 - tailscale
-- zoom
+- zoom  
 - pcmanfm-gtk3 # for a lightweight file manager
 
 ## MacOS-specific stuff
@@ -111,9 +118,18 @@ sudo dnf install -y google-noto-emoji-fonts google-noto-sans-fonts wireplumber p
 # Install starship prompt
 mkdir -p ~/.local/bin
 curl -sS https://starship.rs/install.sh | sh -s -- --bin-dir ~/.local/bin --yes
+
+# Developer tools
+sudo dnf install -y docker docker-compose postgresql mysql redis kubernetes-client awscli2
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+
+# Install k9s (Kubernetes CLI manager)
+curl -sL https://github.com/derailed/k9s/releases/download/v0.32.6/k9s_Linux_amd64.tar.gz -o /tmp/k9s.tar.gz
+tar -xzf /tmp/k9s.tar.gz -C /tmp && sudo cp /tmp/k9s /usr/local/bin/
 ```
 
-Note: `eza` is the successor to `exa` and can be installed from cargo or built from source. A C compiler is required for building some packages.
+Note: `eza` is the successor to `exa` and can be installed from cargo or built from source. A C compiler is required for building some packages. After installing Docker, you'll need to log out and back in for the group changes to take effect.
 
 ## Hyprland
 
@@ -122,11 +138,7 @@ Note: `eza` is the successor to `exa` and can be installed from cargo or built f
 
 ## Developer-y stuff
 
-- postgresql-libs
-- mysql-clients
-- docker
-- docker-compose
-- docker-buildx
+See the Fedora installation section above for Docker, PostgreSQL, MySQL, and Redis setup.
 
 (archcraft-specific)
 - foot
