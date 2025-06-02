@@ -1,13 +1,13 @@
-#!/usr/bin/env ruby
-require 'json'
+#!/bin/bash
 
-`touch /tmp/lid_down`
+touch /tmp/lid_down
 
-out = JSON.parse(`swaymsg -t get_outputs`)
+# Get number of connected outputs
+output_count=$(swaymsg -t get_outputs | jq 'length')
 
-if out.length > 1
-  `swaymsg output eDP-1 disable`
-  `swaymsg output DP-1 scale 1.0 pos 0 0 res 3840x2160@144Hz`
-  `swaymsg output DP-2 scale 1.0 pos 0 0 res 3840x2160@144Hz`
-  `swaymsg output DP-2 scale 1.0 pos 0 0 res 3840x2160@144Hz`
-end
+if [ "$output_count" -gt 1 ]; then
+  swaymsg output eDP-1 disable
+  swaymsg output DP-1 scale 1.0 pos 0 0 res 3840x2160@144Hz
+  swaymsg output DP-2 scale 1.0 pos 0 0 res 3840x2160@144Hz  
+  swaymsg output DP-3 scale 1.0 pos 0 0 res 3840x2160@144Hz
+fi
