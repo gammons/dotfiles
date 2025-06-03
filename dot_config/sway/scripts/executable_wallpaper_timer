@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Wallpaper rotation timer - changes wallpaper every 30 minutes
+INTERVAL=1800  # 30 minutes in seconds
+
+while true; do
+    sleep $INTERVAL
+    ~/.bin/wallpaper --next
+done

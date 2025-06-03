@@ -96,6 +96,13 @@ flatpak install -y flathub com.spotify.Client
 
 ## fedora-specific WM stuff
 
+### Quick install (recommended)
+```bash
+# Run the automated installer script
+./install-fedora.sh
+```
+
+### Manual installation
 ```bash
 # Basic packages
 sudo dnf install -y git neovim tig tmux htop the_silver_searcher fd-find fzf jq unzip keychain bat gh bind-utils nnn
@@ -127,6 +134,9 @@ sudo usermod -aG docker $USER
 # Install k9s (Kubernetes CLI manager)
 curl -sL https://github.com/derailed/k9s/releases/download/v0.32.6/k9s_Linux_amd64.tar.gz -o /tmp/k9s.tar.gz
 tar -xzf /tmp/k9s.tar.gz -C /tmp && sudo cp /tmp/k9s /usr/local/bin/
+
+# Ruby development dependencies (for asdf ruby compilation)
+sudo dnf install -y perl-core perl-FindBin perl-IPC-Cmd zlib-devel libffi-devel libyaml-devel readline-devel
 ```
 
 Note: `eza` is the successor to `exa` and can be installed from cargo or built from source. A C compiler is required for building some packages. After installing Docker, you'll need to log out and back in for the group changes to take effect.

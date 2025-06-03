@@ -1,0 +1,50 @@
+#!/bin/bash
+
+WALLPAPER_DIR="$HOME/local_code/aesthetic-wallpapers/images"
+STATE_FILE="$HOME/.wallpaper_state"
+
+# Get all wallpaper files
+mapfile -t wallpapers < <(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) | sort)
+
+if [ ${#wallpapers[@]} -eq 0 ]; then
+    echo "No wallpapers found in $WALLPAPER_DIR"
+    exit 1
+fi
+
+# Read current index, default to 0
+current_index=0
+if [ -f "$STATE_FILE" ]; then
+    current_index=$(cat "$STATE_FILE")
+fi
+
+# Handle arguments
+case "${1:-}" in
+    --next)
+        current_index=$(( (current_index + 1) % ${#wallpapers[@]} ))
+        ;;
+    --prev)
+        current_index=$(( (current_index - 1 + ${#wallpapers[@]}) % ${#wallpapers[@]} ))
+        ;;
+    --random)
+        current_index=$((RANDOM % ${#wallpapers[@]}))
+        ;;
+    --current)
+        # Just use current index, no change
+        ;;
+    *)
+        # Default: go to next wallpaper
+        current_index=$(( (current_index + 1) % ${#wallpapers[@]} ))
+        ;;
+esac
+
+# Get the wallpaper file
+wallpaper_file="${wallpapers[$current_index]}"
+
+# Set wallpaper using swaybg
+pkill swaybg 2>/dev/null || true
+swaybg -i "$wallpaper_file" -m fill &
+
+# Save current index
+echo "$current_index" > "$STATE_FILE"
+
+echo "Set wallpaper: $(basename "$wallpaper_file")"
