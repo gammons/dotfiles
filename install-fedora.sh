@@ -38,6 +38,9 @@ echo "⚙️  Enabling and starting Docker..."
 sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
 
+echo "🔒 Configuring SELinux for Docker containers..."
+sudo setsebool -P container_manage_cgroup true
+
 echo "🔨 Installing C/C++ development tools..."
 sudo dnf install -y gcc gcc-c++ make automake autoconf libtool glibc-devel
 
@@ -71,3 +74,8 @@ echo "   flatpak install -y flathub com.spotify.Client"
 echo "3. Install asdf and your preferred language runtimes"
 echo "4. Run 'npm install -g diagnostic-languageserver vscode-langservers-extracted' for vim LSP"
 echo "5. For Ruby development: 'gem install rubocop-performance rubocop-rails rubocop-rspec'"
+echo ""
+echo "🐳 Docker troubleshooting:"
+echo "If you encounter permission denied errors with docker-compose, run:"
+echo "   sudo chcon -Rt svirt_sandbox_file_t /path/to/your/project"
+echo "   chmod +x entrypoints/*.sh bin/*"

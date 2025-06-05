@@ -169,6 +169,35 @@ npm install -g diagnostic-languageserver vscode-langservers-extracted
 
 systemctl enable systemd-timesyncd
 
+### Docker permission issues on Fedora
+
+If you encounter permission denied errors when running `docker-compose up` (especially with mounted volumes), this is likely due to SELinux enforcing stricter security policies. Here's how to fix it:
+
+1. **Set proper SELinux context for Docker volumes:**
+   ```bash
+   sudo setsebool -P container_manage_cgroup true
+   sudo chcon -Rt svirt_sandbox_file_t /path/to/your/project
+   ```
+
+2. **Ensure execute permissions on scripts:**
+   ```bash
+   chmod +x entrypoints/*.sh bin/*
+   find . -name "*.sh" | xargs chmod +x
+   ```
+
+3. **Create missing configuration files:**
+   ```bash
+   # For ngrok (if using)
+   cp ngrok.template.yml ngrok.yml
+   ```
+
+Common error messages that indicate SELinux permission issues:
+- `Error reading configuration file '/etc/ngrok.yml': open /etc/ngrok.yml: permission denied`
+- `ruby: Permission denied -- ./bin/vite (LoadError)`
+- `/bin/sh: 0: cannot open ./entrypoints/docker-entrypoint.sh: Permission denied`
+
+These solutions maintain security while allowing Docker containers to properly access mounted files.
+
 ### set chrome as default opener
 
 xdg-settings set default-web-browser chrome.desktop
