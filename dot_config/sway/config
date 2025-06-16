@@ -231,17 +231,17 @@ bindsym $mod+u exec swaymsg '[title="dropdown-terminal"] scratchpad show; \
     [title="dropdown-terminal"] move position center'
 
 # Obsidian scratchpad configuration (cross-compatible)
-for_window [class="obsidian"] floating enable
-for_window [class="obsidian"] move scratchpad
+for_window [app_id="obsidian"] floating enable
+for_window [app_id="obsidian"] move scratchpad
 
 # Try to launch both versions (only one will succeed)
 exec --no-startup-id obsidian
 exec --no-startup-id flatpak run md.obsidian.Obsidian
 
 # Keybinding to show/hide and resize Obsidian (cross-compatible)
-bindsym $mod+o exec swaymsg '[class="obsidian"] scratchpad show; \
-    [class="obsidian"] resize set 47ppt 96ppt; \
-    [class="obsidian"] move position 51ppt 2ppt;'
+bindsym $mod+o exec swaymsg '[app_id="obsidian"] scratchpad show; \
+    [app_id="obsidian"] resize set 47ppt 96ppt; \
+    [app_id="obsidian"] move position 51ppt 2ppt;'
 
 # Pavucontrol scratchpad configuration
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable

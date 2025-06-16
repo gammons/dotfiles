@@ -39,6 +39,22 @@ flatpak install -y flathub com.spotify.Client
 - zoom  
 - pcmanfm-gtk3 # for a lightweight file manager
 
+### Obsidian Wayland Configuration
+To run Obsidian with native Wayland support instead of X11:
+
+```bash
+# Enable Wayland socket
+flatpak override --user --socket=wayland md.obsidian.Obsidian
+
+# Set Wayland environment variable
+flatpak override --user --env=OBSIDIAN_USE_WAYLAND=1 md.obsidian.Obsidian
+
+# Add ozone platform hint for Electron
+flatpak override --user --add-policy=Electron.ozone-platform-hint=auto md.obsidian.Obsidian
+```
+
+After running these commands, restart Obsidian to use native Wayland.
+
 ## MacOS-specific stuff
 
 - hammerspoon
