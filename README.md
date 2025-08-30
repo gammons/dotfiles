@@ -24,6 +24,11 @@ Simple dotfiles, rebooted for the umpteenth time.
 - dnsutils
 - nnn
 
+## Arch-specific developer stuff
+
+- aws-cli
+- k9s
+
 ## Applications
 
 ### Fedora Flatpak apps
