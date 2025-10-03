@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Obsidian
-Icon=obsidian
-Exec=obsidian --ozone-platform-hint=auto
