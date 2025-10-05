@@ -8,7 +8,13 @@ SPECIAL_WORKSPACE="special:obsidian"
 if ! hyprctl clients -j | jq -e ".[] | select(.class == \"$OBSIDIAN_CLASS\")" >/dev/null 2>&1; then
   uwsm app -- obsidian &
   sleep 0.5
+fi
+
+# Ensure Obsidian is on the special workspace
+OBSIDIAN_WORKSPACE=$(hyprctl clients -j | jq -r ".[] | select(.class == \"$OBSIDIAN_CLASS\") | .workspace.name")
+if [ "$OBSIDIAN_WORKSPACE" != "$SPECIAL_WORKSPACE" ]; then
   hyprctl dispatch movetoworkspacesilent $SPECIAL_WORKSPACE,class:$OBSIDIAN_CLASS
+  sleep 0.1
 fi
 
 # Check if workspace is visible before toggling
