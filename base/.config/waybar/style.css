@@ -1,5 +1,5 @@
 * {
-  font-family: "JetBrains Mono", "Iosevka Nerd Font", archcraft, sans-serif;
+  font-family: 'CaskaydiaMono Nerd Font';
   font-size: 14px;
   border: none;
   border-radius: 0;
@@ -14,7 +14,7 @@ window#waybar {
 }
 
 #custom-weather {
-  font-family: "Weather Icons";
+  font-family: 'CaskaydiaMono Nerd Font';
 }
 
 #clock {

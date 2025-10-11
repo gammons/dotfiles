@@ -21,7 +21,7 @@ set -o vi
 # Aliases
 alias be='bundle exec'
 alias c='cal -3'
-alias dots='cd ~/.local/share/chezmoi'
+alias dots='cd ~/.dotfiles'
 alias g='git status'
 alias gc='git commit'
 alias gca='git commit --all'
