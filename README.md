@@ -26,6 +26,25 @@ sudo dnf install stow
 brew install stow
 ```
 
+### Required Programs (Arch Linux)
+
+Install the core programs needed for these dotfiles:
+
+```bash
+# Core utilities
+sudo pacman -S git starship neovim tig tmux htop the_silver_searcher fd fzf eza jq unzip keychain bat inetutils github-cli bind nnn
+
+# Development tools (optional)
+sudo pacman -S aws-cli k9s
+
+# Applications (optional)
+sudo pacman -S tailscale pcmanfm-gtk3
+flatpak install flathub com.slack.Slack md.obsidian.Obsidian com.spotify.Client
+
+# AUR packages (using yay or paru)
+yay -S asdf-vm
+```
+
 ## Installation
 
 Clone this repository:
