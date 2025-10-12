@@ -49,7 +49,7 @@
     "on-click": "alacritty -e btop"
   },
   "clock": {
-    "format": "{:%A %H:%M}",
+    "format": "{:%a %d %b %H:%M}",
     "format-alt": "{:%d %B W%V %Y}",
     "tooltip": false,
     "on-click-right": "omarchy-cmd-tzupdate"
