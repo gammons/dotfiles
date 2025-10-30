@@ -286,6 +286,8 @@ bindsym XF86MonBrightnessUp exec $brightnessDownCmd
 
 bindsym $mod+z exec --no-startup-id swaylock -c 333333
 
+bindsym $mod+n exec --no-startup-id swaync-client -t -sw
+
 bindsym --to-code $mod+m floating enable; resize set 40ppt 40ppt; move position 30ppt 0
 
 ############################
