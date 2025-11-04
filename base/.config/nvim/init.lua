@@ -23,7 +23,36 @@ require('packer').startup(function()
 
   -- Colors - base16 color schemes
   use 'RRethy/nvim-base16'
-  use { "catppuccin/nvim", as = "catppuccin" }
+
+  -- Omarchy theme plugins - all themes from ~/local_code/omarchy/themes
+  use { 'catppuccin/nvim', as = 'catppuccin' }                 -- catppuccin, catppuccin-latte
+  use 'neanias/everforest-nvim'                                -- everforest
+  use 'kepano/flexoki-neovim'                                  -- flexoki-light
+  use 'ellisonleao/gruvbox.nvim'                               -- gruvbox
+  use 'rebelot/kanagawa.nvim'                                  -- kanagawa
+  use 'ribru17/bamboo.nvim'                                    -- osaka-jade (bamboo)
+  use { 'rose-pine/neovim', as = 'rose-pine' }                 -- rose-pine
+  use 'folke/tokyonight.nvim'                                  -- tokyo-night
+  use { 'loctvl842/monokai-pro.nvim', as = 'monokai-pro' }     -- ristretto
+  use 'EdenEast/nightfox.nvim'                                 -- nord (nordfox)
+  use 'craftzdog/solarized-osaka.nvim'                         -- solarized-osaka
+  use 'bjarneo/aether.nvim'                                    -- aether theme
+  use "artanikin/vim-synthwave84"                              -- synthwave84
+
+  -- Additional omarchy theme plugins from ~/.config/omarchy/themes
+  use 'somerocketeer/bauhaus.nvim'                             -- bauhaus
+  use 'bjarneo/pixel.nvim'                                     -- blackturq
+  use { 'lalitmee/cobalt2.nvim', requires = 'tjdevries/colorbuddy.nvim' } -- cobalt2
+  use 'Mofiqul/dracula.nvim'                                   -- dracula
+  use 'olimorris/onedarkpro.nvim'                              -- one-dark-pro
+  use 'navarasu/onedark.nvim'                                  -- pulsar
+  use 'bjarneo/serenity.nvim'                                  -- serenity
+
+  -- Note: The following plugins may not be available in standard repositories
+  -- You may need to manually add them if available:
+  -- use 'tahayvr/matteblack.nvim'                             -- matte-black
+  -- use 'tahayvr/vhs80.nvim'                                  -- vhs80
+  -- use 'gthelding/monokai-pro.nvim'                          -- alternative for ristretto (currently using loctvl842)
 
   -- autocompletion
   use 'hrsh7th/nvim-compe'
@@ -91,7 +120,7 @@ end)
 -- lualine
 require('lualine').setup {
   options = {
-    theme = 'catppuccin',
+    -- theme = 'catppuccin',
     section_separators = {'', ''},
     component_separators = {'', ''},
   },
@@ -130,7 +159,11 @@ g["prettier#single_quote"] = 1
 cmd "au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json,*.vue PrettierAsync"
 
 -------------------- OPTIONS -------------------------------
-cmd 'colorscheme catppuccin'            -- Put your favorite colorscheme here
+-- Load omarchy theme system
+local omarchy_theme = require('omarchy_theme_loader')
+omarchy_theme.setup()
+omarchy_theme.load_current_theme() -- Load the current omarchy theme
+
 opt.completeopt = "menuone,noselect"
 opt.expandtab = true                -- Use spaces instead of tabs
 opt.hidden = true                   -- Enable background buffers
