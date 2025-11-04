@@ -10,9 +10,6 @@
     "max-length": 50
   },
   "sway/workspaces": {
-    "all-outputs": true,
-  },
-  "sway/workspaces": {
     "on-click": "activate",
     "all-outputs": true,
   },

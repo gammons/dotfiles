@@ -58,7 +58,8 @@ window#waybar {
 	min-height: 20px;
 }
 
-#workspaces button.active {
+#workspaces button.active,
+#workspaces button.focused {
 	background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
 	color: #FFF;
 	border-radius: 50%;
@@ -79,7 +80,6 @@ window#waybar {
 
 
 #workspaces button.visible,
-#workspaces button.focused,
 #workspaces button.urgent,
 #workspaces button.persistent {
 	color: #FFF;

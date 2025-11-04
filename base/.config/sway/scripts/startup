@@ -29,4 +29,5 @@ waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css &
 ~/.config/sway/scripts/swayidle.sh &
 
 ~/.bin/wallpaper &
-~/.config/sway/scripts/wallpaper_timer &
+# Disabled wallpaper timer - was spawning multiple instances on reload
+# ~/.config/sway/scripts/wallpaper_timer &
