@@ -1,0 +1,8 @@
+#!/bin/sh
+# Wrapper script to execute omarchy commands with correct PATH and environment
+export PATH="$HOME/.local/share/omarchy/bin:$PATH"
+export XDG_DATA_DIRS="/usr/share:/usr/local/share:$HOME/.local/share"
+export GSETTINGS_SCHEMA_DIR="/usr/share/glib-2.0/schemas"
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_TYPE=wayland
+exec "$@"
