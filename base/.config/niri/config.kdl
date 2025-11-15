@@ -1,0 +1,606 @@
+// This config is in the KDL format: https://kdl.dev
+// "/-" comments out the following node.
+// Check the wiki for a full description of the configuration:
+// https://yalter.github.io/niri/Configuration:-Introduction
+
+// =============================================================================
+// MIGRATED FROM SWAY CONFIG
+// =============================================================================
+// This configuration has been adapted from Sway. Important differences:
+//
+// 1. MODIFIER KEY: Sway used Alt1 (Alt), Niri uses "Alt" (Super on TTY, Alt in winit)
+// 2. SCRATCHPAD: Niri doesn't have native scratchpad support
+//    - Workaround: Apps configured to spawn as floating windows
+//    - Original Alt+U/O/I bindings are not fully replicated
+// 3. LAYOUTS: Niri uses a column-based layout system (different from Sway's tiling)
+// 4. DEVICE-SPECIFIC INPUT: Niri may not support device-specific input configs
+//    - Razer Viper Ultimate settings may need external tools
+// 5. LID SWITCH: Niri may not support lid switch bindings (bindswitch)
+//    - Original bindings: lid:on -> ~/.config/sway/scripts/lid_down
+//    - Original bindings: lid:off -> ~/.config/sway/scripts/lid_up
+// 6. WORKSPACE ASSIGNMENT: Sway's workspace to output assignment not directly supported
+// 7. RESIZE MODE: Niri doesn't have a resize mode, use Alt+R/Alt+Shift+R for presets
+// 8. GAPS MODE: Sway's gap mode toggle (Alt+G) not replicated in Niri
+//
+// =============================================================================
+
+// Input device configuration.
+// Find the full list of options on the wiki:
+// https://yalter.github.io/niri/Configuration:-Input
+input {
+  keyboard {
+    xkb {
+      options "ctrl:nocaps"
+    }
+
+    repeat-delay 250
+    repeat-rate 55
+  }
+
+  touchpad {
+    // tap disabled (omit 'tap' node to disable tapping)
+    dwt
+    natural-scroll
+    accel-speed 0.0
+    scroll-method "two-finger"
+    click-method "clickfinger"
+    middle-emulation
+  }
+
+  mouse {
+    accel-speed -0.4
+    accel-profile "flat"
+  }
+
+  // focus-follows-mouse disabled
+}
+
+switch-events {
+  lid-close { spawn "~/.config/sway/scripts/lid_down"; }
+  lid-open { spawn "~/.config/sway/scripts/lid_up"; }
+}
+
+// You can configure outputs by their name, which you can find
+// by running `niri msg outputs` while inside a niri instance.
+// The built-in laptop monitor is usually called "eDP-1".
+// Find more information on the wiki:
+// https://yalter.github.io/niri/Configuration:-Outputs
+// Remember to uncomment the node by removing "/-"!
+// Laptop display
+output "eDP-1" {
+  mode "3840x2400"
+  scale 1.5
+  position x=0 y=0
+}
+
+// External displays (any of DP-1, DP-2, or DP-3)
+output "DP-1" {
+  mode "3840x2160@143.988"
+  scale 1.0
+  position x=0 y=0
+}
+
+output "DP-2" {
+  mode "3840x2160@144"
+  scale 1.0
+  position x=2560 y=0
+}
+
+output "DP-3" {
+  mode "3840x2160@144"
+  scale 1.0
+  position x=2560 y=0
+}
+
+// Settings that influence how windows are positioned and sized.
+// Find more information on the wiki:
+// https://yalter.github.io/niri/Configuration:-Layout
+layout {
+  // Set gaps around windows in logical pixels.
+  gaps 10
+
+  // When to center a column when changing focus, options are:
+  // - "never", default behavior, focusing an off-screen column will keep at the left
+  //   or right edge of the screen.
+  // - "always", the focused column will always be centered.
+  // - "on-overflow", focusing a column will center it if it doesn't fit
+  //   together with the previously focused column.
+  // center-focused-column "always"
+
+  // You can customize the widths that "switch-preset-column-width" (Alt+R) toggles between.
+  preset-column-widths {
+    // Proportion sets the width as a fraction of the output width, taking gaps into account.
+    // For example, you can perfectly fit four windows sized "proportion 0.25" on an output.
+    // The default preset widths are 1/3, 1/2 and 2/3 of the output.
+    proportion 0.33333
+    proportion 0.5
+    proportion 0.66667
+
+    // Fixed sets the width in logical pixels exactly.
+    // fixed 1920
+  }
+
+  // You can also customize the heights that "switch-preset-window-height" (Alt+Shift+R) toggles between.
+  // preset-window-heights { }
+
+  // You can change the default width of the new windows.
+  default-column-width { proportion 0.5; }
+  // If you leave the brackets empty, the windows themselves will decide their initial width.
+  // default-column-width {}
+
+  // By default focus ring and border are rendered as a solid background rectangle
+  // behind windows. That is, they will show up through semitransparent windows.
+  // This is because windows using client-side decorations can have an arbitrary shape.
+  //
+  // If you don't like that, you should uncomment `prefer-no-csd` below.
+  // Niri will draw focus ring and border *around* windows that agree to omit their
+  // client-side decorations.
+  //
+  // Alternatively, you can override it with a window rule called
+  // `draw-border-with-background`.
+
+  // You can change how the focus ring looks.
+  focus-ring {
+    // Uncomment this line to disable the focus ring.
+    // off
+
+    // How many logical pixels the ring extends out from the windows.
+    width 2
+
+    // Cool gradient from cyan to purple
+    active-gradient from="#80c8ff" to="#c780ff" angle=135
+
+    // Color of the ring on inactive monitors.
+    inactive-color "#505050"
+  }
+
+  // Border configuration (from Sway: default_border pixel 2)
+  border {
+    width 2
+    active-color "#7fc8ff"
+    inactive-color "#505050"
+    urgent-color "#9b0000"
+  }
+
+  // You can enable drop shadows for windows.
+  shadow {
+    // Uncomment the next line to enable shadows.
+    on
+
+    // By default, the shadow draws only around its window, and not behind it.
+    // Uncomment this setting to make the shadow draw behind its window.
+    //
+    // Note that niri has no way of knowing about the CSD window corner
+    // radius. It has to assume that windows have square corners, leading to
+    // shadow artifacts inside the CSD rounded corners. This setting fixes
+    // those artifacts.
+    //
+    // However, instead you may want to set prefer-no-csd and/or
+    // geometry-corner-radius. Then, niri will know the corner radius and
+    // draw the shadow correctly, without having to draw it behind the
+    // window. These will also remove client-side shadows if the window
+    // draws any.
+    //
+    draw-behind-window true
+
+    // You can change how shadows look. The values below are in logical
+    // pixels and match the CSS box-shadow properties.
+
+    // Softness controls the shadow blur radius.
+    softness 30
+
+    // Spread expands the shadow.
+    spread 5
+
+    // Offset moves the shadow relative to the window.
+    offset x=0 y=5
+
+    // You can also change the shadow color and opacity.
+    color "#0007"
+  }
+
+  // Struts shrink the area occupied by windows, similarly to layer-shell panels.
+  // You can think of them as a kind of outer gaps. They are set in logical pixels.
+  // Left and right struts will cause the next window to the side to always be visible.
+  // Top and bottom struts will simply add outer gaps in addition to the area occupied by
+  // layer-shell panels and regular gaps.
+  struts {
+    // left 64
+    // right 64
+    // top 64
+    // bottom 64
+  }
+}
+
+// Add lines like this to spawn processes at startup.
+// Note that running niri as a session supports xdg-desktop-autostart,
+// which may be more convenient to use.
+
+// Waybar
+spawn-at-startup "waybar"
+
+// Startup script from Sway config
+spawn-sh-at-startup "~/.config/sway/scripts/startup"
+
+// Background color (Note: Niri may handle this differently than swaybg)
+spawn-at-startup "swaybg" "--color=#000000"
+
+// DBus environment variables (important for Wayland)
+spawn-sh-at-startup "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY"
+
+// Named workspaces
+workspace "scratch"
+workspace "browser"
+workspace "term"
+workspace "slack"
+workspace "spotify"
+
+// Dropdown terminal is spawned on-demand with Alt+U (see keybindings)
+// spawn-at-startup "kitty" "--class" "dropdown"
+
+// Obsidian is spawned on-demand with Alt+O (see keybindings)
+// spawn-at-startup "obsidian"
+// spawn-sh-at-startup "flatpak run md.obsidian.Obsidian"  // Uncomment if using flatpak version
+
+// Pavucontrol for audio control scratchpad
+spawn-at-startup "pavucontrol"
+
+hotkey-overlay {
+  // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
+  // skip-at-startup
+}
+
+// Uncomment this line to ask the clients to omit their client-side decorations if possible.
+// If the client will specifically ask for CSD, the request will be honored.
+// Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
+// This option will also fix border/focus ring drawing behind some semitransparent windows.
+// After enabling or disabling this, you need to restart the apps for this to take effect.
+// prefer-no-csd
+
+// You can change the path where screenshots are saved.
+// A ~ at the front will be expanded to the home directory.
+// The path is formatted with strftime(3) to give you the screenshot date and time.
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// You can also set this to null to disable saving screenshots to disk.
+// screenshot-path null
+
+// Animation settings.
+// The wiki explains how to configure individual animations:
+// https://yalter.github.io/niri/Configuration:-Animations
+animations {
+  // Uncomment to turn off all animations.
+  // off
+
+  // Slow down all animations by this factor. Values below 1 speed them up instead.
+  // slowdown 3.0
+}
+
+// Window rules let you adjust behavior for individual windows.
+// Find more information on the wiki:
+// https://yalter.github.io/niri/Configuration:-Window-Rules
+
+// Work around WezTerm's initial configure bug
+// by setting an empty default-column-width.
+window-rule {
+  // This regular expression is intentionally made as specific as possible,
+  // since this is the default config, and we want no false positives.
+  // You can get away with just app-id="wezterm" if you want.
+  match app-id=r#"^org\.wezfurlong\.wezterm$"#
+  default-column-width {}
+}
+
+// Open the Firefox picture-in-picture player as floating by default.
+window-rule {
+  // This app-id regular expression will work for both:
+  // - host Firefox (app-id is "firefox")
+  // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+  match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+  open-floating true
+}
+
+// Example: block out two password managers from screen capture.
+// (This example rule is commented out with a "/-" in front.)
+/-window-rule {
+  match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+  match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+  block-out-from "screen-capture"
+
+  // Use this instead if you want them visible on third-party screenshot tools.
+  // block-out-from "screencast"
+}
+
+// Enable rounded corners for all windows
+window-rule {
+  geometry-corner-radius 8
+  clip-to-geometry true
+}
+
+// Zoom floating windows
+window-rule {
+  match title=r#"^Zoom Meeting ID$"#
+  match title=r#"^Zoom Cloud Meetings$"#
+  match title=r#"^Zoom - Pro Account$"#
+  open-floating true
+}
+
+// Zenity dialogs
+window-rule {
+  match title=r#"^Zenity$"#
+  open-floating true
+}
+
+// Gpick color picker
+window-rule {
+  match app-id=r#"Gpick"#
+  open-floating true
+}
+
+// VirtualBox
+window-rule {
+  match app-id=r#"VirtualBox"#
+  open-floating true
+}
+
+// VPN and calendar dialogs
+window-rule {
+  match title=r#"Connect to VPN"#
+  match title=r#"Calendar selection"#
+  open-floating true
+}
+
+// Volume Control and Easy Effects
+window-rule {
+  match title=r#"Volume Control"#
+  match title=r#"Easy Effects"#
+  open-floating true
+}
+
+// Google Chrome - centered, 2/3 width
+window-rule {
+  match app-id=r#"^google-chrome"#
+  default-column-width { proportion 0.66667; }
+}
+
+// Slack - centered, 2/3 width
+window-rule {
+  match app-id=r#"^[Ss]lack"#
+  default-column-width { proportion 0.66667; }
+}
+
+// Obsidian scratchpad window
+window-rule {
+  match app-id=r#"obsidian"#
+  open-on-workspace "scratch"
+  open-floating true
+
+  // Position on right half of screen
+  default-floating-position x=30 y=30 relative-to="right"
+
+  // 50% width (right half)
+  default-column-width { proportion 0.4; }
+
+  // Full height
+  default-window-height { proportion 0.94; }
+}
+
+// Pavucontrol
+window-rule {
+  match app-id=r#"org\.pulseaudio\.pavucontrol"#
+  open-floating true
+}
+
+// Dropdown terminal scratchpad
+// Launch with: kitty --class dropdown
+window-rule {
+  match app-id=r#"^dropdown$"#
+
+  // Open on scratch workspace
+  open-on-workspace "scratch"
+
+  // Open as floating
+  open-floating true
+
+  // Centered in the middle of the screen (default behavior when no position specified)
+
+  // Vertical rectangle - 50% height, 30% width
+  default-window-height { proportion 0.3; }
+  default-column-width { proportion 0.20; }
+
+  // Don't auto-focus when spawning (useful if respawning while working)
+  open-focused false
+}
+
+// Note: Niri doesn't support matching by window-type like Sway
+// Pop-up and task dialogs may need individual window rules based on title or app-id
+
+binds {
+  // Keys consist of modifiers separated by + signs, followed by an XKB key name
+  // in the end. To find an XKB name for a particular key, you may use a program
+  // like wev.
+  //
+  // "Alt" is a special modifier equal to Super when running on a TTY, and to Alt
+  // when running as a winit window.
+  //
+  // Most actions that you can bind here can also be invoked programmatically with
+  // `niri msg action do-something`.
+
+  // Note: Sway config used Mod1 (Alt), Niri uses "Alt" which is Super on TTY, Alt in winit
+
+  // Alt-Shift-/, which is usually the same as Alt-?,
+  // shows a list of important hotkeys.
+  Alt+Shift+Slash { show-hotkey-overlay; }
+
+  // Terminal, app launcher, screen locker
+  Alt+Return { spawn "kitty"; }
+  Alt+P { spawn-sh "~/.config/sway/scripts/menu"; }
+  Alt+Z { spawn "swaylock" "-c" "333333"; }
+  Alt+Shift+Z { spawn "systemctl" "suspend"; }
+
+  // Kill focused window
+  Alt+Shift+Q { close-window; }
+
+  // Focus navigation (vim keys)
+  Alt+H     { focus-column-left; }
+  Alt+J     { focus-workspace-down; }
+  Alt+K     { focus-workspace-up; }
+  Alt+L     { focus-column-right; }
+
+  // Focus navigation (arrow keys)
+  Alt+Left  { focus-column-left; }
+  Alt+Down  { focus-workspace-down; }
+  Alt+Up    { focus-workspace-up; }
+  Alt+Right { focus-column-right; }
+
+  // Move windows (vim keys)
+  Alt+Shift+H     { move-column-left; }
+  Alt+Shift+J     { move-column-to-workspace-down; }
+  Alt+Shift+K     { move-column-to-workspace-up; }
+  Alt+Shift+L     { move-column-right; }
+
+  // Move windows (arrow keys)
+  Alt+Shift+Left  { move-column-left; }
+  Alt+Shift+Down  { move-column-to-workspace-down; }
+  Alt+Shift+Up    { move-column-to-workspace-up; }
+  Alt+Shift+Right { move-column-right; }
+
+  // Toggle Obsidian scratchpad
+  Alt+O { spawn-sh "~/.config/niri/scripts/niri-scratchpad.py --app-id obsidian --spawn 'obsidian' --multi-monitor"; }
+
+  // Move workspace to different monitor
+  Alt+Ctrl+Left  { move-workspace-to-monitor-left; }
+  Alt+Ctrl+Right { move-workspace-to-monitor-right; }
+
+  // Note: Alt+Shift+G (split horizontal) not applicable in Niri's column-based layout
+  // Niri handles splits differently - no direct equivalent to Sway's split h/v
+  Alt+V       { toggle-window-floating; }
+
+  // Fullscreen
+  Alt+F { fullscreen-window; }
+
+  // Maximize (toggle column to 100% width)
+  Alt+Shift+F { maximize-column; }
+
+  // Layout toggle
+  Alt+E { toggle-column-tabbed-display; }
+
+  // Floating toggle
+  Alt+Shift+Space { toggle-window-floating; }
+  Alt+Space { switch-focus-between-floating-and-tiling; }
+
+  // Focus parent (Niri doesn't have direct equivalent)
+  // Alt+A - not available in Niri
+
+  // Volume controls
+  Alt+F2 allow-when-locked=true { spawn-sh "pactl set-sink-volume 0 -5%"; }
+  Alt+F3 allow-when-locked=true { spawn-sh "pactl set-sink-volume 0 +5%"; }
+  XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+"; }
+  XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
+  XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+  XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+
+  // Media controls
+  Alt+F4 { spawn "playerctl" "previous"; }
+  Alt+F5 { spawn "playerctl" "play-pause"; }
+  Alt+F6 { spawn "playerctl" "next"; }
+  XF86AudioNext { spawn-sh "mpc next"; }
+  XF86AudioPrev { spawn-sh "mpc prev"; }
+  XF86AudioPlay { spawn-sh "mpc toggle"; }
+  XF86AudioStop { spawn-sh "mpc stop"; }
+
+  // Brightness controls
+  Alt+F11 allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+  Alt+Shift+F11 allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
+  XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+  XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
+
+  // Display control
+  Alt+F7 { spawn-sh "niri msg output eDP-1 off"; }
+  Alt+F8 { spawn-sh "niri msg output eDP-1 on"; }
+
+  // Wallpaper, back and forth, notification center
+  Alt+W { spawn-sh "~/.bin/wallpaper"; }
+  Alt+Q { focus-workspace-previous; }
+  Alt+N { spawn "swaync-client" "-t" "-sw"; }
+
+  // Scratchpad support using niri-scratchpad.py
+  // This uses a dedicated "scratch" workspace to hide windows
+  //
+  // How it works:
+  // 1. Press Alt+U to toggle the dropdown terminal
+  // 2. First press spawns it (anchored to top, 50% height, 80% width)
+  // 3. If focused: hides it to the "scratch" workspace
+  // 4. If hidden: brings it back to current workspace
+  //
+  // The dropdown terminal is launched with --class dropdown
+  // which matches the window rule above for positioning
+
+  // Toggle dropdown terminal scratchpad
+  Alt+U { spawn-sh "~/.config/niri/scripts/niri-scratchpad.py --app-id dropdown --spawn 'kitty --class dropdown' --multi-monitor"; }
+
+  // Screenshot
+  F10 { spawn-sh "grim -g \"$(slurp)\" - | swappy -f - -o - | wl-copy"; }
+
+  // Resize window keybinding
+  Alt+R { switch-preset-column-width; }
+  Alt+Shift+R { switch-preset-window-height; }
+  Alt+Ctrl+R { reset-window-height; }
+  Alt+0 { set-column-width "50%"; }  // Reset to default width
+
+  // Center column
+  Alt+C { center-column; }
+
+  // Window size adjustment
+  Alt+Minus { set-column-width "-10%"; }
+  Alt+Equal { set-column-width "+10%"; }
+  Alt+Shift+Minus { set-window-height "-10%"; }
+  Alt+Shift+Equal { set-window-height "+10%"; }
+
+  // Floating window positioning (from Sway Alt+M)
+  // Note: Niri doesn't support exact positioning like Sway (resize set 40ppt 40ppt; move position 30ppt 0)
+  Alt+M { toggle-window-floating; }
+
+  // Consume/expel windows
+  Alt+BracketLeft  { consume-or-expel-window-left; }
+  Alt+BracketRight { consume-or-expel-window-right; }
+  Alt+Comma  { consume-window-into-column; }
+  Alt+Period { expel-window-from-column; }
+
+  // Workspace switching - named workspaces
+  Alt+1 { focus-workspace "browser"; }
+  Alt+2 { focus-workspace "term"; }
+  Alt+3 { focus-workspace "slack"; }
+  Alt+4 { focus-workspace "spotify"; }
+  Alt+5 { focus-workspace 5; }
+  Alt+6 { focus-workspace 6; }
+  Alt+7 { focus-workspace 7; }
+  Alt+8 { focus-workspace 8; }
+  Alt+9 { focus-workspace 9; }
+
+  // Move container to workspace
+  Alt+Shift+1 { move-column-to-workspace "browser"; }
+  Alt+Shift+2 { move-column-to-workspace "term"; }
+  Alt+Shift+3 { move-column-to-workspace "slack"; }
+  Alt+Shift+4 { move-column-to-workspace "spotify"; }
+  Alt+Shift+5 { move-column-to-workspace 5; }
+  Alt+Shift+6 { move-column-to-workspace 6; }
+  Alt+Shift+7 { move-column-to-workspace 7; }
+  Alt+Shift+8 { move-column-to-workspace 8; }
+  Alt+Shift+9 { move-column-to-workspace 9; }
+
+  // Reload and quit
+  Alt+Shift+C { spawn-sh "niri msg action reload-config"; }
+  Alt+Shift+E { quit; }
+
+  // Screenshot bindings
+  Print { screenshot; }
+  Ctrl+Print { screenshot-screen; }
+  Alt+Print { screenshot-window; }
+
+  // Keyboard shortcuts inhibit toggle
+  Alt+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+  // Powers off the monitors
+  Alt+Shift+P { power-off-monitors; }
+}
