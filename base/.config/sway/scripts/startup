@@ -21,9 +21,9 @@ done
 # Launch notification daemon (swaync)
 swaync &
 
+wlsunset -l 40 -L -75 -t 5000 &
+
 # Start network manager applet
-nm-applet --indicator &
-gammastep-indicator &
 waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css &
 
 ~/.config/sway/scripts/swayidle.sh &

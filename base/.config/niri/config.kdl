@@ -9,9 +9,8 @@
 // This configuration has been adapted from Sway. Important differences:
 //
 // 1. MODIFIER KEY: Sway used Alt1 (Alt), Niri uses "Alt" (Super on TTY, Alt in winit)
-// 2. SCRATCHPAD: Niri doesn't have native scratchpad support
-//    - Workaround: Apps configured to spawn as floating windows
-//    - Original Alt+U/O/I bindings are not fully replicated
+// 2. SCRATCHPAD: Niri now has native scratchpad support (25.09+)
+//    - Alt+U/O bindings work with native scratchpad implementation
 // 3. LAYOUTS: Niri uses a column-based layout system (different from Sway's tiling)
 // 4. DEVICE-SPECIFIC INPUT: Niri may not support device-specific input configs
 //    - Razer Viper Ultimate settings may need external tools
@@ -229,7 +228,6 @@ spawn-at-startup "swaybg" "--color=#000000"
 spawn-sh-at-startup "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY"
 
 // Named workspaces
-workspace "scratch"
 workspace "browser"
 workspace "term"
 workspace "slack"
@@ -245,9 +243,14 @@ workspace "spotify"
 // Pavucontrol for audio control scratchpad
 spawn-at-startup "pavucontrol"
 
+// Auto-launch apps into workspaces
+spawn-at-startup "google-chrome-stable"
+spawn-at-startup "slack"
+spawn-at-startup "spotify"
+
 hotkey-overlay {
   // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
-  // skip-at-startup
+  skip-at-startup
 }
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -357,22 +360,30 @@ window-rule {
   open-floating true
 }
 
-// Google Chrome - centered, 2/3 width
+// Google Chrome - centered, 2/3 width, assign to browser workspace
 window-rule {
   match app-id=r#"^google-chrome"#
   default-column-width { proportion 0.66667; }
+  open-on-workspace "browser"
 }
 
-// Slack - centered, 2/3 width
+// Slack - centered, 2/3 width, assign to slack workspace
 window-rule {
   match app-id=r#"^[Ss]lack"#
   default-column-width { proportion 0.66667; }
+  open-on-workspace "slack"
+}
+
+// Spotify - assign to spotify workspace
+window-rule {
+  match app-id=r#"[Ss]potify"#
+  default-column-width { proportion 0.66667; }
+  open-on-workspace "spotify"
 }
 
 // Obsidian scratchpad window
 window-rule {
   match app-id=r#"obsidian"#
-  open-on-workspace "scratch"
   open-floating true
 
   // Position on right half of screen
@@ -396,20 +407,12 @@ window-rule {
 window-rule {
   match app-id=r#"^dropdown$"#
 
-  // Open on scratch workspace
-  open-on-workspace "scratch"
-
-  // Open as floating
+  // Open as floating (will be centered by default)
   open-floating true
-
-  // Centered in the middle of the screen (default behavior when no position specified)
 
   // Vertical rectangle - 50% height, 30% width
   default-window-height { proportion 0.3; }
   default-column-width { proportion 0.20; }
-
-  // Don't auto-focus when spawning (useful if respawning while working)
-  open-focused false
 }
 
 // Note: Niri doesn't support matching by window-type like Sway
@@ -465,8 +468,8 @@ binds {
   Alt+Shift+Up    { move-column-to-workspace-up; }
   Alt+Shift+Right { move-column-right; }
 
-  // Toggle Obsidian scratchpad
-  Alt+O { spawn-sh "~/.config/niri/scripts/niri-scratchpad.py --app-id obsidian --spawn 'obsidian' --multi-monitor"; }
+  // Toggle Obsidian scratchpad (native niri scratchpad)
+  Alt+O { spawn-sh "~/.config/niri/scripts/scratchpad-toggle.sh obsidian obsidian"; }
 
   // Move workspace to different monitor
   Alt+Ctrl+Left  { move-workspace-to-monitor-left; }
@@ -524,20 +527,19 @@ binds {
   Alt+Q { focus-workspace-previous; }
   Alt+N { spawn "swaync-client" "-t" "-sw"; }
 
-  // Scratchpad support using niri-scratchpad.py
-  // This uses a dedicated "scratch" workspace to hide windows
+  // Native scratchpad support (niri 25.09+)
   //
   // How it works:
   // 1. Press Alt+U to toggle the dropdown terminal
-  // 2. First press spawns it (anchored to top, 50% height, 80% width)
-  // 3. If focused: hides it to the "scratch" workspace
-  // 4. If hidden: brings it back to current workspace
+  // 2. First press spawns it with the configured window rules
+  // 3. If focused: hides it to scratchpad (truly hidden, not on a workspace)
+  // 4. If hidden: brings it back as a centered floating window
   //
   // The dropdown terminal is launched with --class dropdown
   // which matches the window rule above for positioning
 
-  // Toggle dropdown terminal scratchpad
-  Alt+U { spawn-sh "~/.config/niri/scripts/niri-scratchpad.py --app-id dropdown --spawn 'kitty --class dropdown' --multi-monitor"; }
+  // Toggle dropdown terminal scratchpad (native niri scratchpad)
+  Alt+U { spawn-sh "~/.config/niri/scripts/scratchpad-toggle.sh dropdown kitty --class dropdown"; }
 
   // Screenshot
   F10 { spawn-sh "grim -g \"$(slurp)\" - | swappy -f - -o - | wl-copy"; }
