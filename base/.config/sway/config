@@ -37,9 +37,9 @@ input "type:touchpad" {
 }
 
 ############################
-# Desktop mouse
+# External mice (generic)
 ############################
-input "5426:123:Razer_Razer_Viper_Ultimate_Dongle"  {
+input "type:pointer" {
   scroll_factor 1.5
   pointer_accel -0.4
 }
