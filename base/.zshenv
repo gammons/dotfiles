@@ -12,6 +12,8 @@ export PATH=~/.local/share/omarchy/bin:$PATH
 export PATH=$PATH:$(go env GOPATH)/bin
 export PATH=$PATH:$HOME/.asdf/shims
 
+export RUBYOPT="-r$HOME/.rubyopenssl_default_store.rb $RUBYOPT"
+
 if [ x"${DESKTOP_SESSION}" != "gnome" ]; then
   eval $(keychain --eval --quiet id_rsa)
 fi
