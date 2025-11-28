@@ -3,16 +3,16 @@
   "mode": "dock",
   "exclusive": true,
   "passthrough": false,
-  "modules-left": ["niri/workspaces"],
+  "modules-left": ["sway/workspaces"],
   "modules-center": ["custom/weather", "custom/playing_now"],
   "modules-right": ["custom/bluetooth_battery", "custom/power_now", "backlight", "battery", "pulseaudio", "cpu", "network", "clock", "tray"],
   "sway/window": {
     "max-length": 50
   },
-  "niri/workspaces": {
+  "sway/workspaces": {
     "all-outputs": true,
   },
-  "niri/workspaces": {
+  "sway/workspaces": {
     "on-click": "activate",
     "all-outputs": true,
   },
