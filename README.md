@@ -113,3 +113,59 @@ See `nvim/.config/nvim/lua/config/keymaps.lua` for all custom keybindings.
 - Symlinks will point to the dotfiles repo location
 - Any changes made to files in `~/dotfiles/` will immediately affect your system
 - Original dotfiles are backed up in `~/dotfiles-backup-YYYYMMDD/`
+
+## installing sway
+
+The following packages are required to run sway on arch linux:
+
+```bash
+swayfx
+
+# Screen lock and idle management
+swaylock-effects
+swayidle
+
+# Color temperature / night light
+wlsunset
+
+# Wallpaper
+swaybg
+
+# On-screen display (volume/brightness indicators)
+swayosd
+
+# Status bar
+waybar
+
+# Screenshot tools
+grim
+slurp
+wayfreeze
+satty
+
+# Clipboard
+wl-clipboard
+
+# Portal backend for wlroots compositors
+xdg-desktop-portal-wlr
+
+# Session management
+uwsm
+
+# Notifications
+mako
+
+# Application launcher
+walker
+
+# Action menu
+elephant
+
+greetd
+```
+
+they can be installed with one line:
+
+```bash
+sudo pacman -S swayfx swaylock-effects swayidle wlsunset swaybg swayosd waybar grim slurp wayfreeze satty wl-clipboard xdg-desktop-portal-wlr uwsm mako walker elephant greetd
+```
