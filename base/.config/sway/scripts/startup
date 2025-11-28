@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2022 Aditya Shakya <adi1090x@gmail.com>
+##
+## Autostart Programs
+
+# Kill already running process
+_ps=(waybar swaync xfce-polkit)
+for _prs in "${_ps[@]}"; do
+	if [[ `pidof ${_prs}` ]]; then
+		killall -9 ${_prs}
+	fi
+done
+
+# Polkit agent
+/usr/lib/xfce-polkit/xfce-polkit &
+
+# xdg desktop wlr thing for screen sharing
+/usr/lib/xdg-desktop-portal --replace &
+
+# Launch notification daemon (swaync)
+swaync &
+
+wlsunset -l 40 -L -75 -t 5000 &
+
+# Start network manager applet
+waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css &
+
+~/.config/sway/scripts/swayidle.sh &
+
+~/.bin/wallpaper &
+~/.config/sway/scripts/wallpaper_timer &

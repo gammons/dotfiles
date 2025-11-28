@@ -1,0 +1,166 @@
+* {
+  all: unset;
+  font-family: "monospace";
+  font-size: 14px;
+}
+
+.notification-row {
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notification {
+  background: rgba(30, 30, 30, 0.85);
+  padding: 12px;
+  margin: 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.notification-content {
+  padding: 6px;
+  margin: 0;
+}
+
+.close-button {
+  background: rgba(255, 100, 100, 0.3);
+  color: #fff;
+  text-shadow: none;
+  padding: 4px;
+  border-radius: 4px;
+  margin: 6px;
+}
+
+.close-button:hover {
+  background: rgba(255, 100, 100, 0.5);
+}
+
+.notification-default-action {
+  padding: 4px;
+  margin: 0;
+}
+
+.notification-default-action:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.notification-action {
+  background: rgba(60, 60, 60, 0.8);
+  padding: 6px;
+  margin: 4px;
+  border-radius: 4px;
+}
+
+.notification-action:hover {
+  background: rgba(80, 80, 80, 0.8);
+}
+
+.notification.critical {
+  border: 2px solid rgba(255, 50, 50, 0.8);
+}
+
+.notification.low {
+  border: 1px solid rgba(150, 150, 150, 0.3);
+}
+
+.notification.high {
+  border: 1px solid rgba(100, 150, 255, 0.5);
+}
+
+.summary {
+  font-weight: bold;
+  color: #fff;
+}
+
+.time {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+}
+
+.body {
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 4px;
+}
+
+/* Control Center */
+.control-center {
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.control-center-list {
+  background: transparent;
+}
+
+.control-center-list-placeholder {
+  opacity: 0.5;
+}
+
+.floating-notifications {
+  background: transparent;
+}
+
+/* Widgets */
+.widget-title {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px;
+  margin: 4px;
+}
+
+.widget-title>button {
+  background: rgba(255, 100, 100, 0.3);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.widget-title>button:hover {
+  background: rgba(255, 100, 100, 0.5);
+}
+
+.widget-dnd {
+  background: rgba(40, 40, 40, 0.8);
+  padding: 8px;
+  margin: 6px;
+  border-radius: 6px;
+}
+
+.widget-dnd>switch {
+  background: rgba(60, 60, 60, 0.8);
+  border-radius: 12px;
+  padding: 2px;
+}
+
+.widget-dnd>switch:checked {
+  background: rgba(100, 150, 255, 0.6);
+}
+
+.widget-dnd>switch slider {
+  background: #fff;
+  border-radius: 10px;
+}
+
+.widget-inhibitors {
+  background: rgba(40, 40, 40, 0.8);
+  padding: 8px;
+  margin: 6px;
+  border-radius: 6px;
+}
+
+.widget-inhibitors>button {
+  background: rgba(255, 150, 50, 0.3);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.widget-inhibitors>button:hover {
+  background: rgba(255, 150, 50, 0.5);
+}

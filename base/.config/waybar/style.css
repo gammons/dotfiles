@@ -1,0 +1,136 @@
+* {
+  font-family: 'CaskaydiaMono Nerd Font';
+  font-size: 14px;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: rgba(50, 50, 50, 0.7);
+  color: #ddd;
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+#custom-weather {
+  font-family: 'CaskaydiaMono Nerd Font';
+}
+
+#clock {
+  font-weight: bold;
+}
+
+#clock,
+#backlight,
+#battery,
+#cpu,
+#custom-cpupower,
+#custom-omarchy,
+#custom-weather,
+#custom-power_now,
+#custom-playing_now,
+#memory,
+#mpd,
+#network,
+#pulseaudio,
+#workspaces,
+#tray,
+#mode {
+	border-radius: 1px;
+	margin: 6px 10px;
+}
+
+#backlight {
+}
+
+#workspaces {
+	background-color: transparent;
+	color: #FFFFFF;
+	border-radius: 0px;
+	padding: 4px;
+}
+
+#workspaces button {
+	padding: 4px;
+	background-color: transparent;
+	min-width: 20px;
+	min-height: 20px;
+}
+
+#workspaces button.active {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+	color: #FFF;
+	border-radius: 50%;
+	min-width: 20px;
+	min-height: 20px;
+	padding: 4px;
+	font-weight: bold;
+}
+
+
+
+#workspaces button:hover {
+	background-color: #1B1F28;
+	color: #FFFFFF;
+	border: 0px solid #1B1F28;
+	padding: 2px 6px;
+}
+
+
+#workspaces button.visible,
+#workspaces button.focused,
+#workspaces button.urgent,
+#workspaces button.persistent {
+	color: #FFF;
+	padding: 4px;
+}
+
+#workspaces button.current_output {
+}
+
+#workspaces button#sway-workspace-1 {
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#window {
+	background-color: #2A2E37;
+	color: #FFFFFF;
+}
+window#waybar.empty #window {
+	background-color: transparent;
+}
+
+
+#tray {
+	background-color: #2F333C;
+	border-radius: 12px 0px 0px 0px;
+	padding: 4px 6px;
+}
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+#tray > .active {
+}
+
+#battery.critical:not(.charging) {
+  background-color: #E06B74;
+}
+
+#battery.low:not(.charging) {
+	color: #2A2E37;
+  background-color: #E5C07A;
+}
+

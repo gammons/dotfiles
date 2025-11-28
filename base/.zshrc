@@ -1,0 +1,67 @@
+typeset -U path cdpath fpath manpath
+autoload -U compinit && compinit
+
+HISTSIZE="100000"
+SAVEHIST="100000"
+HISTFILE=${ZDOTDIR:-$HOME}/.history
+COLORTERM=truecolor
+
+# Chrome Wayland flags
+export CHROME_FLAGS="--ozone-platform=wayland --enable-features=UseOzonePlatform"
+
+setopt HIST_FCNTL_LOCK
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+unsetopt HIST_EXPIRE_DUPS_FIRST
+setopt SHARE_HISTORY
+unsetopt EXTENDED_HISTORY
+
+set -o vi
+
+# Aliases
+alias be='bundle exec'
+alias c='cal -3'
+alias dots='cd ~/.dotfiles'
+alias g='git status'
+alias gc='git commit'
+alias gca='git commit --all'
+alias gco='git checkout'
+alias gd='git diff'
+alias gdc='gd --cached'
+alias kc='kubectl'
+alias kamc="kamal app exec -i './bin/rails console'"
+alias kamb="kamal app exec -i '/bin/bash'"
+alias kamd='kamal deploy'
+alias l='eza --long --header -a -s modified'
+alias lc='cd ~/local_code'
+alias n='cd ~/notes'
+alias pull='git fetch && git rebase'
+alias push='git push'
+alias vim='nvim'
+alias cm='chezmoi'
+alias tf='terraform'
+alias fn='fishnet'
+alias irb='irb -r active_support/all'
+alias cat='bat -p'
+alias pr='gh pr create'
+alias mus='cd ~/local_code/musashi'
+alias tb='cd ~/local_code/truelist.io/backend'
+alias de="docker exec -it musashi-web-1 "
+alias deb="docker exec -it musashi-web-1 bundle exec "
+alias dcu='docker compose up'
+alias dcb='docker compose build'
+alias prodb="npx heroku run --size=performance-l /bin/bash -a musashi-production"
+alias prodc="npx heroku run bundle exec rails c -a musashi-production"
+
+alias dcu='docker-compose up'
+alias dcd='docker-compose down'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(starship init zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(/usr/bin/mise activate zsh)"
