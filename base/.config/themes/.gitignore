@@ -1,0 +1,5 @@
+# Background symlink is dynamically created by theme switcher
+*/background
+
+# Current theme symlink is user-specific
+current

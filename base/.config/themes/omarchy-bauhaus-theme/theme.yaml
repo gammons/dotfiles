@@ -1,0 +1,29 @@
+name: Omarchy Bauhaus
+slug: bauhaus
+version: 0.1.0
+description: "A Bauhaus-inspired dark theme derived from muted earth tones in the included backgrounds."
+license: MIT
+maintainers:
+  - name: mcw
+    email: ""
+tags: [dark, bauhaus, muted, vintage]
+palette: palette.yml
+apps:
+  - alacritty
+  - waybar
+  - hyprland
+  - hyprlock
+  - mako
+  - btop
+  - walker
+  - neovim
+  - chromium
+  - icons
+  - eza
+  - ghostty
+  - kitty
+  - swayosd
+  - vscode
+notes: |
+  Standalone theme project, modeled after Astral Silk and Nagai Twilight.
+  Color palette extracted from Bauhaus01-05.jpg backgrounds.
