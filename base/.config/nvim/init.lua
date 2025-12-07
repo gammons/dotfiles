@@ -25,6 +25,7 @@ require('packer').startup(function()
   use 'RRethy/nvim-base16'
   local themes_dir = vim.fn.expand('~/.config/themes')
   local loaded_plugins = {}
+  local loaded_dirs = {}
   for _, theme_name in ipairs(vim.fn.readdir(themes_dir)) do
     local theme_path = themes_dir .. '/' .. theme_name .. '/neovim.lua'
     if theme_name ~= 'current' and vim.fn.filereadable(theme_path) == 1 then
@@ -32,6 +33,14 @@ require('packer').startup(function()
       if file then
         local content = file:read('*all')
         file:close()
+        -- Check for local dir-based themes (e.g., dir = "~/.config/themes/frost/frost.nvim")
+        for dir_path, dir_name in content:gmatch('dir%s*=%s*["\']([^"\']+)["\'].-name%s*=%s*["\']([%w%-_]+)["\']') do
+          if not loaded_dirs[dir_path] then
+            loaded_dirs[dir_path] = true
+            local expanded_path = vim.fn.expand(dir_path)
+            use { expanded_path, name = dir_name }
+          end
+        end
         -- Extract plugin repos using pattern matching (e.g., "user/repo")
         for repo in content:gmatch('["\']([%w%-_]+/[%w%-_.]+)["\']') do
           if not loaded_plugins[repo] then
@@ -116,7 +125,7 @@ end)
 -- lualine
 require('lualine').setup {
   options = {
-    theme = 'catppuccin',
+    theme = 'auto',
     section_separators = {'', ''},
     component_separators = {'', ''},
   },
@@ -158,11 +167,20 @@ cmd "au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json,*.vue Prettier
 -- Load colorscheme from theme config
 local theme_file = dofile(vim.fn.expand('~/.config/themes/current/neovim.lua'))
 for _, plugin in ipairs(theme_file) do
+  -- Add local dir-based themes to runtimepath
+  if plugin.dir then
+    local expanded_dir = vim.fn.expand(plugin.dir)
+    vim.opt.runtimepath:prepend(expanded_dir)
+  end
   if plugin.opts and plugin.opts.colorscheme then
     vim.schedule(function()
-      vim.cmd('colorscheme ' .. plugin.opts.colorscheme)
+      local cs = plugin.opts.colorscheme
+      if type(cs) == 'function' then
+        cs()
+      else
+        vim.cmd('colorscheme ' .. cs)
+      end
     end)
-    break
   end
 end
 opt.completeopt = "menuone,noselect"
