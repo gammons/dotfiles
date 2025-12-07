@@ -1,0 +1,55 @@
+#!/bin/bash
+
+THEMES_DIR="$HOME/.config/themes"
+CURRENT_LINK="$THEMES_DIR/current"
+
+# Get list of available themes (directories only, excluding 'current')
+get_themes() {
+    find "$THEMES_DIR" -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | sort
+}
+
+# Show usage
+usage() {
+    echo "Usage: changetheme [THEME]"
+    echo ""
+    echo "Available themes:"
+    get_themes | sed 's/^/  /'
+    echo ""
+    if [ -L "$CURRENT_LINK" ]; then
+        current=$(readlink "$CURRENT_LINK")
+        echo "Current theme: $current"
+    fi
+}
+
+# Main logic
+if [ $# -eq 0 ]; then
+    usage
+    exit 0
+fi
+
+theme="$1"
+theme_path="$THEMES_DIR/$theme"
+
+# Validate theme exists
+if [ ! -d "$theme_path" ]; then
+    echo "Error: Theme '$theme' not found."
+    echo ""
+    usage
+    exit 1
+fi
+
+# Remove existing symlink if present
+if [ -L "$CURRENT_LINK" ]; then
+    rm "$CURRENT_LINK"
+elif [ -e "$CURRENT_LINK" ]; then
+    echo "Error: $CURRENT_LINK exists but is not a symlink"
+    exit 1
+fi
+
+# Create new symlink (relative path for cleaner links)
+ln -s "$theme" "$CURRENT_LINK"
+
+# Reload alacritty by touching its config
+touch ~/.config/alacritty/alacritty.toml
+
+echo "Theme changed to: $theme"

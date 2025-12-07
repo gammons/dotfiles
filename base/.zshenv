@@ -4,7 +4,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export MOZ_ENABLE_WAYLAND=1
 export XDG_CURRENT_DESKTOP=sway
 
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/.bin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=~/.local/bin:$PATH

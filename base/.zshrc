@@ -1,4 +1,5 @@
 typeset -U path cdpath fpath manpath
+fpath=(~/.zsh/completions $fpath)
 autoload -U compinit && compinit
 
 HISTSIZE="100000"

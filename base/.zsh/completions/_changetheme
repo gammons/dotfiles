@@ -1,0 +1,10 @@
+#compdef changetheme
+
+_changetheme() {
+    local themes_dir="$HOME/.config/themes"
+    local -a themes
+    themes=(${(f)"$(find "$themes_dir" -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | sort)"})
+    _describe 'theme' themes
+}
+
+_changetheme "$@"
