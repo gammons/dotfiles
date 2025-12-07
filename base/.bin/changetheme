@@ -5,7 +5,7 @@ CURRENT_LINK="$THEMES_DIR/current"
 
 # Get list of available themes (directories only, excluding 'current')
 get_themes() {
-    find "$THEMES_DIR" -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | sort
+    find -L "$THEMES_DIR" -maxdepth 1 -mindepth 1 -type d ! -name current -printf '%f\n' | sort
 }
 
 # Show usage

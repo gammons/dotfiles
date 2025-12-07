@@ -3,7 +3,7 @@
 _changetheme() {
     local themes_dir="$HOME/.config/themes"
     local -a themes
-    themes=(${(f)"$(find "$themes_dir" -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | sort)"})
+    themes=(${(f)"$(find -L "$themes_dir" -maxdepth 1 -mindepth 1 -type d ! -name current -printf '%f\n' | sort)"})
     _describe 'theme' themes
 }
 
