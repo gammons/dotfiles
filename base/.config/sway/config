@@ -290,7 +290,7 @@ bindsym $mod+shift+F11 exec $brightnessDownCmd
 bindsym XF86MonBrightnessDown exec $brightnessUpCmd
 bindsym XF86MonBrightnessUp exec $brightnessDownCmd
 
-bindsym $mod+z exec --no-startup-id swaylock -c 333333
+bindsym $mod+z exec --no-startup-id swaylock
 
 bindsym $mod+n exec --no-startup-id swaync-client -t -sw
 

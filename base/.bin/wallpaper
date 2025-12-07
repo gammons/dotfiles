@@ -46,7 +46,11 @@ wallpaper_file="${wallpapers[$current_index]}"
 
 # Set wallpaper using swaybg
 pkill swaybg 2>/dev/null || true
-swaybg -i "$wallpaper_file" -m fill &
+swaybg -i "$wallpaper_file" -m fill &>/dev/null &
+disown
+
+# Update background symlink for swaylock
+ln -sf "$wallpaper_file" "$HOME/.config/themes/current/background"
 
 # Save current index
 echo "$current_index" > "$STATE_FILE"
