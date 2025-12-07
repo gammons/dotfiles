@@ -10,9 +10,7 @@ OUTPUT="eDP-1"
 echo $OUTPUT
 
 if grep -q open /proc/acpi/button/lid/${LID}/state; then
-    ./lid_up
-    # swaymsg output ${OUTPUT} enable
+    ~/.config/sway/scripts/lid_up
 else
-    ./lid_down
-    # swaymsg output ${OUTPUT} disable
+    ~/.config/sway/scripts/lid_down
 fi

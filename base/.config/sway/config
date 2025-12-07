@@ -1,4 +1,9 @@
 ############################
+# Theme
+############################
+include ~/.config/themes/current/sway.conf
+
+############################
 # Outputs
 ############################
 output eDP-1 scale 1.5 pos 0 0 res 3840x2400
@@ -202,6 +207,7 @@ set $ruby ~/.rubies/ruby-2.6.1/bin/ruby
 ############################
 
 exec ~/.config/sway/scripts/startup
+exec_always ~/.config/sway/scripts/clamshell
 
 exec swaybg --color=#000000
 

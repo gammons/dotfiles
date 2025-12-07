@@ -52,4 +52,7 @@ ln -s "$theme" "$CURRENT_LINK"
 # Reload alacritty by touching its config
 touch ~/.config/alacritty/alacritty.toml
 
+# Reload sway config
+swaymsg reload 2>/dev/null
+
 echo "Theme changed to: $theme"
