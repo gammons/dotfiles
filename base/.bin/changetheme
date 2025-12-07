@@ -55,4 +55,7 @@ touch ~/.config/alacritty/alacritty.toml
 # Reload sway config
 swaymsg reload 2>/dev/null
 
+# Set wallpaper from new theme
+~/.bin/wallpaper --reset
+
 echo "Theme changed to: $theme"

@@ -1,0 +1,8 @@
+[Unit]
+Description=Rotate wallpaper
+
+[Service]
+Type=oneshot
+ExecStart=%h/.bin/wallpaper --next
+Environment=DISPLAY=:0
+Environment=WAYLAND_DISPLAY=wayland-1

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WALLPAPER_DIR="$HOME/local_code/aesthetic-wallpapers/images"
+WALLPAPER_DIR="$HOME/.config/themes/current/backgrounds"
 STATE_FILE="$HOME/.wallpaper_state"
 
 # Get all wallpaper files
@@ -30,6 +30,10 @@ case "${1:-}" in
         ;;
     --current)
         # Just use current index, no change
+        ;;
+    --reset)
+        # Reset to first wallpaper (useful when theme changes)
+        current_index=0
         ;;
     *)
         # Default: go to next wallpaper
