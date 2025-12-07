@@ -18,4 +18,4 @@ if [ x"${DESKTOP_SESSION}" != "gnome" ]; then
   eval $(keychain --eval --quiet id_rsa)
 fi
 
-. "$HOME/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
