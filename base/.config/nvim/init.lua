@@ -21,9 +21,34 @@ vim.g.loaded_netrwPlugin = 1
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
-  -- Colors - base16 color schemes
+  -- Colors - load all theme plugins from ~/.config/themes
   use 'RRethy/nvim-base16'
-  use { "catppuccin/nvim", as = "catppuccin" }
+  local themes_dir = vim.fn.expand('~/.config/themes')
+  local loaded_plugins = {}
+  for _, theme_name in ipairs(vim.fn.readdir(themes_dir)) do
+    local theme_path = themes_dir .. '/' .. theme_name .. '/neovim.lua'
+    if theme_name ~= 'current' and vim.fn.filereadable(theme_path) == 1 then
+      local file = io.open(theme_path, 'r')
+      if file then
+        local content = file:read('*all')
+        file:close()
+        -- Extract plugin repos using pattern matching (e.g., "user/repo")
+        for repo in content:gmatch('["\']([%w%-_]+/[%w%-_.]+)["\']') do
+          if not loaded_plugins[repo] then
+            loaded_plugins[repo] = true
+            -- Check if it has a custom name
+            local name_pattern = repo:gsub('%-', '%%-') .. '["\'].-name%s*=%s*["\']([%w%-_]+)["\']'
+            local custom_name = content:match(name_pattern)
+            if custom_name then
+              use { repo, name = custom_name }
+            else
+              use(repo)
+            end
+          end
+        end
+      end
+    end
+  end
 
   -- autocompletion
   use 'hrsh7th/nvim-compe'
@@ -130,7 +155,16 @@ g["prettier#single_quote"] = 1
 cmd "au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json,*.vue PrettierAsync"
 
 -------------------- OPTIONS -------------------------------
-cmd 'colorscheme catppuccin'            -- Put your favorite colorscheme here
+-- Load colorscheme from theme config
+local theme_file = dofile(vim.fn.expand('~/.config/themes/current/neovim.lua'))
+for _, plugin in ipairs(theme_file) do
+  if plugin.opts and plugin.opts.colorscheme then
+    vim.schedule(function()
+      vim.cmd('colorscheme ' .. plugin.opts.colorscheme)
+    end)
+    break
+  end
+end
 opt.completeopt = "menuone,noselect"
 opt.expandtab = true                -- Use spaces instead of tabs
 opt.hidden = true                   -- Enable background buffers
