@@ -49,7 +49,7 @@ input "type:pointer" {
 ############################
 
 set $mod Mod1
-set $term kitty
+set $term alacritty
 set $menu ~/.config/sway/scripts/menu
 
 # Font for window titles. Will also be used by the bar unless a different font
