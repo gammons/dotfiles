@@ -56,6 +56,11 @@ touch ~/.config/alacritty/alacritty.toml
 mkdir -p ~/.config/swaylock
 ln -sf ~/.config/themes/current/swaylock.conf ~/.config/swaylock/config
 
+# Reload tmux if running (it will source the theme on next refresh)
+if command -v tmux &> /dev/null && [ -n "$TMUX" ]; then
+    tmux source-file ~/.config/themes/current/tmux.conf 2>/dev/null
+fi
+
 # Reload sway config
 swaymsg reload 2>/dev/null
 
