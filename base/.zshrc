@@ -10,6 +10,9 @@ COLORTERM=truecolor
 # Chrome Wayland flags
 export CHROME_FLAGS="--ozone-platform=wayland --enable-features=UseOzonePlatform"
 
+# Editor
+export GIT_EDITOR=nvim
+
 setopt HIST_FCNTL_LOCK
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
