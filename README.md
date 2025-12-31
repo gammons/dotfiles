@@ -152,20 +152,63 @@ xdg-desktop-portal-wlr
 # Session management
 uwsm
 
-# Notifications
-mako
-
-# Application launcher
-walker
-
-# Action menu
-elephant
+swaync
 
 greetd
+greetd-tuigreet
 ```
 
 they can be installed with one line:
 
 ```bash
-sudo pacman -S swayfx swaylock-effects swayidle wlsunset swaybg swayosd waybar grim slurp wayfreeze satty wl-clipboard xdg-desktop-portal-wlr uwsm mako walker elephant greetd
+sudo pacman -S swayfx swaylock-effects swayidle wlsunset swaybg swayosd waybar grim slurp wayfreeze satty wl-clipboard xdg-desktop-portal-wlr uwsm mako swaync fuzzel greetd
+```
+
+## New instructions using archinstall
+
+To set up a new Arch Linux installation with these dotfiles using `archinstall`, follow these steps:
+1. Boot into the Arch Linux live environment.
+2. Connect to the internet.
+3. Copy `user_configuration.json` from this repository to the live environment.
+4. Run `archinstall` with the custom configuration:
+   ```bash
+   archinstall --config https://raw.githubusercontent.com/gammons/dotfiles/main/user_configuration.json
+   ``` 
+
+This will automate the installation process and apply your dotfiles configuration.
+
+### AUR helper installation
+To install an AUR helper like `yay`, you can use the following commands:
+
+```bash
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
+### Dotfiles
+
+To apply the dotfiles after installation, clone this repository and use GNU Stow to symlink the configuration files to your home directory:
+
+```bash
+git clone https://github.com/gammons/dotfiles ~/dotfiles
+cd ~/dotfiles
+stow -d ~/dotfiles -t ~ base
+```
+
+### nvim packer
+
+To install `packer.nvim` for Neovim, run the following command:
+
+```
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+ ```
+
+### aur packages
+
+To install AUR packages listed in the dotfiles, you can use `yay`:
+
+```bash
+yay -S swayfx swaylock-effects
 ```
