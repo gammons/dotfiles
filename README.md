@@ -164,51 +164,180 @@ they can be installed with one line:
 sudo pacman -S swayfx swaylock-effects swayidle wlsunset swaybg swayosd waybar grim slurp wayfreeze satty wl-clipboard xdg-desktop-portal-wlr uwsm mako swaync fuzzel greetd
 ```
 
-## New instructions using archinstall
+## Automated Arch Linux Installation
 
-To set up a new Arch Linux installation with these dotfiles using `archinstall`, follow these steps:
-1. Boot into the Arch Linux live environment.
-2. Connect to the internet.
-3. Copy `user_configuration.json` from this repository to the live environment.
-4. Run `archinstall` with the custom configuration:
-   ```bash
-   archinstall --config https://raw.githubusercontent.com/gammons/dotfiles/main/user_configuration.json
-   ``` 
+This repository includes `automated_install.py`, a fully automated installation script that installs Arch Linux and provisions the system with all required packages, dotfiles, and configuration.
 
-This will automate the installation process and apply your dotfiles configuration.
+### What It Does
 
-### AUR helper installation
-To install an AUR helper like `yay`, you can use the following commands:
+The script performs a complete Arch Linux installation including:
 
+- **Disk Setup**: Creates an encrypted (LUKS) LVM layout with separate root and home partitions
+- **Base System**: Installs base packages, kernel, bootloader (systemd-boot with UKI)
+- **Packages**: Installs all required packages (sway, waybar, neovim, docker, dev tools, fonts, etc.)
+- **Users**: Creates user accounts with sudo access
+- **Services**: Enables docker, iwd, systemd-networkd, greetd
+- **Provisioning**:
+  - Installs yay (AUR helper)
+  - Clones dotfiles and runs stow
+  - Sets zsh as default shell
+  - Installs packer.nvim
+  - Installs AUR packages (swayfx, swaylock-effects)
+  - Configures greetd with tuigreet
+
+### Prerequisites
+
+- Arch Linux live ISO (boot from USB or in a VM)
+- Network connection
+- Target disk (will be wiped!)
+
+### Installation Steps
+
+#### 1. Boot into the Arch Linux live environment
+
+Download the latest [Arch Linux ISO](https://archlinux.org/download/) and boot from it.
+
+#### 2. Connect to the internet
+
+For WiFi:
 ```bash
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
+iwctl --passphrase 'your-wifi-password' station wlan0 connect your-network-name
 ```
 
-### Dotfiles
+For Ethernet, it should connect automatically.
 
-To apply the dotfiles after installation, clone this repository and use GNU Stow to symlink the configuration files to your home directory:
+Verify connectivity:
+```bash
+ping -c 3 archlinux.org
+```
+
+#### 3. Download the installation files
 
 ```bash
+curl -LO https://raw.githubusercontent.com/gammons/dotfiles/main/automated_install.py
+curl -LO https://raw.githubusercontent.com/gammons/dotfiles/main/user_credentials.json.template
+```
+
+#### 4. Create your credentials file
+
+```bash
+cp user_credentials.json.template user_credentials.json
+nano user_credentials.json  # or use vim
+```
+
+Edit the file with your actual passwords:
+```json
+{
+    "encryption_password": "your-disk-encryption-password",
+    "users": [
+        {
+            "username": "grant",
+            "!password": "your-user-password",
+            "sudo": true,
+            "groups": ["wheel", "docker"]
+        }
+    ]
+}
+```
+
+#### 5. Identify your target disk
+
+```bash
+lsblk
+```
+
+Common disk names:
+- `/dev/sda` - SATA/USB drives
+- `/dev/nvme0n1` - NVMe drives
+- `/dev/vda` - Virtual machines
+
+#### 6. Run the installation
+
+Dry run (preview what will happen):
+```bash
+python automated_install.py --device /dev/sda --dry-run
+```
+
+Actual installation:
+```bash
+python automated_install.py --device /dev/sda
+```
+
+Replace `/dev/sda` with your target disk.
+
+**Warning**: This will wipe the target disk completely!
+
+#### 7. Reboot
+
+Once installation completes:
+```bash
+reboot
+```
+
+Remove the installation media when prompted.
+
+### Disk Layout
+
+The script creates the following partition layout:
+
+| Partition | Size | Type | Mount |
+|-----------|------|------|-------|
+| ESP | 1 GiB | FAT32 | /boot |
+| LUKS | remaining | encrypted | - |
+| └─ root | 32 GiB | ext4 (LVM) | / |
+| └─ home | remaining | ext4 (LVM) | /home |
+
+### Customization
+
+To customize the installation, edit `automated_install.py`:
+
+- **HOSTNAME**: System hostname (default: "archlinux")
+- **TIMEZONE**: Your timezone (default: "America/New_York")
+- **PACKAGES**: List of packages to install
+- **SERVICES**: Services to enable
+- **BOOT_SIZE_GIB**: Boot partition size
+- **ROOT_SIZE_GIB**: Root volume size
+
+### Testing in a VM
+
+For testing, you can use QEMU:
+
+```bash
+# Create a virtual disk
+qemu-img create -f qcow2 archtest.qcow2 50G
+
+# Copy OVMF vars (must be writable)
+cp /usr/share/ovmf/x64/OVMF_VARS.4m.fd .
+
+# Boot the ISO
+qemu-system-x86_64 -enable-kvm \
+  -machine q35,accel=kvm \
+  -cpu host -m 4096 \
+  -drive if=pflash,format=raw,readonly=on,file=/usr/share/ovmf/x64/OVMF_CODE.4m.fd \
+  -drive if=pflash,format=raw,file=OVMF_VARS.4m.fd \
+  -cdrom archlinux-*.iso \
+  -drive file=archtest.qcow2,format=qcow2 \
+  -boot d
+```
+
+### Troubleshooting
+
+If provisioning fails but the system boots, you can run the provisioning steps manually:
+
+```bash
+# Install yay
+git clone https://aur.archlinux.org/yay.git ~/yay
+cd ~/yay && makepkg -si --noconfirm
+rm -rf ~/yay
+
+# Clone and apply dotfiles
 git clone https://github.com/gammons/dotfiles ~/dotfiles
-cd ~/dotfiles
-stow -d ~/dotfiles -t ~ base
-```
+cd ~/dotfiles && stow -d ~/dotfiles -t ~ base
 
-### nvim packer
-
-To install `packer.nvim` for Neovim, run the following command:
-
-```
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
- ```
-
-### aur packages
-
-To install AUR packages listed in the dotfiles, you can use `yay`:
-
-```bash
+# Install AUR packages
 yay -S swayfx swaylock-effects
+
+# Install packer.nvim
+git clone --depth 1 https://github.com/wbthomason/packer.nvim \
+  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 ```
