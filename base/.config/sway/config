@@ -35,7 +35,7 @@ input "type:touchpad" {
  dwt enabled
  scroll_method two_finger
  tap disabled
- scroll_factor 1.0
+ scroll_factor 1.3
  tap_button_map lrm
  middle_emulation enabled
  click_method clickfinger
@@ -258,6 +258,17 @@ bindsym $mod+i exec swaymsg '\
     [app_id="org.pulseaudio.pavucontrol"] scratchpad show; \
     [app_id="org.pulseaudio.pavucontrol"] resize set 70ppt 70ppt; \
     [app_id="org.pulseaudio.pavucontrol"] move position center'
+
+# SpeedCrunch scratchpad configuration
+for_window [app_id="org.speedcrunch.speedcrunch"] floating enable
+for_window [app_id="org.speedcrunch.speedcrunch"] move scratchpad
+exec --no-startup-id speedcrunch
+
+# Keybinding to show/hide and resize SpeedCrunch
+bindsym $mod+c exec swaymsg '\
+    [app_id="org.speedcrunch.speedcrunch"] scratchpad show; \
+    [app_id="org.speedcrunch.speedcrunch"] resize set 800 800; \
+    [app_id="org.speedcrunch.speedcrunch"] move position center'
 
 bindsym $mod+shift+u exec --no-startup-id $term --title=dropdown-terminal
 
