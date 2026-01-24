@@ -35,7 +35,7 @@ input "type:touchpad" {
  dwt enabled
  scroll_method two_finger
  tap disabled
- scroll_factor 1.3
+ scroll_factor 1.2
  tap_button_map lrm
  middle_emulation enabled
  click_method clickfinger

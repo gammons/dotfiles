@@ -1,1 +1,4 @@
-~/.config/sway/scripts/inhibit.sh && swaylock --indicator-idle-visible
+~/.config/sway/scripts/inhibit.sh && swaylock \
+    --screenshots \
+    --effect-blur 7x5 \
+    --indicator-idle-visible
