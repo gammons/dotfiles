@@ -1,0 +1,43 @@
+@define-color background-color #222436;
+@define-color border-color #bb9af7;
+@define-color label #ffffff;
+@define-color image #7da6ff;
+@define-color progress #bb9af7;
+
+/* Additional ArchRiot colors for consistency */
+@define-color accent1 #ff7a93;
+@define-color accent2 #0db9d7;
+@define-color accent3 #ff9e64;
+@define-color accent4 #bb9af7;
+@define-color accent5 #7da6ff;
+
+/* SwayOSD styling with ArchRiot theme */
+window {
+    background-color: rgba(34, 36, 54, 0.95);
+    border: 2px solid @border-color;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.container {
+    background-color: transparent;
+}
+
+.progress-bar {
+    background-color: @progress;
+    border-radius: 6px;
+}
+
+.progress-bar trough {
+    background-color: rgba(65, 72, 104, 0.5);
+    border-radius: 6px;
+}
+
+label {
+    color: @label;
+    font-weight: bold;
+}
+
+image {
+    color: @image;
+}

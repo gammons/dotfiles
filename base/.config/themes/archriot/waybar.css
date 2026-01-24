@@ -1,0 +1,25 @@
+@define-color foreground #ffffff;
+@define-color background #1a1b26;
+
+@define-color critical #ff0000;
+@define-color warning #f3f809;
+@define-color fgcolor #ffffff;
+@define-color bgcolor #222436;
+@define-color alert #df3320;
+
+@define-color accent1 #ff7a93;
+@define-color accent2 #0db9d7;
+@define-color accent3 #ff9e64;
+@define-color accent4 #bb9af7;
+@define-color accent5 #7da6ff;
+@define-color accent6 #0db9d7;
+
+@define-color workspace_active #9d7bd8;
+@define-color workspace_hover #b8a2e6;
+
+@define-color cpu_color #6a7de8;
+@define-color memory_color #8a95e8;
+@define-color temp_color #547ae0;
+@define-color power_color #a45ad0;
+@define-color lock_color #9c7ce8;
+@define-color window_color #4a2b7a;

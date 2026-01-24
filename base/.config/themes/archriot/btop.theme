@@ -1,0 +1,86 @@
+# ArchRiot theme for btop
+# Modern system monitor theme with ArchRiot color palette
+
+# Main background, empty for terminal default, need to be empty if you want transparent background
+theme[main_bg]="#1a1b26"
+
+# Main text color
+theme[main_fg]="#ffffff"
+
+# Title color for boxes
+theme[title]="#bb9af7"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#9d7bd8"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#4a2b7a"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#ffffff"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#686868"
+
+# Color of text appearing on top of graphs, i.e uptime and current network graph scaling
+theme[graph_text]="#ffffff"
+
+# Background color of the percentage meters
+theme[meter_bg]="#222436"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#0db9d7"
+
+# CPU, Memory, Network, Proc box outline colors
+theme[cpu_box]="#6a7de8"
+theme[mem_box]="#8a95e8"
+theme[net_box]="#7da6ff"
+theme[proc_box]="#bb9af7"
+
+# Box divider line and small boxes line color
+theme[div_line]="#404040"
+
+# Temperature graph color (Blue -> Orange -> Red)
+theme[temp_start]="#7aa2f7"
+theme[temp_mid]="#ff9e64"
+theme[temp_end]="#ff7a93"
+
+# CPU graph colors (Blue -> Purple -> Magenta)
+theme[cpu_start]="#6a7de8"
+theme[cpu_mid]="#8a95e8"
+theme[cpu_end]="#bb9af7"
+
+# Mem/Disk free meter (Cyan -> Blue -> Purple)
+theme[free_start]="#0db9d7"
+theme[free_mid]="#7da6ff"
+theme[free_end]="#9d7bd8"
+
+# Mem/Disk cached meter (Green -> Yellow -> Orange)
+theme[cached_start]="#9ece6a"
+theme[cached_mid]="#e0af68"
+theme[cached_end]="#ff9e64"
+
+# Mem/Disk available meter (Blue -> Purple -> Magenta)
+theme[available_start]="#7aa2f7"
+theme[available_mid]="#6a7de8"
+theme[available_end]="#9d7bd8"
+
+# Mem/Disk used meter (Red -> Purple -> Dark Purple)
+theme[used_start]="#ff7a93"
+theme[used_mid]="#bb9af7"
+theme[used_end]="#4a2b7a"
+
+# Download graph colors (Cyan -> Blue -> Purple)
+theme[download_start]="#0db9d7"
+theme[download_mid]="#7da6ff"
+theme[download_end]="#bb9af7"
+
+# Upload graph colors (Orange -> Red -> Purple)
+theme[upload_start]="#ff9e64"
+theme[upload_mid]="#ff7a93"
+theme[upload_end]="#9d7bd8"
+
+# Process box color gradient for threads, mem and cpu usage (Blue -> Purple -> Dark Purple)
+theme[process_start]="#7da6ff"
+theme[process_mid]="#bb9af7"
+theme[process_end]="#4a2b7a"

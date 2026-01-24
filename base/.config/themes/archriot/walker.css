@@ -1,0 +1,76 @@
+@define-color selected-text #ffffff;
+@define-color text #ffffff;
+@define-color base #1a1b26;
+@define-color border #bb9af7;
+@define-color foreground #bb9af7;
+@define-color background #222436;
+
+/* Additional ArchRiot colors for consistency */
+@define-color accent1 #ff7a93;
+@define-color accent2 #0db9d7;
+@define-color accent3 #ff9e64;
+@define-color accent4 #bb9af7;
+@define-color accent5 #7da6ff;
+@define-color workspace_active #9d7bd8;
+
+/* Walker window styling with ArchRiot theme */
+window {
+    background-color: rgba(34, 36, 54, 0.95);
+    border: 2px solid @border;
+    border-radius: 12px;
+}
+
+/* Input field styling */
+#input {
+    background-color: transparent;
+    color: @text;
+    border: none;
+    padding: 8px 12px;
+}
+
+/* Search results list */
+#scroll {
+    background-color: transparent;
+}
+
+/* Individual list items */
+.item {
+    background-color: transparent;
+    color: @text;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+/* Selected/highlighted item */
+.item:selected {
+    background-color: rgba(157, 123, 216, 0.3);
+    color: @selected-text;
+}
+
+/* Item text and labels */
+.label {
+    color: @text;
+}
+
+.item:selected .label {
+    color: @selected-text;
+}
+
+/* Icons */
+.icon {
+    color: @accent5;
+}
+
+.item:selected .icon {
+    color: @selected-text;
+}
+
+/* Match highlighting in search results */
+.match {
+    color: @accent4;
+    font-weight: bold;
+}
+
+.item:selected .match {
+    color: @accent4;
+}
