@@ -328,7 +328,6 @@ assign [class="Spotify"] 4
 # gaps
 ############################
 
-smart_gaps on
 gaps inner 5
 gaps outer 5
 
