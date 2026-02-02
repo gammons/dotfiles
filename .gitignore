@@ -1,1 +1,59 @@
+# Backup files
 ~
+*.bak
+*.swp
+*.swo
+
+# Application data that shouldn't be tracked
+base/.config/BraveSoftware/
+base/.config/Claude/
+base/.config/Slack/
+base/.config/SpeedCrunch/
+base/.config/autostart/
+base/.config/cava/
+base/.config/dconf/
+base/.config/dolphin-emu/
+base/.config/gh/
+base/.config/git/
+base/.config/github-copilot/
+base/.config/go/
+base/.config/google-chrome/
+base/.config/gtk-3.0/
+base/.config/htop/
+base/.config/k9s/
+base/.config/mise/
+base/.config/nextjs-nodejs/
+base/.config/obsidian/
+base/.config/omarchy/
+base/.config/pulse/
+base/.config/spotify/
+base/.config/vibe-typer/
+base/.config/zoom.conf
+base/.config/zoomus.conf
+base/.config/mimeapps.list
+base/.config/QtProject.conf
+
+# Local data
+base/.local/bin/
+base/.local/share/SpeedCrunch/
+base/.local/share/atuin/
+base/.local/share/claude/
+base/.local/share/dolphin-emu/
+base/.local/share/gvfs-metadata/
+base/.local/share/heroku/
+base/.local/share/k9s/
+base/.local/share/keyrings/
+base/.local/share/mise/
+base/.local/share/nvim/
+base/.local/share/omarchy/
+base/.local/share/recently-used.xbel
+base/.local/state/
+
+# Desktop files (except specific ones we track)
+base/.local/share/applications/*.desktop
+base/.local/share/applications/mimeapps.list
+base/.local/share/applications/mimeinfo.cache
+!base/.local/share/applications/slack.desktop
+
+# Nvim plugin directory (plugins are managed by package manager)
+base/.config/nvim/plugin/

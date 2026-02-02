@@ -55,7 +55,7 @@ input "type:pointer" {
 
 set $mod Mod1
 set $term alacritty
-set $menu ~/.config/sway/scripts/menu
+set $menu qs ipc -c noctalia-shell call launcher toggle
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -253,11 +253,8 @@ bindsym $mod+o exec swaymsg '[app_id="obsidian"] scratchpad show; \
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 for_window [app_id="org.pulseaudio.pavucontrol"] move scratchpad
 
-# Keybinding to show/hide and resize pavucontrol
-bindsym $mod+i exec swaymsg '\
-    [app_id="org.pulseaudio.pavucontrol"] scratchpad show; \
-    [app_id="org.pulseaudio.pavucontrol"] resize set 70ppt 70ppt; \
-    [app_id="org.pulseaudio.pavucontrol"] move position center'
+# Keybinding to show/hide noctalia volume panel
+bindsym $mod+i exec qs ipc -c noctalia-shell call volume togglePanel
 
 # SpeedCrunch scratchpad configuration
 for_window [app_id="org.speedcrunch.speedcrunch"] floating enable
