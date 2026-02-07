@@ -207,12 +207,13 @@ set $ruby ~/.rubies/ruby-2.6.1/bin/ruby
 ############################
 
 exec ~/.config/sway/scripts/startup
+exec qs -c noctalia-shell
 exec_always ~/.config/sway/scripts/clamshell
 
 exec swaybg --color=#000000
 
 # needed for waybar launching too slowly (https://github.com/swaywm/sway/issues/5732)
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+# exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
 ############################
 # Further customization

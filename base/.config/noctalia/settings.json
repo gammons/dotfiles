@@ -329,7 +329,7 @@
         "animationDisabled": false,
         "animationSpeed": 1,
         "autoStartAuth": false,
-        "avatarImage": "/home/grant-work/Downloads/me.jpeg",
+        "avatarImage": "/home/grant/Documents/me.jpeg",
         "boxRadiusRatio": 1,
         "compactLockScreen": false,
         "dimmerOpacity": 0.2,
@@ -388,11 +388,11 @@
     "nightLight": {
         "autoSchedule": true,
         "dayTemp": "6500",
-        "enabled": false,
+        "enabled": true,
         "forced": false,
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
-        "nightTemp": "4000"
+        "nightTemp": "4666"
     },
     "notifications": {
         "backgroundOpacity": 1,

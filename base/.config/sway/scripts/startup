@@ -5,7 +5,7 @@
 ## Autostart Programs
 
 # Kill already running process
-_ps=(waybar swaync xfce-polkit quickshell)
+_ps=(waybar swaync xfce-polkit)
 for _prs in "${_ps[@]}"; do
 	if [[ `pidof ${_prs}` ]]; then
 		killall -9 ${_prs}
@@ -17,14 +17,6 @@ done
 
 # xdg desktop wlr thing for screen sharing
 /usr/lib/xdg-desktop-portal --replace &
-
-# Launch notification daemon (swaync)
-swaync &
-
-wlsunset -l 40 -L -75 -t 5000 &
-
-# Start noctalia shell (replaces waybar)
-qs -c noctalia-shell &
 
 ~/.config/sway/scripts/swayidle.sh &
 
