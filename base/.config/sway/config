@@ -207,7 +207,6 @@ set $ruby ~/.rubies/ruby-2.6.1/bin/ruby
 ############################
 
 exec ~/.config/sway/scripts/startup
-exec qs -c noctalia-shell
 exec_always ~/.config/sway/scripts/clamshell
 
 exec swaybg --color=#000000
