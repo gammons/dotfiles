@@ -13,6 +13,8 @@
         "iconMode": "tabler",
         "ignoreMouseInput": false,
         "pinnedApps": [
+            "google-chrome",
+            "slack"
         ],
         "position": "center",
         "screenshotAnnotationTool": "",

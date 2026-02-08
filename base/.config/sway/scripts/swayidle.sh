@@ -9,6 +9,6 @@ SLEEP_TIMEOUT=600
 
 swayidle timeout $LOCK_TIMEOUT $LOCK_CMD \
   timeout $SLEEP_TIMEOUT $SLEEP_CMD \
-  before-sleep $LOCK_CMD\
+  before-sleep $LOCK_CMD \
   after-resume $RESUME_CMD
 
