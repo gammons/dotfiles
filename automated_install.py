@@ -111,15 +111,19 @@ PACKAGES = [
     # Sway & Wayland
     "fuzzel",
     "grim",
+    "playerctl",
     "slurp",
     "swappy",
     "swaybg",
     "swayidle",
     "swaync",
     "swayosd",
+    "uwsm",
     "waybar",
     "wl-clipboard",
     "wlsunset",
+    "xdg-desktop-portal-gtk",
+    "xdg-desktop-portal-wlr",
     # Display manager
     "greetd-tuigreet",
     # Audio
@@ -130,9 +134,13 @@ PACKAGES = [
     "pipewire-pulse",
     "wireplumber",
     # Networking
+    # NetworkManager with iwd backend for wifi management
+    # (noctalia requires NetworkManager for its wifi panel)
     "inetutils",
     "iwd",
+    "networkmanager",
     "openssh",
+    "tailscale",
     # Fonts
     "noto-fonts",
     "noto-fonts-cjk",
@@ -148,10 +156,12 @@ PACKAGES = [
     "k9s",
     # Cloud & Dev tools
     "aws-cli",
+    "bun",
     "github-cli",
     "go",
     "mise",
     "nodejs",
+    "pnpm",
     # Desktop apps
     "obsidian",
     # System
@@ -166,8 +176,9 @@ PACKAGES = [
 SERVICES = [
     "docker",
     "iwd",
-    "systemd-networkd",
+    "NetworkManager",
     "systemd-resolved",
+    "tailscaled",
 ]
 
 # =============================================================================
@@ -313,6 +324,13 @@ def get_post_install_commands(users: list[str]) -> list[str]:
     """
     commands = []
 
+    # Configure NetworkManager to use iwd as the wifi backend
+    commands.append("mkdir -p /etc/NetworkManager/conf.d")
+    nm_iwd_config = r'''[device]
+wifi.backend=iwd
+'''
+    commands.append(f"cat > /etc/NetworkManager/conf.d/iwd.conf << 'NM_EOF'\n{nm_iwd_config}NM_EOF")
+
     # Install yay (AUR helper) - needs to be done as a non-root user
     # First, ensure base-devel and git are installed (should be from packages list)
     commands.append("pacman -S --noconfirm --needed base-devel git")
@@ -366,7 +384,7 @@ user = "greeter"
     first_user = users[0] if users else None
     if first_user:
         commands.append(
-            f"su - {first_user} -c 'yay -S --noconfirm swayfx swaylock-effects'"
+            f"su - {first_user} -c 'yay -S --noconfirm google-chrome noctalia-shell slack-desktop spotify swayfx swaylock-effects'"
         )
 
     return commands
@@ -444,13 +462,14 @@ def perform_installation(
         info(f"Services: {', '.join(SERVICES)}")
         info(f"Users: {[u.username for u in users]}")
         info("Post-install provisioning:")
+        info("  - Configure NetworkManager to use iwd as wifi backend")
         info("  - Configure and enable greetd with tuigreet")
         info("  - Set zsh as default shell for all users")
         info("  - Install yay AUR helper")
         info("  - Clone dotfiles and run stow")
         info("  - Set theme to nord")
         info("  - Install packer.nvim")
-        info("  - Install AUR packages: swayfx, swaylock-effects")
+        info("  - Install AUR packages: google-chrome, noctalia-shell, slack-desktop, spotify, swayfx, swaylock-effects")
         return
 
     # Build disk config for real installation
