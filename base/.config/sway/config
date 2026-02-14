@@ -211,8 +211,10 @@ exec_always ~/.config/sway/scripts/clamshell
 
 exec swaybg --color=#000000
 
-# export sway env vars to systemd so services like noctalia can access SWAYSOCK
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+# export sway env vars to systemd so services like noctalia can access SWAYSOCK,
+# then start graphical-session.target so dependent services (like noctalia) launch
+# only after the environment is available
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK && systemctl --user start graphical-session.target
 
 ############################
 # Further customization
