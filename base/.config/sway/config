@@ -214,7 +214,7 @@ exec swaybg --color=#000000
 # export sway env vars to systemd so services like noctalia can access SWAYSOCK,
 # then start graphical-session.target so dependent services (like noctalia) launch
 # only after the environment is available
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK && systemctl --user start graphical-session.target
+exec QT_QPA_PLATFORM=wayland dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK QT_QPA_PLATFORM && systemctl --user start graphical-session.target
 
 ############################
 # Further customization
