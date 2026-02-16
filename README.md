@@ -180,9 +180,10 @@ The script performs a complete Arch Linux installation including:
 - **Provisioning**:
   - Installs yay (AUR helper)
   - Clones dotfiles and runs stow
+  - Enables noctalia systemd user service (shell/launcher for sway)
   - Sets zsh as default shell
   - Installs packer.nvim
-  - Installs AUR packages (swayfx, swaylock-effects)
+  - Installs AUR packages (swayfx, swaylock-effects, noctalia-shell)
   - Configures greetd with tuigreet
 
 ### Prerequisites
@@ -335,7 +336,10 @@ git clone https://github.com/gammons/dotfiles ~/.dotfiles
 cd ~/.dotfiles && stow -d ~/.dotfiles -t ~ base
 
 # Install AUR packages
-yay -S swayfx swaylock-effects
+yay -S swayfx swaylock-effects noctalia-shell
+
+# Enable noctalia (shell/launcher service for sway)
+systemctl --user enable noctalia.service
 
 # Install packer.nvim
 git clone --depth 1 https://github.com/wbthomason/packer.nvim \
