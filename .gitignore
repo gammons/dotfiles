@@ -57,3 +57,4 @@ base/.local/share/applications/mimeinfo.cache
 
 # Nvim plugin directory (plugins are managed by package manager)
 base/.config/nvim/plugin/
+user_credentials.json
