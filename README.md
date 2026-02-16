@@ -50,14 +50,14 @@ yay -S asdf-vm
 Clone this repository:
 
 ```bash
-git clone <your-repo-url> ~/dotfiles
-cd ~/dotfiles
+git clone <your-repo-url> ~/.dotfiles
+cd ~/.dotfiles
 ```
 
 ### Install the dotfiles
 
 ```bash
-stow -d ~/dotfiles -t ~ base
+stow -d ~/.dotfiles -t ~ base
 ```
 
 ## Usage
@@ -66,12 +66,12 @@ stow -d ~/dotfiles -t ~ base
 
 1. Move the file/directory to the appropriate package:
    ```bash
-   mv ~/.config/foo ~/dotfiles/base/.config/foo
+   mv ~/.config/foo ~/.dotfiles/base/.config/foo
    ```
 
 2. Stow the package (if not already stowed):
    ```bash
-   stow -d ~/dotfiles -t ~ base
+   stow -d ~/.dotfiles -t ~ base
    ```
 
 ### Removing/Unstowing
@@ -79,7 +79,7 @@ stow -d ~/dotfiles -t ~ base
 To remove symlinks:
 
 ```bash
-stow -D -d ~/dotfiles -t ~ base
+stow -D -d ~/.dotfiles -t ~ base
 ```
 
 ### Testing changes
@@ -87,7 +87,7 @@ stow -D -d ~/dotfiles -t ~ base
 Use the `-n` (dry-run) flag to see what stow will do without making changes:
 
 ```bash
-stow -n -v -d ~/dotfiles -t ~ base
+stow -n -v -d ~/.dotfiles -t ~ base
 ```
 
 ## Neovim Configuration
@@ -111,8 +111,8 @@ See `nvim/.config/nvim/lua/config/keymaps.lua` for all custom keybindings.
 ## Notes
 
 - Symlinks will point to the dotfiles repo location
-- Any changes made to files in `~/dotfiles/` will immediately affect your system
-- Original dotfiles are backed up in `~/dotfiles-backup-YYYYMMDD/`
+- Any changes made to files in `~/.dotfiles/` will immediately affect your system
+- Original dotfiles are backed up in `~/.dotfiles-backup-YYYYMMDD/`
 
 ## installing sway
 
@@ -331,8 +331,8 @@ cd ~/yay && makepkg -si --noconfirm
 rm -rf ~/yay
 
 # Clone and apply dotfiles
-git clone https://github.com/gammons/dotfiles ~/dotfiles
-cd ~/dotfiles && stow -d ~/dotfiles -t ~ base
+git clone https://github.com/gammons/dotfiles ~/.dotfiles
+cd ~/.dotfiles && stow -d ~/.dotfiles -t ~ base
 
 # Install AUR packages
 yay -S swayfx swaylock-effects

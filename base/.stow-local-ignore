@@ -1,0 +1,25 @@
+# App data and caches (managed by the apps themselves)
+\.config/Slack
+\.config/google-chrome
+\.config/BraveSoftware
+\.config/obsidian
+\.config/Claude
+\.config/spotify
+\.config/dolphin-emu
+\.config/github-copilot
+\.config/dconf
+\.config/pulse
+
+# Runtime state and data
+\.local/share/claude
+\.local/share/nvim
+\.local/share/mise
+\.local/share/atuin
+\.local/share/heroku
+\.local/share/keyrings
+\.local/share/gvfs-metadata
+\.local/share/omarchy
+\.local/share/dolphin-emu
+\.local/share/recently-used\.xbel
+\.local/state
+\.local/bin/claude
