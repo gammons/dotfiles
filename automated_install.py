@@ -35,15 +35,12 @@ from archinstall.lib.models.device import (
     DiskLayoutType,
     EncryptionType,
     FilesystemType,
-    LvmConfiguration,
-    LvmVolume,
-    LvmVolumeGroup,
-    LvmVolumeStatus,
     ModificationStatus,
     PartitionFlag,
     PartitionModification,
     PartitionType,
     Size,
+    SubvolumeModification,
     Unit,
 )
 from archinstall.lib.models.locale import LocaleConfiguration
@@ -69,7 +66,6 @@ MOUNTPOINT = Path("/mnt")
 
 # Disk layout settings
 BOOT_SIZE_GIB = 1       # Boot partition size in GiB
-ROOT_SIZE_GIB = 32      # Root LVM volume size in GiB (rest goes to /home)
 
 # System settings
 HOSTNAME = "archlinux"
@@ -108,11 +104,12 @@ PACKAGES = [
     "tree-sitter",
     "tree-sitter-lua",
     "wget",
-    # Sway & Wayland
+    # Sway & Wayland (sway is replaced by swayfx from AUR in post-install)
     "fuzzel",
     "grim",
     "playerctl",
     "slurp",
+    "sway",
     "swappy",
     "swaybg",
     "swayidle",
@@ -169,6 +166,7 @@ PACKAGES = [
     "impala",
     "keychain",
     "polkit",
+    "quickshell",
     "screenfetch",
 ]
 
@@ -206,9 +204,11 @@ def create_disk_config(
 
     Layout:
     - /boot: 1 GiB FAT32 (EFI System Partition)
-    - LUKS encrypted partition containing LVM:
-      - root: 32 GiB ext4 mounted at /
-      - home: remaining space ext4 mounted at /home
+    - LUKS encrypted btrfs partition with subvolumes:
+      - @          mounted at /
+      - @home      mounted at /home
+      - @snapshots mounted at /.snapshots
+      - @var_log   mounted at /var/log
     """
     device_path = Path(device_path)
 
@@ -241,7 +241,7 @@ def create_disk_config(
     # Calculate start position for the main partition (after boot)
     main_start = Size(1, Unit.MiB, sector_size) + Size(BOOT_SIZE_GIB, Unit.GiB, sector_size)
 
-    # Main partition: rest of disk (will be encrypted and contain LVM)
+    # Main partition: rest of disk (LUKS encrypted btrfs with subvolumes)
     # Leave some space at the end for GPT backup header (1 MiB is safe)
     total_size = device.device_info.total_size
     end_reserved = Size(1, Unit.MiB, sector_size)
@@ -252,61 +252,30 @@ def create_disk_config(
         type=PartitionType.Primary,
         start=main_start,
         length=main_length,
-        mountpoint=None,  # LVM volumes will have mountpoints
-        fs_type=FilesystemType.Ext4,  # Will be overwritten by LVM
+        mountpoint=None,  # Subvolumes define mountpoints
+        fs_type=FilesystemType.Btrfs,
+        mount_options=["compress=zstd"],
         flags=[],
+        btrfs_subvols=[
+            SubvolumeModification(Path("@"), Path("/")),
+            SubvolumeModification(Path("@home"), Path("/home")),
+            SubvolumeModification(Path("@snapshots"), Path("/.snapshots")),
+            SubvolumeModification(Path("@var_log"), Path("/var/log")),
+        ],
     )
     device_mod.add_partition(main_partition)
 
-    # Create LVM configuration
-    root_volume = LvmVolume(
-        status=LvmVolumeStatus.Create,
-        name="root",
-        fs_type=FilesystemType.Ext4,
-        length=Size(ROOT_SIZE_GIB, Unit.GiB, sector_size),
-        mountpoint=Path("/"),
-        mount_options=[],
-        btrfs_subvols=[],
-    )
-
-    # Home volume gets remaining space
-    # Calculate approximate remaining size for home
-    # (LVM will handle the exact sizing)
-    home_length = main_length - Size(ROOT_SIZE_GIB, Unit.GiB, sector_size) - Size(100, Unit.MiB, sector_size)
-
-    home_volume = LvmVolume(
-        status=LvmVolumeStatus.Create,
-        name="home",
-        fs_type=FilesystemType.Ext4,
-        length=home_length,
-        mountpoint=Path("/home"),
-        mount_options=[],
-        btrfs_subvols=[],
-    )
-
-    volume_group = LvmVolumeGroup(
-        name="ArchinstallVg",
-        pvs=[main_partition],
-        volumes=[root_volume, home_volume],
-    )
-
-    lvm_config = LvmConfiguration(
-        config_type=DiskLayoutType.Default,
-        vol_groups=[volume_group],
-    )
-
-    # Create disk layout configuration
+    # Create disk layout configuration (no LVM)
     disk_config = DiskLayoutConfiguration(
         config_type=DiskLayoutType.Default,
         device_modifications=[device_mod],
-        lvm_config=lvm_config,
     )
 
     # Setup encryption if password provided
     if encryption_password:
         disk_encryption = DiskEncryption(
             encryption_password=Password(plaintext=encryption_password),
-            encryption_type=EncryptionType.LvmOnLuks,
+            encryption_type=EncryptionType.Luks,
             partitions=[main_partition],
             lvm_volumes=[],
         )
@@ -368,6 +337,9 @@ user = "greeter"
             "stow -d ~/dotfiles -t ~ base"
             "'"
         )
+
+        # Enable noctalia systemd user service (after dotfiles are stowed)
+        commands.append(f"su - {username} -c 'systemctl --user enable noctalia.service || true'")
 
         # Set theme (after dotfiles are in place)
         commands.append(f"su - {username} -c 'source ~/.zshrc 2>/dev/null; changetheme nord || true'")
@@ -450,9 +422,12 @@ def perform_installation(
         info(f"Mountpoint: {MOUNTPOINT}")
         info(f"Disk layout:")
         info(f"  - /boot: {BOOT_SIZE_GIB} GiB FAT32 (ESP)")
-        info(f"  - LVM on LUKS (encrypted: {encryption_password is not None}):")
-        info(f"    - root: {ROOT_SIZE_GIB} GiB ext4")
-        info(f"    - home: remaining space ext4")
+        info(f"  - LUKS encrypted btrfs (encrypted: {encryption_password is not None}):")
+        info(f"    - @          -> /")
+        info(f"    - @home      -> /home")
+        info(f"    - @snapshots -> /.snapshots")
+        info(f"    - @var_log   -> /var/log")
+        info(f"    - mount options: compress=zstd")
         info(f"Hostname: {HOSTNAME}")
         info(f"Timezone: {TIMEZONE}")
         info(f"Locale: {LOCALE_LANG}")
@@ -467,6 +442,7 @@ def perform_installation(
         info("  - Set zsh as default shell for all users")
         info("  - Install yay AUR helper")
         info("  - Clone dotfiles and run stow")
+        info("  - Enable noctalia systemd user service")
         info("  - Set theme to nord")
         info("  - Install packer.nvim")
         info("  - Install AUR packages: google-chrome, noctalia-shell, slack-desktop, spotify, swayfx, swaylock-effects")
@@ -591,9 +567,11 @@ def main():
 Disk Layout:
   The script creates the following layout on the target device:
   - /boot: 1 GiB FAT32 (EFI System Partition)
-  - LUKS encrypted partition (if encryption_password set) with LVM:
-    - root: 32 GiB ext4 mounted at /
-    - home: remaining space ext4 mounted at /home
+  - LUKS encrypted btrfs partition (if encryption_password set) with subvolumes:
+    - @          mounted at /
+    - @home      mounted at /home
+    - @snapshots mounted at /.snapshots
+    - @var_log   mounted at /var/log
 
 Examples:
   # Dry run to see what would happen:
