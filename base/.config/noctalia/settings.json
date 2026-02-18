@@ -237,7 +237,7 @@
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
         "monitorForColors": "",
-        "predefinedScheme": "Eldritch",
+        "predefinedScheme": "Oxocarbon",
         "schedulingMode": "off",
         "useWallpaperColors": false
     },
@@ -302,9 +302,25 @@
         }
     },
     "desktopWidgets": {
-        "enabled": false,
+        "enabled": true,
         "gridSnap": false,
         "monitorWidgets": [
+            {
+                "name": "DP-2",
+                "widgets": [
+                    {
+                        "diskPath": "/",
+                        "id": "SystemStat",
+                        "layout": "bottom",
+                        "roundedCorners": true,
+                        "scale": 1,
+                        "showBackground": true,
+                        "statType": "CPU",
+                        "x": 10,
+                        "y": 68
+                    }
+                ]
+            }
         ]
     },
     "dock": {
@@ -331,7 +347,7 @@
         "animationDisabled": false,
         "animationSpeed": 1,
         "autoStartAuth": false,
-        "avatarImage": "/home/grant/Documents/me.jpeg",
+        "avatarImage": "~/.config/noctalia/me.jpeg",
         "boxRadiusRatio": 1,
         "compactLockScreen": false,
         "dimmerOpacity": 0.2,
@@ -534,9 +550,9 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/grant-work/Pictures/Wallpapers",
+        "directory": "/home/grant-work/.config/themes/current/backgrounds",
         "enableMultiMonitorDirectories": false,
-        "enabled": false,
+        "enabled": true,
         "fillColor": "#000000",
         "fillMode": "crop",
         "hideWallpaperFilenames": false,
