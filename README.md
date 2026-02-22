@@ -321,6 +321,23 @@ qemu-system-x86_64 -enable-kvm \
   -boot d
 ```
 
+### AMD GPU Performance (4K@120Hz)
+
+On kernel 6.18.9+, the amdgpu power management may not boost GPU clocks properly for 4K@120Hz compositing under swayfx, causing the compositor to render at 60fps. The fix is to force the GPU to `high` performance:
+
+```bash
+# Immediate fix
+echo high | sudo tee /sys/class/drm/card1/device/power_dpm_force_performance_level
+
+# Persistent fix (udev rule)
+echo 'ACTION=="add", SUBSYSTEM=="drm", KERNEL=="card*", DRIVERS=="amdgpu", ATTR{device/power_dpm_force_performance_level}="high"' | sudo tee /etc/udev/rules.d/99-amdgpu-performance.rules
+```
+
+To revert (e.g. for battery life):
+```bash
+echo auto | sudo tee /sys/class/drm/card1/device/power_dpm_force_performance_level
+```
+
 ### Troubleshooting
 
 If provisioning fails but the system boots, you can run the provisioning steps manually:
