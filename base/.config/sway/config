@@ -322,7 +322,7 @@ for_window [title="Connect to VPN"] floating enable
 for_window [title="Calendar selection"] floating enable
 for_window [title="Volume Control"] floating enable
 for_window [title="Easy Effects"] floating enable
-for_window [app_id="^chrome-.*-Default$"] floating enable
+for_window [app_id="^chrome-.+-"] floating enable
 
 assign [class="Slack"] 3
 assign [class="Spotify"] 4
