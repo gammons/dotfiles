@@ -128,7 +128,6 @@ MouseArea {
       if (mouse.button === Qt.LeftButton) {
         if (pluginApi) {
             pluginApi.openPanel(root.screen, root);
-          //PanelService.getPanel("clockPanel", screen)?.toggle(root);
         }
       } else if (mouse.button === Qt.RightButton) {
         PanelService.showContextMenu(contextMenu, root, screen);
@@ -157,7 +156,7 @@ MouseArea {
       PanelService.closeContextMenu(screen);
 
       if (action === "open") {
-        PanelService.getPanel("clockPanel", screen)?.toggle(root);
+        pluginApi.openPanel(root.screen, root);
       } else if (action === "settings") {
         BarService.openPluginSettings(screen, pluginApi.manifest);
       }
@@ -231,7 +230,7 @@ function buildTooltip() {
             break
     }
     if (allRows.length > 0) {
-      TooltipService.show(root, allRows, BarService.getTooltipDirection())
+      TooltipService.show(root, allRows, BarService.getTooltipDirection(root.screen?.name))
     }
   }
 }
