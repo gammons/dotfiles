@@ -338,6 +338,25 @@ To revert (e.g. for battery life):
 echo auto | sudo tee /sys/class/drm/card1/device/power_dpm_force_performance_level
 ```
 
+### ThinkPad Fan Control
+
+On ThinkPad laptops, the BIOS fan curve can be overly aggressive. `thinkfan` provides custom fan curve control.
+
+```bash
+sudo pacman -S thinkfan
+
+# Enable fan control for thinkpad_acpi
+sudo tee /etc/modprobe.d/thinkpad_acpi.conf <<< 'options thinkpad_acpi fan_control=1'
+
+# Copy the fan curve config
+sudo cp ~/.dotfiles/thinkfan.yaml /etc/thinkfan.yaml
+
+# Enable and start the service
+sudo systemctl enable --now thinkfan
+```
+
+A reboot is required for the modprobe config to take effect (or reload the module with `sudo modprobe -r thinkpad_acpi && sudo modprobe thinkpad_acpi fan_control=1`).
+
 ### Troubleshooting
 
 If provisioning fails but the system boots, you can run the provisioning steps manually:
