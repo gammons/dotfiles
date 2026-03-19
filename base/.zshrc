@@ -57,6 +57,7 @@ alias dcb='docker compose build'
 alias prodb="npx heroku run --size=performance-l /bin/bash -a musashi-production"
 alias prodc="npx heroku run bundle exec rails c -a musashi-production"
 alias p='k9s -n truelist'
+alias oc='opencode'
 
 alias dcu='docker-compose up'
 alias dcd='docker-compose down'
@@ -70,3 +71,5 @@ export NVM_DIR="$HOME/.nvm"
 
 eval "$(atuin init zsh --disable-up-arrow)"
 eval "$(/usr/bin/mise activate zsh)"
+export ANDROID_HOME=~/Android/Sdk
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
