@@ -161,6 +161,8 @@ PACKAGES = [
     "pnpm",
     # Desktop apps
     "obsidian",
+    # Backup
+    "restic",
     # System
     "brightnessctl",
     "impala",
