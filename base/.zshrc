@@ -58,6 +58,7 @@ alias prodb="npx heroku run --size=performance-l /bin/bash -a musashi-production
 alias prodc="npx heroku run bundle exec rails c -a musashi-production"
 alias p='k9s -n truelist'
 alias oc='opencode'
+alias fd='fd --hidden'
 
 alias dcu='docker-compose up'
 alias dcd='docker-compose down'
