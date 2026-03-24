@@ -23,13 +23,14 @@ ColumnLayout {
     Logger.i("WeatherIndicator", "Settings UI loaded");
   }
 
-    NComboBox {
-      label: pluginApi?.tr("settings.customColor.label") || "customColor"
-      description: pluginApi?.tr("settings.customColor.desc") || "Choose what color you would like the icon and text to be."
-      model: Color.colorKeyModel
-      currentKey: root.customColor
-      onSelected: key => root.customColor = key
-    }
+  NColorChoice {
+    label: pluginApi?.tr("settings.customColor.label") || "customColor"
+    description: pluginApi?.tr("settings.customColor.desc") || "Choose what color you would like the icon and text to be."
+    currentKey: root.customColor
+    onSelected: key => {
+                  root.customColor = key;
+                }
+  }
 
   NToggle {
     id: toggleIcon
