@@ -18,7 +18,5 @@ done
 # xdg desktop wlr thing for screen sharing
 /usr/lib/xdg-desktop-portal --replace &
 
-~/.config/sway/scripts/swayidle.sh &
-
 ~/.bin/wallpaper &
 ~/.config/sway/scripts/wallpaper_timer &
