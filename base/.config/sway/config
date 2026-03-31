@@ -258,6 +258,16 @@ for_window [app_id="org.pulseaudio.pavucontrol"] move scratchpad
 # Keybinding to show/hide noctalia volume panel
 bindsym $mod+i exec qs ipc -c noctalia-shell call volume togglePanel
 
+# Google Messages scratchpad configuration
+for_window [app_id="chrome-messages.google.com__web-Profile_1"] floating enable
+for_window [app_id="chrome-messages.google.com__web-Profile_1"] move scratchpad
+exec --no-startup-id google-chrome-stable --app=https://messages.google.com/web
+
+# Keybinding to show/hide and resize Google Messages
+bindsym $mod+t exec swaymsg '[app_id="chrome-messages.google.com__web-Profile_1"] scratchpad show; \
+    [app_id="chrome-messages.google.com__web-Profile_1"] resize set 45ppt 90ppt; \
+    [app_id="chrome-messages.google.com__web-Profile_1"] move position center;'
+
 # SpeedCrunch scratchpad configuration
 for_window [app_id="org.speedcrunch.speedcrunch"] floating enable
 for_window [app_id="org.speedcrunch.speedcrunch"] move scratchpad
