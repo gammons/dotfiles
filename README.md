@@ -357,6 +357,18 @@ sudo systemctl enable --now thinkfan
 
 A reboot is required for the modprobe config to take effect (or reload the module with `sudo modprobe -r thinkpad_acpi && sudo modprobe thinkpad_acpi fan_control=1`).
 
+### Known Issues
+
+**Noctalia crashes (SIGSEGV) after Qt upgrade**
+
+After running `yay -Syu`, noctalia may crash with a SIGSEGV in `xdg_popup_configure` when opening popups. This happens because yay can build AUR packages (like `noctalia-qs`) *before* pacman upgrades their dependencies (like Qt), resulting in an ABI mismatch.
+
+**Fix:** Rebuild noctalia-qs after a Qt upgrade:
+
+```bash
+yay -S noctalia-qs --rebuild
+```
+
 ### Troubleshooting
 
 If provisioning fails but the system boots, you can run the provisioning steps manually:
