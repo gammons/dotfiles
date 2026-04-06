@@ -1,0 +1,22 @@
+#!/bin/bash
+# Toggle Google Messages scratchpad, launching Chrome if needed.
+APP_ID_PATTERN="chrome-messages.google.com__web"
+
+if swaymsg -t get_tree | grep -q "$APP_ID_PATTERN"; then
+    swaymsg "[app_id=\"${APP_ID_PATTERN}.*\"] scratchpad show; \
+        [app_id=\"${APP_ID_PATTERN}.*\"] resize set 45ppt 90ppt; \
+        [app_id=\"${APP_ID_PATTERN}.*\"] move position center;"
+else
+    google-chrome-stable --app=https://messages.google.com/web &
+    # Wait for window to appear in scratchpad, then show it
+    for _ in $(seq 1 20); do
+        sleep 0.5
+        if swaymsg -t get_tree | grep -q "$APP_ID_PATTERN"; then
+            sleep 0.3
+            swaymsg "[app_id=\"${APP_ID_PATTERN}.*\"] scratchpad show; \
+                [app_id=\"${APP_ID_PATTERN}.*\"] resize set 45ppt 90ppt; \
+                [app_id=\"${APP_ID_PATTERN}.*\"] move position center;"
+            break
+        fi
+    done
+fi
