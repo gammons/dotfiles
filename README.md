@@ -357,6 +357,22 @@ sudo systemctl enable --now thinkfan
 
 A reboot is required for the modprobe config to take effect (or reload the module with `sudo modprobe -r thinkpad_acpi && sudo modprobe thinkpad_acpi fan_control=1`).
 
+### Bluetooth Adapter Disappears (AMD USB Controller Crash)
+
+On ThinkPad laptops with AMD USB controllers, the xHCI host controller (`0000:64:00.3`) can crash, taking the Bluetooth adapter offline. Symptoms: `bluetoothctl show` reports "No default controller available" and no Bluetooth device appears in `lsusb`.
+
+The fix is to unbind and rebind the USB controller from the xHCI driver:
+
+```bash
+sudo sh -c 'echo "0000:64:00.3" > /sys/bus/pci/drivers/xhci_hcd/unbind'
+sleep 2
+sudo sh -c 'echo "0000:64:00.3" > /sys/bus/pci/drivers/xhci_hcd/bind'
+sleep 3
+bluetoothctl connect 04:00:6E:D1:53:AD
+```
+
+Verify the PCI address matches your system with `lspci | grep -i usb`. You can confirm the crash occurred by checking `dmesg` for messages like `xhci_hcd 0000:64:00.3: HC died; cleaning up`.
+
 ### Known Issues
 
 **Noctalia crashes (SIGSEGV) after Qt upgrade**
