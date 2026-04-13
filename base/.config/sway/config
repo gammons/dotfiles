@@ -211,12 +211,9 @@ exec_always ~/.config/sway/scripts/clamshell
 
 exec swaybg --color=#000000
 
-# export sway env vars to systemd so noctalia can access SWAYSOCK, WAYLAND_DISPLAY, etc.
-# then start noctalia. exec_always ensures env is refreshed on sway reload and when
-# switching between user sessions.
-exec_always rm -rf /run/user/$(id -u)/quickshell/by-{shell,id,pid,path}; \
-    QT_QPA_PLATFORM=wayland dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK QT_QPA_PLATFORM && \
-    systemctl --user restart noctalia.service
+# Export sway env vars to systemd and start noctalia.
+# exec_always ensures env is refreshed on sway reload and when switching between user sessions.
+exec_always ~/.config/sway/scripts/start_noctalia
 
 ############################
 # Further customization

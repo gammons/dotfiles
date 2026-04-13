@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Export sway environment variables to systemd and start the graphical session.
+# This ensures noctalia (and any other graphical-session.target services) can
+# access WAYLAND_DISPLAY, SWAYSOCK, etc.
+#
+# Called from sway config via exec_always, so it runs on both initial startup
+# and sway reload.
+
+# Clean up stale quickshell state from previous sessions
+rm -rf "/run/user/$(id -u)/quickshell/by-shell" \
+       "/run/user/$(id -u)/quickshell/by-id" \
+       "/run/user/$(id -u)/quickshell/by-pid" \
+       "/run/user/$(id -u)/quickshell/by-path" 2>/dev/null
+
+# Wait for the D-Bus session bus to be available. On fresh login, sway's
+# exec_always can fire before the user bus is ready, causing
+# dbus-update-activation-environment to fail silently.
+for i in $(seq 1 30); do
+    if dbus-send --session --dest=org.freedesktop.DBus \
+        --type=method_call --print-reply \
+        /org/freedesktop/DBus org.freedesktop.DBus.GetId \
+        >/dev/null 2>&1; then
+        break
+    fi
+    sleep 0.2
+done
+
+# Export essential Wayland/Sway environment variables to the systemd user
+# manager so that user services (like noctalia) inherit them.
+dbus-update-activation-environment --systemd \
+    DISPLAY \
+    WAYLAND_DISPLAY \
+    SWAYSOCK \
+    XDG_CURRENT_DESKTOP=sway \
+    QT_QPA_PLATFORM=wayland
+
+# Start the graphical session target. This pulls in any enabled services that
+# have WantedBy=graphical-session.target (including noctalia.service).
+# On sway reload, this restarts noctalia so it picks up the fresh env vars.
+systemctl --user start graphical-session.target
+systemctl --user restart noctalia.service
