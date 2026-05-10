@@ -230,12 +230,12 @@ def create_disk_config(
 
     # Boot partition: 1 GiB FAT32 at start
     boot_partition = PartitionModification(
-        status=ModificationStatus.Create,
-        type=PartitionType.Primary,
+        status=ModificationStatus.CREATE,
+        type=PartitionType.PRIMARY,
         start=Size(1, Unit.MiB, sector_size),
         length=Size(BOOT_SIZE_GIB, Unit.GiB, sector_size),
         mountpoint=Path("/boot"),
-        fs_type=FilesystemType.Fat32,
+        fs_type=FilesystemType.FAT32,
         flags=[PartitionFlag.BOOT, PartitionFlag.ESP],
     )
     device_mod.add_partition(boot_partition)
@@ -250,12 +250,12 @@ def create_disk_config(
     main_length = total_size - main_start - end_reserved
 
     main_partition = PartitionModification(
-        status=ModificationStatus.Create,
-        type=PartitionType.Primary,
+        status=ModificationStatus.CREATE,
+        type=PartitionType.PRIMARY,
         start=main_start,
         length=main_length,
         mountpoint=None,  # Subvolumes define mountpoints
-        fs_type=FilesystemType.Btrfs,
+        fs_type=FilesystemType.BTRFS,
         mount_options=["compress=zstd"],
         flags=[],
         btrfs_subvols=[
@@ -277,7 +277,7 @@ def create_disk_config(
     if encryption_password:
         disk_encryption = DiskEncryption(
             encryption_password=Password(plaintext=encryption_password),
-            encryption_type=EncryptionType.Luks,
+            encryption_type=EncryptionType.LUKS,
             partitions=[main_partition],
             lvm_volumes=[],
         )
@@ -460,7 +460,7 @@ def perform_installation(
     # Perform filesystem operations (format and partition disks)
     info("Setting up filesystems...")
     fs_handler = FilesystemHandler(disk_config)
-    fs_handler.perform_filesystem_operations(show_countdown=True)
+    fs_handler.perform_filesystem_operations()
 
     # Determine if mkinitcpio should run (not needed if using UKI)
     run_mkinitcpio = not USE_UKI
@@ -481,7 +481,7 @@ def perform_installation(
             if (
                 disk_config.disk_encryption
                 and disk_config.disk_encryption.encryption_type
-                != EncryptionType.NoEncryption
+                != EncryptionType.NO_ENCRYPTION
             ):
                 installation.generate_key_files()
 
@@ -493,9 +493,10 @@ def perform_installation(
             locale_config=locale_config,
         )
 
-        # Setup swap (zram)
+        # Setup swap (zram) - 4.2+ setup_swap only configures zram; arg is now
+        # the compression algorithm (default ZramAlgorithm.ZSTD).
         info("Setting up swap...")
-        installation.setup_swap("zram")
+        installation.setup_swap()
 
         # Install bootloader
         info("Installing bootloader...")
