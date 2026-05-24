@@ -373,6 +373,34 @@ bluetoothctl connect 04:00:6E:D1:53:AD
 
 Verify the PCI address matches your system with `lspci | grep -i usb`. You can confirm the crash occurred by checking `dmesg` for messages like `xhci_hcd 0000:64:00.3: HC died; cleaning up`.
 
+### Brother Network Printer
+
+For a Brother network printer (e.g. HL-L3270CDW), install the printing stack:
+
+```bash
+sudo pacman -S cups ghostscript gsfonts avahi nss-mdns system-config-printer
+```
+
+Enable services:
+
+```bash
+sudo systemctl enable --now cups.socket avahi-daemon.service
+```
+
+Add `mdns_minimal [NOTFOUND=return]` to the `hosts:` line in `/etc/nsswitch.conf` (after `mymachines`, before `resolve`/`dns`) so `.local` hostname resolution works:
+
+```bash
+sudo sed -i 's/^\(hosts:.*mymachines\)\( \|$\)/\1 mdns_minimal [NOTFOUND=return]\2/' /etc/nsswitch.conf
+```
+
+The HL-L3270CDW supports IPP Everywhere/AirPrint, so it works driverless. Open `http://localhost:631` or run `system-config-printer` to add the printer — with Avahi running it should auto-discover.
+
+If driverless doesn't work well (missing duplex, color profile issues, etc.), install the Brother-specific driver from the AUR:
+
+```bash
+yay -S brother-hll3270cdw
+```
+
 ### Known Issues
 
 **Noctalia crashes (SIGSEGV) after Qt upgrade**

@@ -170,10 +170,19 @@ PACKAGES = [
     "polkit",
     "quickshell",
     "screenfetch",
+    # Printing (Brother network printer support via IPP Everywhere)
+    "avahi",
+    "cups",
+    "ghostscript",
+    "gsfonts",
+    "nss-mdns",
+    "system-config-printer",
 ]
 
 # Services to enable
 SERVICES = [
+    "avahi-daemon",
+    "cups.socket",
     "docker",
     "iwd",
     "NetworkManager",
@@ -301,6 +310,13 @@ def get_post_install_commands(users: list[str]) -> list[str]:
 wifi.backend=iwd
 '''
     commands.append(f"cat > /etc/NetworkManager/conf.d/iwd.conf << 'NM_EOF'\n{nm_iwd_config}NM_EOF")
+
+    # Enable mDNS (.local) hostname resolution for network printers and other
+    # zeroconf services. Idempotent: only inserts mdns_minimal if not present.
+    commands.append(
+        r"""grep -q mdns_minimal /etc/nsswitch.conf || """
+        r"""sed -i 's/^\(hosts:.*mymachines\)\( \|$\)/\1 mdns_minimal [NOTFOUND=return]\2/' /etc/nsswitch.conf"""
+    )
 
     # Install yay (AUR helper) - needs to be done as a non-root user
     # First, ensure base-devel and git are installed (should be from packages list)
