@@ -691,7 +691,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/grant-work/.config/themes/current/backgrounds",
+        "directory": "~/.config/themes/current/backgrounds",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [
@@ -702,7 +702,7 @@
         "linkLightAndDarkWallpapers": true,
         "monitorDirectories": [
             {
-                "directory": "/home/grant-work/.config/themes/current/backgrounds",
+                "directory": "~/.config/themes/current/backgrounds",
                 "name": "DP-2",
                 "wallpaper": ""
             }
