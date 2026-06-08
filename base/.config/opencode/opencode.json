@@ -1,4 +1,41 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["@ex-machina/opencode-anthropic-auth","superpowers@git+https://github.com/obra/superpowers.git"]
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (home server)",
+      "options": {
+        "baseURL": "http://192.168.1.226:11434/v1"
+      },
+      "models": {
+        "gemma4:12b": { "name": "Gemma 4 12B" }
+      }
+    }
+  },
+  "plugin": [
+    "opencode-claude-auth@latest",
+    "superpowers@git+https://github.com/obra/superpowers.git"
+  ],
+  "mcp": {
+    "posthog": {
+      "type": "remote",
+      "url": "https://mcp.posthog.com/mcp",
+      "oauth": {}
+    },
+    "stripe": {
+      "type": "remote",
+      "url": "https://mcp.stripe.com/",
+      "oauth": {}
+    },
+    "google-ads": {
+      "type": "remote",
+      "url": "http://localhost:8765/mcp",
+      "oauth": {}
+    },
+    "Truelist": {
+      "type": "remote",
+      "url": "https://api.truelist.io/mcp",
+      "oauth": {}
+    }
+  }
 }
