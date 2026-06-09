@@ -52,6 +52,9 @@ ln -s "$theme" "$CURRENT_LINK"
 # Reload alacritty by touching its config
 touch ~/.config/alacritty/alacritty.toml
 
+# Reload ghostty (it doesn't watch its config; SIGUSR2 triggers a reload)
+pkill -USR2 -x ghostty 2>/dev/null
+
 # Update swaylock config symlink
 mkdir -p ~/.config/swaylock
 ln -sf ~/.config/themes/current/swaylock.conf ~/.config/swaylock/config

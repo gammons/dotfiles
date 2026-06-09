@@ -1,0 +1,24 @@
+# Dynamic theme colors (managed by ~/.bin/changetheme)
+# The `?` makes the import optional so ghostty won't error if the symlink
+# is missing. `changetheme` repoints ~/.config/themes/current and reloads
+# ghostty via SIGUSR2.
+config-file = ?"~/.config/themes/current/ghostty.conf"
+
+# Font
+font-family = "CaskaydiaMono Nerd Font"
+font-style = Regular
+font-size = 9
+
+# Window
+window-padding-x = 14
+window-padding-y = 14
+confirm-close-surface = false
+resize-overlay = never
+
+# Cursor styling
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+# Keyboard bindings
+keybind = f11=toggle_fullscreen
