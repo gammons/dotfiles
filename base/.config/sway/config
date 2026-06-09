@@ -54,7 +54,7 @@ input "type:pointer" {
 ############################
 
 set $mod Mod1
-set $term kitty
+set $term ghostty
 set $menu qs ipc -c noctalia-shell call launcher toggle
 
 # Font for window titles. Will also be used by the bar unless a different font
