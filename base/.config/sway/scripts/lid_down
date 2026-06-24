@@ -11,5 +11,14 @@ if [ "$output_count" -gt 1 ]; then
   swaymsg output DP-2 scale 1.0 pos 0 0 res 3840x2160@144Hz  
   swaymsg output DP-3 scale 1.0 pos 0 0 res 3840x2160@144Hz
 else
-  qs ipc -c noctalia-shell call lockScreen lock
+  # Single (laptop) display: lock + suspend in one step.
+  #
+  # A plain `lockScreen lock` here hangs: closing the lid removes eDP-1
+  # (the only Wayland output), so noctalia can't render a lock surface and
+  # the session is stuck locked-with-no-display.
+  #
+  # lockAndSuspend activates the lock screen but falls through to
+  # `systemctl suspend` within ~3s regardless, so it can't hang. On resume
+  # the lid is open, eDP-1 is back, and the lock surface renders.
+  qs ipc -c noctalia-shell call sessionMenu lockAndSuspend
 fi
