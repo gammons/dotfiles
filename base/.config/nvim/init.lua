@@ -63,7 +63,7 @@ require('packer').startup(function()
   use 'hrsh7th/nvim-compe'
 
   -- tree sitter
-  use 'nvim-treesitter/nvim-treesitter'
+  use { 'nvim-treesitter/nvim-treesitter', branch = 'master', run = ':TSUpdate' }
   use 'neovim/nvim-lspconfig'
 
   -- telescope for finding things
@@ -346,12 +346,10 @@ vim.lsp.config('diagnosticls', {
   }
 })
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true, -- show that there is a problem
-    virtual_text = false, -- I can't deal with virtual text
-  }
-)
+vim.diagnostic.config({
+  underline = true, -- show that there is a problem
+  virtual_text = false, -- I can't deal with virtual text
+})
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
