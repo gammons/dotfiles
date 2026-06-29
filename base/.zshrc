@@ -71,6 +71,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 eval "$(atuin init zsh --disable-up-arrow)"
-eval "$(/usr/bin/mise activate zsh)"
+eval "$(mise activate zsh)"
 export ANDROID_HOME=~/Android/Sdk
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
