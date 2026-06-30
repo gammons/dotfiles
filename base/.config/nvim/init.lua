@@ -262,12 +262,26 @@ vim.api.nvim_set_keymap('', '<leader>n', "<cmd>NvimTreeToggle<cr>", {noremap = t
 vim.api.nvim_set_keymap('', '<leader>w', "<cmd>wq!<cr>", {noremap = true, silent = false})
 
 -------------------- TREE-SITTER ---------------------------
-local ts = require 'nvim-treesitter.configs'
-ts.setup {
-  ensure_installed = 'all',
-  ignore_install = { "phpdoc", "ipkg" },
-  highlight = {enable = true},
-}
+local ok, nts = pcall(require, 'nvim-treesitter')
+if ok and type(nts.install) == 'function' then
+  nts.setup()
+  nts.install({
+    'lua', 'vim', 'vimdoc', 'query',
+    'markdown', 'markdown_inline',
+    'ruby', 'javascript', 'typescript', 'tsx',
+    'html', 'css', 'scss',
+    'json', 'yaml', 'toml',
+    'bash', 'python', 'go', 'rust',
+    'dockerfile', 'gitcommit', 'gitignore', 'diff',
+    'regex', 'sql',
+  })
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(ev)
+    pcall(vim.treesitter.start, ev.buf)
+  end,
+})
 
 -------------------- Markdown options ------------------------
 vim.cmd("let g:vim_markdown_folding_disabled = 1")
