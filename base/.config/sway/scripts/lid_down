@@ -2,23 +2,27 @@
 
 touch /tmp/lid_down
 
-# Get number of connected outputs
-output_count=$(swaymsg -t get_outputs | jq 'length')
+exec >> /tmp/lid_down.log 2>&1
+echo "=== lid_down $(date) ==="
+swaymsg -t get_outputs | jq '[.[] | {name, active}]'
 
-if [ "$output_count" -gt 1 ]; then
+# Count active external monitors (exclude eDP and HEADLESS outputs)
+external_count=$(swaymsg -t get_outputs | jq '[.[] | select(.active == true and (.name | test("^eDP|^HEADLESS") | not))] | length')
+echo "external_count=$external_count"
+
+if [ "$external_count" -gt 0 ]; then
+  echo "taking multi-monitor path"
   swaymsg output eDP-1 disable
   swaymsg output DP-1 scale 1.0 pos 0 0 res 3840x2160@144Hz
   swaymsg output DP-2 scale 1.0 pos 0 0 res 3840x2160@144Hz
   swaymsg output DP-3 scale 1.0 pos 0 0 res 3840x2160@144Hz
 else
-  # Single (laptop) display: lock + suspend in one step.
-  #
-  # A plain `lockScreen lock` here hangs: closing the lid removes eDP-1
-  # (the only Wayland output), so noctalia can't render a lock surface and
-  # the session is stuck locked-with-no-display.
-  #
-  # lockAndSuspend activates the lock screen but falls through to
-  # `systemctl suspend` within ~3s regardless, so it can't hang. On resume
-  # the lid is open, eDP-1 is back, and the lock surface renders.
-  qs ipc -c noctalia-shell call sessionMenu lockAndSuspend
+  echo "taking suspend path"
+  qs ipc -c noctalia-shell call lockScreen lock &
+  echo "lock launched (bg), exit code: $?"
+  sleep 1
+  echo "about to suspend"
+  systemctl suspend
+  echo "suspend exit code: $?"
 fi
+echo "=== done ==="

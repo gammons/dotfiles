@@ -2,10 +2,10 @@
 
 touch /tmp/lid_up
 
-# Get number of connected outputs  
-output_count=$(swaymsg -t get_outputs | jq 'length')
+# Count active external monitors (exclude eDP and HEADLESS outputs)
+external_count=$(swaymsg -t get_outputs | jq '[.[] | select(.active == true and (.name | test("^eDP|^HEADLESS") | not))] | length')
 
-if [ "$output_count" -gt 1 ]; then
+if [ "$external_count" -gt 0 ]; then
   swaymsg output eDP-1 enable
   swaymsg output DP-1 scale 1.0 pos 3840 0 res 3840x2160@144Hz
   swaymsg output DP-2 scale 1.0 pos 3840 0 res 3840x2160@144Hz
