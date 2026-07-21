@@ -28,9 +28,13 @@
       "oauth": {}
     },
     "google-ads": {
-      "type": "remote",
-      "url": "http://localhost:8765/mcp",
-      "oauth": {}
+      "type": "local",
+      "command": ["/home/grant/local_code/google-ads-mcp/.venv/bin/google-ads-mcp"],
+      "environment": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/home/grant/.config/google-ads-mcp/adc.json",
+        "GOOGLE_ADS_DEVELOPER_TOKEN": "kJqN3_9zbI5w5zNlJ0ufwg",
+        "GOOGLE_CLOUD_PROJECT": "truelist"
+      }
     },
     "Truelist": {
       "type": "remote",
