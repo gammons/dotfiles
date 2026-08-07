@@ -2,12 +2,25 @@
 
 touch /tmp/lid_up
 
+exec 9>/tmp/lid.lock
+flock 9
+
+exec >> ~/.cache/lid_debug.log 2>&1
+echo "=== lid_up $(date) pid=$$ ==="
+swaymsg -t get_outputs | jq '[.[] | {name, active}]'
+
 # Count active external monitors (exclude eDP and HEADLESS outputs)
 external_count=$(swaymsg -t get_outputs | jq '[.[] | select(.active == true and (.name | test("^eDP|^HEADLESS") | not))] | length')
+echo "external_count=$external_count"
 
 if [ "$external_count" -gt 0 ]; then
   swaymsg output eDP-1 enable
   swaymsg output DP-1 scale 1.0 pos 3840 0 res 3840x2160@144Hz
   swaymsg output DP-2 scale 1.0 pos 3840 0 res 3840x2160@144Hz
   swaymsg output DP-3 scale 1.0 pos 3840 0 res 3840x2160@144Hz
+else
+  # Always restore the internal panel; a prior lid_down may have disabled it
+  swaymsg output eDP-1 enable
+  swaymsg output eDP-1 power on
 fi
+echo "=== done ==="

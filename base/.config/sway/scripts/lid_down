@@ -2,8 +2,11 @@
 
 touch /tmp/lid_down
 
-exec >> /tmp/lid_down.log 2>&1
-echo "=== lid_down $(date) ==="
+exec 9>/tmp/lid.lock
+flock 9
+
+exec >> ~/.cache/lid_debug.log 2>&1
+echo "=== lid_down $(date) pid=$$ ==="
 swaymsg -t get_outputs | jq '[.[] | {name, active}]'
 
 # Count active external monitors (exclude eDP and HEADLESS outputs)
@@ -22,7 +25,13 @@ else
   echo "lock launched (bg), exit code: $?"
   sleep 1
   echo "about to suspend"
-  systemctl suspend
-  echo "suspend exit code: $?"
+  if systemctl suspend; then
+    echo "suspend exit code: 0"
+  else
+    rc=$?
+    echo "suspend FAILED, exit code: $rc; recovering eDP-1"
+    swaymsg output eDP-1 enable
+    swaymsg output eDP-1 power on
+  fi
 fi
 echo "=== done ==="
