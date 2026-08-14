@@ -8,6 +8,8 @@ ARCHINSTALL_MODULES = [
     "archinstall.lib.disk.device_handler",
     "archinstall.lib.disk.filesystem",
     "archinstall.lib.installer",
+    "archinstall.lib.locale",
+    "archinstall.lib.log",
     "archinstall.lib.models",
     "archinstall.lib.models.bootloader",
     "archinstall.lib.models.device",

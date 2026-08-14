@@ -45,7 +45,10 @@ from archinstall.lib.models.device import (
 )
 from archinstall.lib.models.locale import LocaleConfiguration
 from archinstall.lib.models.users import Password, User
-from archinstall.lib.output import error, info, warn
+try:
+    from archinstall.lib.log import error, info, warn
+except ImportError:
+    from archinstall.lib.output import error, info, warn
 
 # Restore original argv for our own argument parsing
 sys.argv = _saved_argv
