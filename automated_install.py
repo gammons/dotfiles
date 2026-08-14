@@ -172,7 +172,6 @@ PACKAGES = [
     "impala",
     "keychain",
     "polkit",
-    "quickshell",
     "screenfetch",
     # Printing (Brother network printer support via IPP Everywhere)
     "avahi",
