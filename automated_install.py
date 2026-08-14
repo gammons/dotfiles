@@ -257,6 +257,31 @@ def ensure_cachyos_repos_in_target(
     target_conf.write_text("\n".join(new_lines) + "\n")
 
 
+def setup_cachyos_repos() -> None:
+    """Configure CachyOS repos on the live ISO (auto-detects x86-64 v3/v4 tier)."""
+    import subprocess
+    import tempfile
+    import urllib.request
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tarball = Path(tmpdir) / "cachyos-repo.tar.xz"
+        info(f"Downloading CachyOS repo setup from {CACHYOS_REPO_URL}...")
+        urllib.request.urlretrieve(CACHYOS_REPO_URL, tarball)
+        subprocess.run(["tar", "-xf", str(tarball), "-C", tmpdir], check=True)
+        script = Path(tmpdir) / "cachyos-repo" / "cachyos-repo.sh"
+        info("Running cachyos-repo.sh --install (auto-detects CPU tier)...")
+        subprocess.run(["bash", str(script), "--install"], check=True)
+
+    info("Verifying CachyOS repos...")
+    subprocess.run(["pacman", "-Sy", "--noconfirm"], check=True)
+    result = subprocess.run(["pacman", "-Si", "linux-cachyos"], capture_output=True)
+    if result.returncode != 0:
+        raise RuntimeError(
+            "CachyOS repos configured but linux-cachyos not found. "
+            "Fix the network/mirror issue or set USE_CACHYOS = False."
+        )
+
+
 def create_disk_config(
     device_path: str,
     encryption_password: str | None = None,
@@ -441,6 +466,9 @@ def perform_installation(
     # Get encryption password from credentials
     encryption_password = creds_dict.get("encryption_password")
 
+    if USE_CACHYOS and not dry_run:
+        setup_cachyos_repos()
+
     # Create disk configuration programmatically
     if not dry_run:
         info(f"Building disk configuration for {device_path}...")
@@ -501,6 +529,9 @@ def perform_installation(
         info(f"Timezone: {TIMEZONE}")
         info(f"Locale: {LOCALE_LANG}")
         info(f"Kernels: {KERNELS}")
+        if USE_CACHYOS:
+            info("CachyOS: repos configured on live ISO via cachyos-repo.sh --install (auto-detected tier)")
+            info("  - extra packages: cachyos-keyring, cachyos-mirrorlist")
         info(f"Bootloader: {BOOTLOADER.value} (UKI: {USE_UKI})")
         info(f"Packages ({len(PACKAGES)}): {', '.join(PACKAGES[:10])}...")
         info(f"Services: {', '.join(SERVICES)}")
@@ -560,6 +591,9 @@ def perform_installation(
             locale_config=locale_config,
         )
 
+        if USE_CACHYOS:
+            ensure_cachyos_repos_in_target(MOUNTPOINT)
+
         # Setup swap (zram) - 4.2+ setup_swap only configures zram; arg is now
         # the compression algorithm (default ZramAlgorithm.ZSTD).
         info("Setting up swap...")
@@ -582,7 +616,8 @@ def perform_installation(
 
         # Install additional packages
         info("Installing additional packages...")
-        installation.add_additional_packages(PACKAGES)
+        packages = (["cachyos-keyring", "cachyos-mirrorlist"] if USE_CACHYOS else []) + PACKAGES
+        installation.add_additional_packages(packages)
 
         # Add users to deferred groups (groups created by packages like docker)
         if user_deferred_groups:
