@@ -109,12 +109,11 @@ PACKAGES = [
     "tree-sitter",
     "tree-sitter-lua",
     "wget",
-    # Sway & Wayland (sway is replaced by swayfx from AUR in post-install)
+    # Sway & Wayland (swayfx from AUR provides sway — installed in post-install)
     "fuzzel",
     "grim",
     "playerctl",
     "slurp",
-    "sway",
     "swappy",
     "swaybg",
     "swayidle",
