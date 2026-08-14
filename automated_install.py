@@ -273,6 +273,14 @@ def setup_cachyos_repos() -> None:
         )
         subprocess.run(["tar", "-xf", str(tarball), "-C", tmpdir], check=True)
         script = Path(tmpdir) / "cachyos-repo" / "cachyos-repo.sh"
+        # The script ends with an unconditional `pacman -Syu`, which upgrades the
+        # entire live ISO system into RAM (airootfs) and can run out of space or
+        # upgrade archinstall mid-run. Neutralize it; we only need the repo setup.
+        subprocess.run(
+            ["sed", "-i", "-E", r"s/^([[:space:]]*)pacman -Syu[[:space:]]*$/\1true/",
+             str(script)],
+            check=True,
+        )
         info("Running cachyos-repo.sh --install (auto-detects CPU tier)...")
         subprocess.run(["bash", str(script), "--install"], check=True)
 
