@@ -73,7 +73,9 @@ TIMEZONE = "America/New_York"
 LOCALE_LANG = "en_US.UTF-8"
 LOCALE_ENCODING = "UTF-8"
 KEYBOARD_LAYOUT = "us"
-KERNELS = ["linux"]
+CACHYOS_REPO_URL = "https://mirror.cachyos.org/cachyos-repo.tar.xz"
+USE_CACHYOS = True
+KERNELS = ["linux-cachyos"] if USE_CACHYOS else ["linux"]
 
 # Bootloader
 BOOTLOADER = Bootloader.Systemd
@@ -204,6 +206,48 @@ def load_credentials(creds_path: Path) -> dict:
 
     with open(creds_path) as f:
         return json.load(f)
+
+
+def kernels_for(use_cachyos: bool) -> list[str]:
+    return ["linux-cachyos"] if use_cachyos else ["linux"]
+
+
+def extract_cachyos_repo_sections(pacman_conf: str) -> str:
+    """Extract [cachyos...] repo sections (with their body lines) from pacman.conf text."""
+    sections: list[str] = []
+    current: list[str] = []
+    for line in pacman_conf.splitlines():
+        if line.startswith("["):
+            if current:
+                sections.extend(current)
+            current = [line] if line.startswith("[cachyos") else []
+        elif current:
+            current.append(line)
+    if current:
+        sections.extend(current)
+    return "\n".join(sections)
+
+
+def ensure_cachyos_repos_in_target(
+    mountpoint: Path,
+    iso_conf_path: Path = Path("/etc/pacman.conf"),
+) -> None:
+    """Ensure the target system's pacman.conf has the CachyOS repo sections.
+
+    archinstall's pacstrap should propagate the ISO's pacman.conf, but if the
+    [cachyos...] sections are missing, copy them from the ISO's pacman.conf.
+    """
+    target_conf = mountpoint / "etc" / "pacman.conf"
+    text = target_conf.read_text()
+    if "[cachyos" in text:
+        info("Target pacman.conf already has CachyOS repos")
+        return
+    warn("Target pacman.conf missing CachyOS repos; copying from ISO")
+    sections = extract_cachyos_repo_sections(iso_conf_path.read_text())
+    if not sections:
+        raise RuntimeError("No CachyOS repo sections found in ISO pacman.conf")
+    with target_conf.open("a") as f:
+        f.write("\n" + sections + "\n")
 
 
 def create_disk_config(
