@@ -92,7 +92,7 @@ PACKAGES = [
     # Shell
     "zsh",
     # Terminal & CLI tools
-    "alacritty",
+    "ghostty",
     "atuin",
     "bat",
     "btop",
