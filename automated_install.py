@@ -264,12 +264,13 @@ def setup_cachyos_repos() -> None:
     """Configure CachyOS repos on the live ISO (auto-detects x86-64 v3/v4 tier)."""
     import subprocess
     import tempfile
-    import urllib.request
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tarball = Path(tmpdir) / "cachyos-repo.tar.xz"
         info(f"Downloading CachyOS repo setup from {CACHYOS_REPO_URL}...")
-        urllib.request.urlretrieve(CACHYOS_REPO_URL, tarball)
+        subprocess.run(
+            ["curl", "-fSL", "-o", str(tarball), CACHYOS_REPO_URL], check=True
+        )
         subprocess.run(["tar", "-xf", str(tarball), "-C", tmpdir], check=True)
         script = Path(tmpdir) / "cachyos-repo" / "cachyos-repo.sh"
         info("Running cachyos-repo.sh --install (auto-detects CPU tier)...")
