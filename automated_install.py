@@ -638,6 +638,11 @@ def perform_installation(
         packages = (["cachyos-keyring", "cachyos-mirrorlist", "cachyos-v3-mirrorlist", "cachyos-v4-mirrorlist"] if USE_CACHYOS else []) + PACKAGES
         installation.add_additional_packages(packages)
 
+        if USE_CACHYOS:
+            # Trust the CachyOS signing keys in the target's pacman keyring
+            # (cachyos-keyring package was just installed above).
+            installation.arch_chroot("pacman-key --populate cachyos")
+
         # Add users to deferred groups (groups created by packages like docker)
         if user_deferred_groups:
             info("Adding users to package-created groups...")
