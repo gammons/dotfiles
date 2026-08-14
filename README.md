@@ -311,13 +311,23 @@ qemu-img create -f qcow2 archtest.qcow2 50G
 cp /usr/share/ovmf/x64/OVMF_VARS.4m.fd .
 
 # Boot the ISO
+# Notes:
+#   - virtio-vga-gl + gtk gl=on gives the guest GPU acceleration (needed for sway)
+#   - virtio-tablet-pci + show-cursor=on makes the mouse cursor render/tracking work
+#   - hostfwd forwards host port 2222 to guest ssh (start sshd in the live env with `passwd` + `systemctl start sshd`)
+#   - the disk appears as /dev/sda in the guest (not /dev/vda) with this command
 qemu-system-x86_64 -enable-kvm \
   -machine q35,accel=kvm \
   -cpu host -m 4096 \
+  -device virtio-vga-gl \
+  -device virtio-tablet-pci \
+  -display gtk,gl=on,show-cursor=on \
   -drive if=pflash,format=raw,readonly=on,file=/usr/share/ovmf/x64/OVMF_CODE.4m.fd \
   -drive if=pflash,format=raw,file=OVMF_VARS.4m.fd \
   -cdrom archlinux-*.iso \
   -drive file=archtest.qcow2,format=qcow2 \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net0 \
   -boot d
 ```
 
