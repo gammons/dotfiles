@@ -635,7 +635,7 @@ def perform_installation(
 
         # Install additional packages
         info("Installing additional packages...")
-        packages = (["cachyos-keyring", "cachyos-mirrorlist"] if USE_CACHYOS else []) + PACKAGES
+        packages = (["cachyos-keyring", "cachyos-mirrorlist", "cachyos-v3-mirrorlist", "cachyos-v4-mirrorlist"] if USE_CACHYOS else []) + PACKAGES
         installation.add_additional_packages(packages)
 
         # Add users to deferred groups (groups created by packages like docker)
