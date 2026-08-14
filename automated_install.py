@@ -217,10 +217,11 @@ def extract_cachyos_repo_sections(pacman_conf: str) -> str:
     sections: list[str] = []
     current: list[str] = []
     for line in pacman_conf.splitlines():
-        if line.startswith("["):
+        stripped = line.lstrip()
+        if stripped.startswith("["):
             if current:
                 sections.extend(current)
-            current = [line] if line.startswith("[cachyos") else []
+            current = [line] if stripped.startswith("[cachyos") else []
         elif current:
             current.append(line)
     if current:
@@ -238,16 +239,22 @@ def ensure_cachyos_repos_in_target(
     [cachyos...] sections are missing, copy them from the ISO's pacman.conf.
     """
     target_conf = mountpoint / "etc" / "pacman.conf"
-    text = target_conf.read_text()
-    if "[cachyos" in text:
+    lines = target_conf.read_text().splitlines()
+    if any(line.lstrip().startswith("[cachyos") for line in lines):
         info("Target pacman.conf already has CachyOS repos")
         return
     warn("Target pacman.conf missing CachyOS repos; copying from ISO")
     sections = extract_cachyos_repo_sections(iso_conf_path.read_text())
     if not sections:
         raise RuntimeError("No CachyOS repo sections found in ISO pacman.conf")
-    with target_conf.open("a") as f:
-        f.write("\n" + sections + "\n")
+    insert_at = len(lines)
+    for i, line in enumerate(lines):
+        stripped = line.lstrip()
+        if stripped.startswith("[") and not stripped.startswith("[options]"):
+            insert_at = i
+            break
+    new_lines = lines[:insert_at] + sections.splitlines() + [""] + lines[insert_at:]
+    target_conf.write_text("\n".join(new_lines) + "\n")
 
 
 def create_disk_config(

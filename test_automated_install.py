@@ -65,7 +65,7 @@ def test_extract_cachyos_repo_sections_none():
     assert ai.extract_cachyos_repo_sections("[core]\nInclude = x\n") == ""
 
 
-def test_ensure_appends_when_missing(tmp_path):
+def test_ensure_inserts_before_core_when_missing(tmp_path):
     (tmp_path / "etc").mkdir()
     target = tmp_path / "etc" / "pacman.conf"
     target.write_text("[core]\nInclude = /etc/pacman.d/mirrorlist\n")
@@ -76,6 +76,19 @@ def test_ensure_appends_when_missing(tmp_path):
     assert "[core]" in text
     assert "[cachyos-v3]" in text
     assert "[cachyos]" in text
+    assert text.index("[cachyos") < text.index("[core]")
+
+
+def test_ensure_raises_when_iso_has_no_cachyos_sections(tmp_path):
+    import pytest
+
+    (tmp_path / "etc").mkdir()
+    target = tmp_path / "etc" / "pacman.conf"
+    target.write_text("[core]\nInclude = /etc/pacman.d/mirrorlist\n")
+    iso = tmp_path / "iso-pacman.conf"
+    iso.write_text("[core]\nInclude = /etc/pacman.d/mirrorlist\n")
+    with pytest.raises(RuntimeError):
+        ai.ensure_cachyos_repos_in_target(tmp_path, iso_conf_path=iso)
 
 
 def test_ensure_noop_when_present(tmp_path):
