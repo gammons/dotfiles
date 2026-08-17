@@ -40,6 +40,11 @@
       "type": "remote",
       "url": "https://api.truelist.io/mcp",
       "oauth": {}
+    },
+    "userevidence": {
+      "type": "remote",
+      "url": "https://app.userevidence.com/mcp?audience=customer",
+      "oauth": {}
     }
   }
 }
