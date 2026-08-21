@@ -109,14 +109,16 @@ PACKAGES = [
     "tree-sitter",
     "tree-sitter-lua",
     "wget",
-    # Sway & Wayland (swayfx from AUR provides sway — installed in post-install)
+    # Sway & Wayland (swayfx is installed separately in post-install; see below)
     "fuzzel",
     "grim",
+    "noctalia-shell",
     "playerctl",
     "slurp",
     "swappy",
     "swaybg",
     "swayidle",
+    "swaylock-effects",
     "swaync",
     "swayosd",
     "uwsm",
@@ -463,12 +465,16 @@ user = "greeter"
             "'"
         )
 
-    # Install AUR packages using yay (run as first non-root user)
+    # Install user apps from AUR using yay (run as first non-root user)
     first_user = users[0] if users else None
     if first_user:
         commands.append(
-            f"su - {first_user} -c 'yay -S --noconfirm google-chrome noctalia-shell slack-desktop spotify swayfx swaylock-effects'"
+            f"su - {first_user} -c 'yay -S --noconfirm --needed google-chrome slack-desktop spotify'"
         )
+        # CachyOS swayfx 0.6-1 currently depends on AUR wlroots0.19. Install the
+        # dependency first and keep swayfx last so it cannot block the apps above.
+        commands.append(f"su - {first_user} -c 'yay -S --noconfirm --needed wlroots0.19'")
+        commands.append(f"su - {first_user} -c 'yay -S --noconfirm --needed swayfx'")
 
     return commands
 
@@ -562,7 +568,8 @@ def perform_installation(
         info("  - Enable noctalia systemd user service")
         info("  - Set theme to nord")
         info("  - Install packer.nvim")
-        info("  - Install AUR packages: google-chrome, noctalia-shell, slack-desktop, spotify, swayfx, swaylock-effects")
+        info("  - Install AUR user apps: google-chrome, slack-desktop, spotify")
+        info("  - Install swayfx last (wlroots0.19 first; required by CachyOS swayfx 0.6-1)")
         return
 
     # Build disk config for real installation

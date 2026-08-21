@@ -244,6 +244,9 @@
                     "id": "Tray",
                     "pinned": [
                     ]
+                },
+                {
+                    "id": "plugin:battery-monitor-plus"
                 }
             ]
         }
@@ -691,7 +694,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "~/.config/themes/current/backgrounds",
+        "directory": "/home/grant/Pictures/Wallpapers",
         "enableMultiMonitorDirectories": false,
         "enabled": false,
         "favorites": [

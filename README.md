@@ -183,7 +183,8 @@ The script performs a complete Arch Linux installation including:
   - Enables noctalia systemd user service (shell/launcher for sway)
   - Sets zsh as default shell
   - Installs packer.nvim
-  - Installs AUR packages (swayfx, swaylock-effects, noctalia-shell)
+  - Installs AUR user apps (google-chrome, slack-desktop, spotify)
+  - Installs swayfx last, separately (wlroots0.19 first while CachyOS swayfx needs it)
   - Configures greetd with tuigreet
 
 ### Prerequisites
@@ -437,8 +438,8 @@ rm -rf ~/yay
 git clone https://github.com/gammons/dotfiles ~/.dotfiles
 cd ~/.dotfiles && stow -d ~/.dotfiles -t ~ base
 
-# Install AUR packages
-yay -S swayfx swaylock-effects noctalia-shell
+# Install AUR user apps and swayfx (swayfx last; wlroots0.19 is needed by CachyOS swayfx 0.6-1)
+yay -S google-chrome slack-desktop spotify wlroots0.19 swayfx
 
 # Enable noctalia (shell/launcher service for sway)
 systemctl --user enable noctalia.service
