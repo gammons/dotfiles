@@ -193,13 +193,18 @@
                     "unreadBadgeColor": "primary"
                 },
                 {
-                    "deviceNativePath": "__default__",
-                    "displayMode": "icon-always",
-                    "hideIfIdle": false,
-                    "hideIfNotDetected": true,
-                    "id": "Battery",
-                    "showNoctaliaPerformance": false,
-                    "showPowerProfiles": false
+                    "defaultSettings": {
+                        "deviceNativePath": "__default__",
+                        "displayMode": "graphic-clean",
+                        "hideIfIdle": false,
+                        "hideIfNotDetected": true,
+                        "refreshIntervalSeconds": 5,
+                        "showNoctaliaPerformance": false,
+                        "showPowerInBar": true,
+                        "showPowerProfiles": false,
+                        "showTimeInBar": true
+                    },
+                    "id": "plugin:battery-monitor-plus"
                 },
                 {
                     "displayMode": "onhover",
@@ -244,9 +249,6 @@
                     "id": "Tray",
                     "pinned": [
                     ]
-                },
-                {
-                    "id": "plugin:battery-monitor-plus"
                 }
             ]
         }
@@ -404,10 +406,10 @@
     },
     "general": {
         "allowPanelsOnScreenWithoutBar": true,
-        "allowPasswordWithFprintd": false,
+        "allowPasswordWithFprintd": true,
         "animationDisabled": false,
         "animationSpeed": 1,
-        "autoStartAuth": false,
+        "autoStartAuth": true,
         "avatarImage": "~/.config/noctalia/me.jpeg",
         "boxRadiusRatio": 1,
         "clockFormat": "hh\\nmm",
@@ -461,7 +463,7 @@
         "shadowOffsetX": 2,
         "shadowOffsetY": 3,
         "showChangelogOnStartup": true,
-        "showHibernateOnLockScreen": false,
+        "showHibernateOnLockScreen": true,
         "showScreenCorners": false,
         "showSessionButtonsOnLockScreen": true,
         "smoothScrollEnabled": true,
