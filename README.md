@@ -368,6 +368,53 @@ sudo systemctl enable --now thinkfan
 
 A reboot is required for the modprobe config to take effect (or reload the module with `sudo modprobe -r thinkpad_acpi && sudo modprobe thinkpad_acpi fan_control=1`).
 
+### Fingerprint Reader (fprintd)
+
+Tested on a Framework Laptop 13 (AMD Ryzen AI 300 series) with a Goodix MOC sensor (`27c6:609c`), which `libfprint` supports out of the box.
+
+`automated_install.py` handles the whole system side (see `get_fingerprint_commands()`): it installs `fprintd`, writes both greetd PAM stacks, adds `pam_fprintd.so` to `/etc/pam.d/system-auth`, and drops a polkit rule so your user can manage their own fingerprints.
+
+Enrolling a finger requires physically touching the sensor, so it is the one step that can't be automated. After first boot:
+
+```bash
+fprintd-enroll          # touch the sensor repeatedly until it completes
+fprintd-verify          # confirm it matches
+fprintd-list "$USER"    # show enrolled fingers
+```
+
+That covers the greeter login, the Noctalia lock screen, `sudo`, and polkit prompts.
+
+#### Why there are two greetd PAM stacks
+
+**Do not add `pam_fprintd.so` to `/etc/pam.d/greetd-greeter`.** It will leave you with no login screen at all.
+
+greetd starts the *greeter* session (user `greeter`) without authenticating it, so it calls `pam_setcred()` with no preceding successful `pam_authenticate()`. `pam_fprintd` returns `PERM_DENIED` from `setcred` in that state, greetd exits non-zero, hits its systemd restart limit, and stops:
+
+```
+greetd[2639]: error: authentication error: pam_setcred: PERM_DENIED
+greetd.service: Failed with result 'start-limit-hit'.
+```
+
+The real user session *is* authenticated first, so `/etc/pam.d/greetd` can safely include the shared chain and pick up `pam_fprintd` from `system-auth`. Hence the split:
+
+| PAM service | `pam_fprintd`? | Used for |
+| --- | --- | --- |
+| `greetd` | yes, via `system-local-login` | your authenticated login session |
+| `greetd-greeter` | **no** | the unauthenticated greeter UI |
+
+`config.toml` pins `service = "greetd-greeter"` rather than relying on greetd's built-in default, so the fprintd-free stack is always the one the greeter uses.
+
+Expect a short pause at the greeter after entering your username — that's `pam_fprintd` waiting for a touch before falling back to the password prompt.
+
+#### Recovery
+
+If a PAM change locks you out of the login screen, switch to a TTY with **Ctrl+Alt+F2** (the `login` stack is independent of greetd) and restore a backup:
+
+```bash
+sudo cp /etc/pam.d/greetd.bak.<timestamp> /etc/pam.d/greetd
+sudo systemctl restart greetd
+```
+
 ### Bluetooth Adapter Disappears (AMD USB Controller Crash)
 
 On ThinkPad laptops with AMD USB controllers, the xHCI host controller (`0000:64:00.3`) can crash, taking the Bluetooth adapter offline. Symptoms: `bluetoothctl show` reports "No default controller available" and no Bluetooth device appears in `lsusb`.
@@ -423,6 +470,30 @@ After running `yay -Syu`, noctalia may crash with a SIGSEGV in `xdg_popup_config
 ```bash
 yay -S noctalia-qs --rebuild
 ```
+
+**Noctalia lock screen ignores the fingerprint reader**
+
+With both **Auto-start authentication** and **Allow password login with fprintd** enabled, Noctalia's lock screen can stop responding to the sensor. `allowPasswordWithFprintd` runs `fprintd-verify` to occupy the sensor while you type, but `tryUnlock()` doesn't stop that process before starting PAM auth, so `pam_fprintd` can't claim the device:
+
+```
+fprintd[825306]: Authorization denied to :1.1325 to call method 'Claim'
+  for device 'Goodix MOC Fingerprint Sensor': Device was already claimed
+```
+
+**Fix:** in `/etc/xdg/quickshell/noctalia-shell/Modules/LockScreen/LockContext.qml`, in `tryUnlock()`, stop the sensor-occupying process and guard against re-entrant starts before calling `pam.start()`:
+
+```qml
+if (unlockInProgress) {
+  return;
+}
+occupyFingerprintSensorProc.running = false;
+pam.start();
+unlockInProgress = true;
+```
+
+Then `systemctl --user restart noctalia.service`. If the sensor is stuck claimed, `sudo systemctl restart fprintd` clears it.
+
+This patches a package-owned file, so **`noctalia-shell` updates will overwrite it** — re-apply if the symptom returns, and check whether it's been fixed upstream first. It is deliberately not automated in `automated_install.py` for that reason.
 
 ### Troubleshooting
 

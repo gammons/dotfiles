@@ -175,6 +175,8 @@ PACKAGES = [
     "keychain",
     "polkit",
     "screenfetch",
+    # Fingerprint reader (pulls libfprint); see get_fingerprint_commands()
+    "fprintd",
     # Printing (Brother network printer support via IPP Everywhere)
     "avahi",
     "cups",
@@ -390,6 +392,112 @@ def create_disk_config(
     return disk_config
 
 
+def get_fingerprint_commands(users: list[str]) -> list[str]:
+    """
+    Generate commands that wire up fprintd fingerprint authentication.
+
+    The split between the two greetd PAM stacks is load-bearing:
+
+    greetd starts the greeter session (user "greeter") *without* authenticating
+    it, so it calls pam_setcred() with no preceding successful
+    pam_authenticate(). pam_fprintd returns PERM_DENIED from setcred in that
+    state, which makes greetd exit non-zero, hit its systemd restart limit, and
+    leave the machine with no login screen at all. So /etc/pam.d/greetd-greeter
+    must never reach pam_fprintd.
+
+    The real user session *is* authenticated, so /etc/pam.d/greetd can include
+    the shared chain and pick up pam_fprintd from system-auth. That is what
+    makes fingerprint login work at the greeter prompt.
+
+    Enrolling a finger requires physically touching the sensor, so it cannot be
+    automated here. Run `fprintd-enroll` after first boot; see the README.
+    """
+    commands = []
+
+    # PAM stack for the authenticated user session. Reaches pam_fprintd via
+    # system-local-login -> system-login -> system-auth.
+    greetd_pam = r'''#%PAM-1.0
+#
+# Managed by dotfiles/automated_install.py
+#
+# Uses the standard chain, which includes pam_fprintd.so via system-auth, so
+# the login screen can authenticate by fingerprint. Safe here because greetd
+# authenticates this session before calling pam_setcred.
+
+auth       required     pam_securetty.so
+auth       requisite    pam_nologin.so
+auth       include      system-local-login
+
+account    include      system-local-login
+password   include      system-local-login
+session    include      system-local-login
+'''
+    commands.append(
+        f"cat > /etc/pam.d/greetd << 'PAM_GREETD_EOF'\n{greetd_pam}PAM_GREETD_EOF"
+    )
+
+    # PAM stack for the unauthenticated greeter session. Mirrors the auth
+    # section of system-local-login but deliberately omits pam_fprintd.so.
+    # Adding pam_fprintd here breaks greetd startup entirely.
+    greeter_pam = r'''#%PAM-1.0
+#
+# Managed by dotfiles/automated_install.py
+#
+# DO NOT add pam_fprintd.so to this file. greetd starts the greeter session
+# without authenticating it, and pam_fprintd's pam_setcred returns
+# PERM_DENIED with no prior pam_authenticate, which crash-loops greetd.
+
+auth       required     pam_securetty.so
+auth       requisite    pam_nologin.so
+auth       required                    pam_faillock.so      preauth
+-auth      [success=2 default=ignore]  pam_systemd_home.so
+auth       [success=1 default=bad]     pam_unix.so          try_first_pass nullok
+auth       [default=die]               pam_faillock.so      authfail
+auth       optional                    pam_permit.so
+auth       required                    pam_env.so
+auth       required                    pam_faillock.so      authsucc
+
+account    include      system-local-login
+password   include      system-local-login
+session    include      system-local-login
+'''
+    commands.append(
+        f"cat > /etc/pam.d/greetd-greeter << 'PAM_GREETER_EOF'\n{greeter_pam}PAM_GREETER_EOF"
+    )
+
+    # Enable fingerprint auth system-wide (login, sudo, polkit, lock screen).
+    # Idempotent: only inserts pam_fprintd if it is not already present.
+    commands.append(
+        r"""grep -q pam_fprintd /etc/pam.d/system-auth || """
+        r"""sed -i '/^auth.*pam_unix\.so/i auth       sufficient                  pam_fprintd.so' """
+        r"""/etc/pam.d/system-auth"""
+    )
+
+    # Let these users enroll and verify fingerprints without an admin prompt.
+    users_js = ", ".join(f'"{u}"' for u in users)
+    polkit_rule = f'''// Managed by dotfiles/automated_install.py
+// Allow these users to manage their own fingerprints without admin auth.
+polkit.addRule(function(action, subject) {{
+    var fprintUsers = [{users_js}];
+    if (action.id == "net.reactivated.fprint.device.enroll" ||
+        action.id == "net.reactivated.fprint.device.verify" ||
+        action.id == "net.reactivated.fprint.device.setusername" ||
+        action.id == "net.reactivated.fprint.device.delete") {{
+        if (fprintUsers.indexOf(subject.user) !== -1) {{
+            return polkit.Result.YES;
+        }}
+    }}
+}});
+'''
+    commands.append("mkdir -p /etc/polkit-1/rules.d")
+    commands.append(
+        f"cat > /etc/polkit-1/rules.d/50-fprintd.rules << 'POLKIT_EOF'\n{polkit_rule}POLKIT_EOF"
+    )
+    commands.append("chmod 644 /etc/polkit-1/rules.d/50-fprintd.rules")
+
+    return commands
+
+
 def get_post_install_commands(users: list[str]) -> list[str]:
     """
     Generate post-installation commands for provisioning.
@@ -426,14 +534,22 @@ wifi.backend=iwd
     commands.append("mkdir -p /etc/greetd")
 
     # Write greetd config to use tuigreet with sway
+    # `service` is pinned rather than left to greetd's built-in default so the
+    # greeter always uses the fprintd-free stack written by
+    # get_fingerprint_commands(). See that function for why it must not reach
+    # pam_fprintd.
     greetd_config = r'''[terminal]
 vt = 1
 
 [default_session]
 command = "tuigreet --time --remember --cmd sway"
 user = "greeter"
+service = "greetd-greeter"
 '''
     commands.append(f"cat > /etc/greetd/config.toml << 'GREETD_EOF'\n{greetd_config}GREETD_EOF")
+
+    # Fingerprint reader: packages, PAM stacks and polkit rule.
+    commands.extend(get_fingerprint_commands(users))
 
     for username in users:
         # Set zsh as default shell
