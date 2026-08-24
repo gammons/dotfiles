@@ -480,20 +480,41 @@ fprintd[825306]: Authorization denied to :1.1325 to call method 'Claim'
   for device 'Goodix MOC Fingerprint Sensor': Device was already claimed
 ```
 
-**Fix:** in `/etc/xdg/quickshell/noctalia-shell/Modules/LockScreen/LockContext.qml`, in `tryUnlock()`, stop the sensor-occupying process and guard against re-entrant starts before calling `pam.start()`:
+**Fix:** in `/etc/xdg/quickshell/noctalia-shell/Modules/LockScreen/LockContext.qml`, release the sensor before PAM tries to claim it, and guard against opening a second PAM conversation. Add a **new** property for that guard:
 
 ```qml
-if (unlockInProgress) {
-  return;
+// "A PAM conversation is currently open." Never bind this to UI state.
+property bool pamSessionActive: false
+
+function startAuth() {
+  if (pamSessionActive) {
+    return;
+  }
+  occupyFingerprintSensorProc.running = false;  // release sensor for pam_fprintd
+  pam.start();
+  pamSessionActive = true;
 }
-occupyFingerprintSensorProc.running = false;
-pam.start();
-unlockInProgress = true;
 ```
+
+Call `startAuth()` from `onPamReadyChanged`, from the empty-text branch of `onCurrentTextChanged`, and at the end of `tryUnlock()`. Clear `pamSessionActive = false` in `onCompleted`, in `onError`, and where `pam.abort()` is called.
+
+> **Do not reuse `unlockInProgress` as that guard.** It means "a credential was submitted, awaiting the PAM result", and the UI binds the password field to it:
+>
+> ```qml
+> TextInput { enabled: !lockContext.unlockInProgress }
+> ```
+>
+> Setting it at `pam.start()` makes the lock screen show "enter your password" while the input is **disabled**, so you can type nothing and the fingerprint stage has already passed. With `autoStartAuth` enabled that happens the instant the screen locks. Leave `unlockInProgress` assigned only in the two `pam.respond()` paths.
 
 Then `systemctl --user restart noctalia.service`. If the sensor is stuck claimed, `sudo systemctl restart fprintd` clears it.
 
+**Never restart noctalia while the screen is locked.** It holds a `WlSessionLock`; if the client dies without unlocking, the compositor is required to stay locked and sway shows a blank/red screen. There is no unlock IPC — only `lockScreen lock`. If a lock screen ever traps you, switch to a TTY with **Ctrl+Alt+F2** and run `pkill -u "$USER" sway` to drop back to the greeter.
+
 This patches a package-owned file, so **`noctalia-shell` updates will overwrite it** — re-apply if the symptom returns, and check whether it's been fixed upstream first. It is deliberately not automated in `automated_install.py` for that reason.
+
+Related upstream issues (both against the v5 C++ rewrite, not the 4.7.x QML shell, but the same root causes):
+[#3602](https://github.com/noctalia-dev/noctalia/issues/3602) — lock screen `Claim()` asks for `enroll` instead of `verify`, which is why the polkit rule above grants both.
+[#3277](https://github.com/noctalia-dev/noctalia/issues/3277) — the hardcoded `login` PAM service makes password entry block on `pam_fprintd`.
 
 ### Troubleshooting
 
