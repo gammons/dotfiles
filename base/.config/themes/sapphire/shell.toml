@@ -1,0 +1,148 @@
+# Omarchy Quattro surfaces for Sapphire.
+# Deep-blue panels, a soft ice-to-rose frame, and a focused sapphire selection
+# carry the existing desktop palette into the shell without changing legacy files.
+
+[bar]
+background = "#060D1F"
+background-alpha = 1.0
+text = "#E0F7FA"
+active = "#F7C3C6"
+scale-with-font = true
+size-horizontal = 26
+size-vertical = 28
+
+[hyprland]
+active-border = "rgba(d7ebe9ee) rgba(f2c8cbee) 45deg"
+active-border-foreground = "#E0F7FA"
+
+[controls]
+normal-color = "#51688E"
+normal-fill-alpha = 0.08
+normal-border-width = 1
+normal-border-alpha = 0.35
+
+hover-cursor-color = "#6488EA"
+hover-cursor-fill-alpha = 0.16
+hover-cursor-border-width = 1
+hover-cursor-border-alpha = 0.60
+
+focus-color = "#F7C3C6"
+focus-fill-alpha = 0.18
+focus-border-width = 1
+focus-border-alpha = 0.86
+
+selected-color = "#85CEC4"
+selected-fill-alpha = 0.22
+selected-border-width = 1
+selected-border-alpha = 0.55
+
+pressed-color = "#E95C4B"
+pressed-fill-alpha = 0.26
+selection-color = "#D7EBE9"
+selection-fill-alpha = 0.40
+
+[spacing]
+scale = 1.0
+scale-with-font = true
+xs = 2
+md = 4
+control-padding-y = 5
+panel-padding = 10
+
+[font]
+base-size = 12
+heading = 16
+icon-large = 18
+
+[popups]
+background = "#060D1F"
+background-alpha = 1.0
+text = "#6488EA"
+border = "hyprland.active-border"
+border-alpha = 1.0
+border-width = 2
+
+[tooltip]
+background = "#060D1F"
+background-alpha = 0.98
+text = "#E0F7FA"
+border = "#51688E"
+border-alpha = 0.80
+border-width = 1
+
+[notifications]
+background = "#060D1F"
+background-alpha = 1.0
+text = "#D7EBE9"
+border = "hyprland.active-border"
+border-alpha = 1.0
+border-width = 2
+countdown = "#F7C3C6"
+
+[launcher]
+background = "#060D1F"
+background-alpha = 0.98
+text = "#E0F7FA"
+border = "hyprland.active-border"
+border-alpha = 1.0
+border-width = 2
+scrim = "#060D1F"
+scrim-alpha = 0.0
+selected-background = "#D5EDEB"
+selected-background-alpha = 0.92
+selected-text = "#060D1F"
+selected-border = "#6488EA"
+selected-border-alpha = 0.75
+selected-border-width = 1
+
+[menu]
+background = "#060D1F"
+background-alpha = 0.98
+text = "#E0F7FA"
+border = "hyprland.active-border"
+border-alpha = 1.0
+border-width = 2
+scrim = "#060D1F"
+scrim-alpha = 0.0
+selected-background = "#D5EDEB"
+selected-background-alpha = 0.92
+selected-text = "#060D1F"
+selected-border = "#6488EA"
+selected-border-alpha = 0.75
+selected-border-width = 1
+
+[polkit]
+background = "#060D1F"
+background-alpha = 1.0
+text = "#E0F7FA"
+text-error = "#E95C4B"
+border = "hyprland.active-border"
+border-error = "#E95C4B"
+border-alpha = 1.0
+border-width = 2
+scrim = "#060D1F"
+scrim-alpha = 0.52
+accent = "#F7C3C6"
+
+[lock]
+background = "#060D1F"
+background-alpha = 1.0
+text = "#D7EBE9"
+placeholder = "#E0F7FAB3"
+text-error = "#E95C4B"
+border = "hyprland.active-border"
+border-active = "hyprland.active-border"
+border-error = "#E95C4B"
+border-alpha = 1.0
+border-width = 2
+selection = "#F2C8CB"
+selection-alpha = 0.46
+
+[image-picker]
+scrim = "#060D1F"
+scrim-alpha = 0.52
+text = "#E0F7FA"
+selected-border = "#F7C3C6"
+selected-border-alpha = 1.0
+unselected-border = "#51688E"
+unselected-border-alpha = 0.80

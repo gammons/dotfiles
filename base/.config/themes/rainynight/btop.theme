@@ -1,0 +1,69 @@
+# ────────────────────────────────────────────────────────────
+# BTOP THEME — Rainy Night City (matches your wallpaper)
+# ────────────────────────────────────────────────────────────
+
+# Transparent / dark night background
+theme[main_bg]="#1e2030"
+
+# Main text – soft grey-blue (city lights)
+theme[main_fg]="#cdd3e1"
+
+# Titles – light blue highlight (lamp glow)
+theme[title]="#d6e7ff"
+
+# Highlight text – muted light grey-blue
+theme[hi_fg]="#bfc6d4"
+
+# Selected row – deeper night shade
+theme[selected_bg]="#14151f"
+
+# Selected row text – bright white-blue
+theme[selected_fg]="#e8f1ff"
+
+# Inactive/dim text – distant-building grey
+theme[inactive_fg]="#7d8291"
+
+# Misc text – light city grey
+theme[proc_misc]="#bfc6d4"
+
+# Box outlines – subtle bluish-grey (window frame color)
+theme[cpu_box]="#292b3b"
+theme[mem_box]="#292b3b"
+theme[net_box]="#292b3b"
+theme[proc_box]="#292b3b"
+
+# Divider lines – same subtle outline tone
+theme[div_line]="#292b3b"
+
+# Graph gradients – smooth blue-grey (rain & neon reflections)
+theme[temp_start]="#4a4f65"
+theme[temp_mid]="#8c92a3"
+theme[temp_end]="#d6e7ff"
+
+theme[cpu_start]="#4a4f65"
+theme[cpu_mid]="#8c92a3"
+theme[cpu_end]="#d6e7ff"
+
+theme[free_start]="#4a4f65"
+theme[free_mid]="#8c92a3"
+theme[free_end]="#d6e7ff"
+
+theme[cached_start]="#4a4f65"
+theme[cached_mid]="#8c92a3"
+theme[cached_end]="#d6e7ff"
+
+theme[available_start]="#4a4f65"
+theme[available_mid]="#8c92a3"
+theme[available_end]="#d6e7ff"
+
+theme[used_start]="#4a4f65"
+theme[used_mid]="#8c92a3"
+theme[used_end]="#d6e7ff"
+
+theme[download_start]="#4a4f65"
+theme[download_mid]="#8c92a3"
+theme[download_end]="#d6e7ff"
+
+theme[upload_start]="#4a4f65"
+theme[upload_mid]="#8c92a3"
+theme[upload_end]="#d6e7ff"

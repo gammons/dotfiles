@@ -1,0 +1,52 @@
+# Aligned with colors.toml / ghostty.conf. Upstream shipped a different
+# (monochrome "black_bloody") palette here, which made Alacritty and Ghostty
+# render the same theme differently.
+
+[colors.primary]
+background = "#000000"
+foreground = "#ffffff"
+dim_foreground = "#c1c1c1"
+
+[colors.cursor]
+text = "#000000"
+cursor = "#ffffff"
+
+[colors.vi_mode_cursor]
+text = "#000000"
+cursor = "#aaaaaa"
+
+[colors.selection]
+text = "#000000"
+background = "#ffffff"
+
+[colors.search.matches]
+foreground = "#000000"
+background = "#a06666"
+
+[colors.search.focused_match]
+foreground = "CellBackground"
+background = "CellForeground"
+
+[colors.footer_bar]
+foreground = "#000000"
+background = "#c1c1c1"
+
+[colors.normal]
+black = "#000000"
+red = "#5f8787"
+green = "#dd9999"
+yellow = "#a06666"
+blue = "#888888"
+magenta = "#999999"
+cyan = "#aaaaaa"
+white = "#c1c1c1"
+
+[colors.bright]
+black = "#333333"
+red = "#5f8787"
+green = "#dd9999"
+yellow = "#a06666"
+blue = "#888888"
+magenta = "#999999"
+cyan = "#aaaaaa"
+white = "#c1c1c1"

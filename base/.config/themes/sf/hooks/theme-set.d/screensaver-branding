@@ -1,0 +1,23 @@
+#!/bin/bash
+# theme-set hook: scope the screensaver branding to the active theme.
+# If the theme ships a screensaver.txt, use it as the screensaver art;
+# otherwise restore the stock Omarchy logo. Runs on every theme switch via
+# `omarchy-hook theme-set <name>`.
+
+theme="${1:-}"
+[[ -n $theme ]] || exit 0
+
+branding="$HOME/.config/omarchy/branding/screensaver.txt"
+theme_dir="$(omarchy-theme-dir "$theme" 2>/dev/null || true)"
+default_logo="${OMARCHY_PATH:-/usr/share/omarchy}/logo.txt"
+
+mkdir -p "$(dirname "$branding")"
+
+if [[ -n $theme_dir && -f "$theme_dir/screensaver.txt" ]]; then
+  cp "$theme_dir/screensaver.txt" "$branding"
+elif [[ -f $default_logo ]]; then
+  cp "$default_logo" "$branding"
+fi
+
+# Refresh a running screensaver so the new art shows on next idle.
+pkill -x ttfx 2>/dev/null || true

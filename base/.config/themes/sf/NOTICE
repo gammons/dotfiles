@@ -1,0 +1,39 @@
+Spark Omarchy theme
+===================
+
+Two different sets of terms apply to the contents of this repository.
+
+1. Code and configuration
+-------------------------
+
+The theme configuration and scripts are licensed under the MIT license, as
+stated in LICENSE. This covers:
+
+  colors.toml
+  shell.lock.toml
+  icons.theme
+  keyboard.rgb
+  hooks/theme-set.d/screensaver-branding
+
+2. Brand assets
+---------------
+
+The SparkFabrik name, logo and wallpapers are the property of
+SparkFabrik S.r.l. They are included in this repository with permission, for
+use as part of this desktop theme. This covers:
+
+  unlock.png
+  preview-unlock.png
+  screensaver.txt
+  backgrounds/
+
+These files are NOT covered by the MIT license. They may not be used to
+identify another product, organization or service, nor redistributed as part
+of a different brand identity. For any other use, contact SparkFabrik.
+
+Attribution
+-----------
+
+This theme began as a color substitution over the Catppuccin theme for
+Omarchy, and has since been rebuilt around the Omarchy 4 palette schema.
+The Catppuccin project is licensed under the MIT license.

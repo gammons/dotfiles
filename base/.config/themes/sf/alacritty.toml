@@ -1,0 +1,50 @@
+# Generated from colors.toml (SparkFabrik Design System)
+
+[colors.primary]
+background = "#031527"
+foreground = "#ffffff"
+dim_foreground = "#0c335a"
+
+[colors.cursor]
+text = "#ffffff"
+cursor = "#eb0000"
+
+[colors.vi_mode_cursor]
+text = "#031527"
+cursor = "#f7ad2c"
+
+[colors.selection]
+text = "#ffffff"
+background = "#0c335a"
+
+[colors.search.matches]
+foreground = "#031527"
+background = "#f7ad2c"
+
+[colors.search.focused_match]
+foreground = "CellBackground"
+background = "CellForeground"
+
+[colors.footer_bar]
+foreground = "#031527"
+background = "#40c6cf"
+
+[colors.normal]
+black = "#02101d"
+red = "#eb0000"
+green = "#008844"
+yellow = "#f7ad2c"
+blue = "#027aca"
+magenta = "#8d1971"
+cyan = "#40c6cf"
+white = "#ffffff"
+
+[colors.bright]
+black = "#0c335a"
+red = "#f36931"
+green = "#68d366"
+yellow = "#f7ad2c"
+blue = "#40c6cf"
+magenta = "#cd0089"
+cyan = "#027aca"
+white = "#ffffff"

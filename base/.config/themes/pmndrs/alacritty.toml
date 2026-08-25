@@ -1,0 +1,50 @@
+# Generated from colors.toml (Poimandres)
+
+[colors.primary]
+background = "#1b1e28"
+foreground = "#a6accd"
+dim_foreground = "#6c6f93"
+
+[colors.cursor]
+text = "#1b1e28"
+cursor = "#add7ff"
+
+[colors.vi_mode_cursor]
+text = "#1b1e28"
+cursor = "#5de4c7"
+
+[colors.selection]
+text = "#f8f8f2"
+background = "#2a2e3f"
+
+[colors.search.matches]
+foreground = "#1b1e28"
+background = "#fffac2"
+
+[colors.search.focused_match]
+foreground = "CellBackground"
+background = "CellForeground"
+
+[colors.footer_bar]
+foreground = "#1b1e28"
+background = "#add7ff"
+
+[colors.normal]
+black = "#252b37"
+red = "#d0679d"
+green = "#5de4c7"
+yellow = "#fffac2"
+blue = "#89ddff"
+magenta = "#d2a6ff"
+cyan = "#add7ff"
+white = "#a6accd"
+
+[colors.bright]
+black = "#6c6f93"
+red = "#d0679d"
+green = "#5de4c7"
+yellow = "#fffac2"
+blue = "#89ddff"
+magenta = "#d2a6ff"
+cyan = "#add7ff"
+white = "#e4f0fb"

@@ -8,6 +8,7 @@ Each theme directory should contain the following files:
 
 ### Core Files (usually provided by Omarchy)
 - `alacritty.toml` - Terminal colors
+- `ghostty.conf` - Ghostty terminal colors (primary terminal)
 - `hyprland.conf` - Hyprland window manager colors
 - `hyprlock.conf` - Hyprlock screen locker colors
 - `waybar.css` - Status bar styling
@@ -21,14 +22,14 @@ Each theme directory should contain the following files:
 - `backgrounds/` - Wallpaper images
 - `background` - Symlink to active wallpaper
 
-### Sway-Specific Files (may need to be generated)
+### Files That May Need To Be Generated
 - `sway.conf` - Sway window manager colors (border, titlebar, etc.)
 - `swaylock.conf` - Swaylock screen locker configuration
 - `tmux.conf` - Tmux status bar and pane colors
+- `ghostty.conf` - Ghostty terminal colors (some upstream themes ship none)
 
 ### Optional Files
 - `kitty.conf` - Kitty terminal colors
-- `ghostty.conf` - Ghostty terminal colors
 - `chromium.theme` - Browser theme
 - `vscode.json` - VS Code theme settings
 - `light.mode` - Marker file indicating this is a light theme
@@ -60,6 +61,48 @@ Generate tmux colors based on the theme palette:
 - Pane border colors
 - Message colors
 
+### ghostty.conf
+Convert `alacritty.toml` (or the theme's own `colors.toml`) into Ghostty's format:
+- `background` / `foreground`
+- `cursor-color` / `cursor-text`
+- `selection-background` / `selection-foreground`
+- `palette = 0..15=#rrggbb`
+
+Keep it colors-only. `~/.config/ghostty/config` owns font, padding and opacity;
+theme files that also set those will leak non-color settings into that theme.
+
+### neovim.lua
+`~/.config/nvim/init.lua` only applies a colorscheme when a spec in the returned
+list has `opts.colorscheme` (a string or a function). Upstream themes that only
+call `vim.cmd.colorscheme(...)` inside `config = function()` will install their
+plugin but never apply it, so append a block like:
+
+```lua
+{
+  "LazyVim/LazyVim",
+  opts = { colorscheme = "<name>" },
+},
+```
+
+Two further traps:
+
+- init.lua scrapes plugin paths out of the raw file text, **including inside Lua
+  comments**, and feeds them to packer. Strip commented-out alternative themes or
+  packer will install them all.
+- Each spec's own `opts` and `config` are discarded. When several themes share
+  one colorscheme plugin (e.g. `bjarneo/aether.nvim`), a plain
+  `colorscheme = "aether"` makes them all render with the plugin's default
+  palette. Use a function instead so the palette is applied at switch time:
+
+  ```lua
+  opts = {
+    colorscheme = function()
+      require("aether").setup({ colors = colors })
+      vim.cmd.colorscheme("aether")
+    end,
+  },
+  ```
+
 ## Color Extraction
 
 Most themes include color definitions in these files:
@@ -79,22 +122,30 @@ changetheme <theme-name>
 This will:
 1. Update the `current` symlink
 2. Reload Alacritty configuration
-3. Update swaylock config symlink
-4. Update tmux config symlink (source from ~/.config/themes/current/tmux.conf)
-5. Reload Sway
-6. Set the wallpaper from the new theme
+3. Reload Ghostty (SIGUSR2)
+4. Update swaylock config symlink
+5. Update tmux config symlink (source from ~/.config/themes/current/tmux.conf)
+6. Reload Sway
+7. Set the wallpaper from the new theme
 
 ## Adding a New Theme
 
-1. Clone/copy the theme to this directory
-2. Check for missing Sway-specific files (swaylock.conf, sway.conf)
-3. Generate missing files using colors from alacritty.toml or hyprlock.conf
-4. Optionally generate tmux.conf for terminal multiplexer theming
-5. Test with `changetheme <new-theme>`
+1. Clone the theme into this directory and drop `.git/` plus any repo-only
+   assets (`screenshots/`, `img/`)
+2. Name the directory after the middle word only: `omarchy-<name>-theme` → `<name>`
+3. Check for missing files (ghostty.conf, sway.conf, swaylock.conf, tmux.conf)
+4. Generate missing files using colors from alacritty.toml, colors.toml or hyprlock.conf
+5. Verify: `ghostty +validate-config`, `sway -C -c <theme>/sway.conf`,
+   `fuzzel --check-config --config=<theme>/fuzzel.ini`, `tmux source-file <theme>/tmux.conf`
+6. Run `:PackerSync` in nvim so the theme's colorscheme plugin gets installed
+7. Test with `changetheme <new-theme>`
 
 ## Current Theme Status
 
-All themes now have the required Sway-specific configuration files:
-- `sway.conf` - All 25 themes ✓
-- `swaylock.conf` - All 25 themes ✓
-- `tmux.conf` - All 25 themes ✓
+35 themes installed. Required files present in all except:
+- `archriot` - missing sway.conf, swaylock.conf, tmux.conf, fuzzel.ini
+- `catppu_mocha` - missing sway.conf, swaylock.conf, tmux.conf, fuzzel.ini
+
+### Known palette overlaps
+- `rainynight` uses the Catppuccin Mocha palette in the terminal, so it looks
+  identical to `catppuccin` there; its wallpapers and neovim colors differ.
