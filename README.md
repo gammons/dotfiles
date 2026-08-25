@@ -384,6 +384,20 @@ fprintd-list "$USER"    # show enrolled fingers
 
 That covers the greeter login, the Noctalia lock screen, `sudo`, and polkit prompts.
 
+#### Keep Noctalia's "Auto-start authentication" off
+
+`general.autoStartAuth` must stay `false`, otherwise fingerprint breaks after suspend.
+
+With it enabled and `lockOnSuspend` on, suspending locks the screen and immediately opens a PAM conversation. `pam_fprintd` claims the sensor, the machine suspends in the same second, the verify fails, and PAM falls through to `pam_unix`. On resume the conversation is already parked at the password prompt, so no fingerprint is offered — and it can't be retriggered, because clearing the field calls `startAuth()`, which returns early while that stale session is still open:
+
+```
+20:43:58  Starting PAM authentication for user: grant     <- lock on suspend
+20:43:58  kernel: PM: suspend entry (s2idle)              <- same second
+20:44:03  PAM message: Password:   responseRequired: true  <- fingerprint stage gone
+```
+
+With `autoStartAuth` off, no PAM session exists at lock time, so nothing can be stranded by suspend. Press Enter once and the fingerprint prompt appears, on a normal lock or after a resume.
+
 #### Why there are two greetd PAM stacks
 
 **Do not add `pam_fprintd.so` to `/etc/pam.d/greetd-greeter`.** It will leave you with no login screen at all.

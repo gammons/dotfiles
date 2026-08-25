@@ -409,7 +409,7 @@
         "allowPasswordWithFprintd": true,
         "animationDisabled": false,
         "animationSpeed": 1,
-        "autoStartAuth": true,
+        "autoStartAuth": false,
         "avatarImage": "~/.config/noctalia/me.jpeg",
         "boxRadiusRatio": 1,
         "clockFormat": "hh\\nmm",
