@@ -382,3 +382,24 @@ output HEADLESS-1 bg "#220900" solid_color
 workspace 0 output HEADLESS-1
 bindsym $mod+0 workspace number 0
 bindsym $mod+Shift+0 move container to workspace number 0
+
+############################
+# Handy (speech to text)
+############################
+
+# Handy's built-in global hotkeys are X11-only (global-hotkey crate uses
+# XGrabKey), so they silently do nothing under sway. Drive it via the CLI
+# instead, which talks to the running instance over tauri single-instance.
+exec handy --start-hidden
+
+# Toggle: tap Super+d to start recording, tap again to stop and transcribe.
+# --no-repeat stops key autorepeat from spamming the toggle if held down.
+bindsym --no-repeat Mod4+d exec handy --toggle-transcription
+
+# Same, with post-processing
+bindsym --no-repeat Mod4+Shift+d exec handy --toggle-post-process
+
+# Handy's own Escape/cancel binding is hard-disabled on Linux
+bindsym Mod4+Escape exec handy --cancel
+
+for_window [app_id="handy"] floating enable, resize set 900 700, move position center

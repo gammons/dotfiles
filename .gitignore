@@ -38,6 +38,7 @@ base/.local/bin/
 base/.local/share/SpeedCrunch/
 base/.local/share/atuin/
 base/.local/share/claude/
+base/.local/share/com.pais.handy/
 base/.local/share/dolphin-emu/
 base/.local/share/gvfs-metadata/
 base/.local/share/heroku/
