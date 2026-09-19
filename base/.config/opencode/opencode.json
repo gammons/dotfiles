@@ -25,25 +25,29 @@
     "opencode-claude-auth@latest",
     "superpowers@git+https://github.com/obra/superpowers.git"
   ],
+  "permission": {
+    "edit": "allow",
+    "bash": "allow",
+    "external_directory": {
+      "*": "allow",
+      "/tmp": "allow",
+      "/tmp/*": "allow",
+      "/private/tmp": "allow",
+      "/private/tmp/*": "allow",
+      "env:$TMPDIR": "allow",
+      "env:$TMPDIR/*": "allow"
+    },
+  },
   "mcp": {
     "posthog": {
       "type": "remote",
       "url": "https://mcp.posthog.com/mcp",
       "oauth": {}
     },
-    "stripe": {
+    "stripe-live": {
       "type": "remote",
       "url": "https://mcp.stripe.com/",
       "oauth": {}
-    },
-    "google-ads": {
-      "type": "local",
-      "command": ["/home/grant/local_code/google-ads-mcp/.venv/bin/google-ads-mcp"],
-      "environment": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "/home/grant/.config/google-ads-mcp/adc.json",
-        "GOOGLE_ADS_DEVELOPER_TOKEN": "kJqN3_9zbI5w5zNlJ0ufwg",
-        "GOOGLE_CLOUD_PROJECT": "truelist"
-      }
     },
     "Truelist": {
       "type": "remote",
@@ -53,6 +57,15 @@
     "userevidence": {
       "type": "remote",
       "url": "https://app.userevidence.com/mcp?audience=customer",
+    },
+    "stripe": {
+      "type": "remote",
+      "url": "https://mcp.stripe.com",
+      "oauth": {}
+    },
+    "notion": {
+      "type": "remote",
+      "url": "https://mcp.notion.com/mcp",
       "oauth": {}
     }
   }
