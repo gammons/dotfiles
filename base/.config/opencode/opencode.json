@@ -67,6 +67,21 @@
       "type": "remote",
       "url": "https://mcp.notion.com/mcp",
       "oauth": {}
+    },
+    "linear": {
+      "type": "remote",
+      "url": "https://mcp.linear.app/mcp",
+      "oauth": {}
+    },
+    "vanta": {
+      "type": "remote",
+      "url": "https://mcp.vanta.com/mcp",
+      "oauth": {}
+    },
+    "notion": {
+      "type": "remote",
+      "url": "https://mcp.notion.com/mcp",
+      "oauth": {}
     }
   }
 }
