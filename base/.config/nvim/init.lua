@@ -37,7 +37,7 @@ local function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
--- Must exist before copilot.vim loads: it wraps this map as its <Tab> fallback
+-- Tab / S-Tab cycle the completion menu when it's visible
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', { expr = true })
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true })
 
@@ -153,7 +153,6 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-surround',
   'ntpeters/vim-better-whitespace',
-  'github/copilot.vim',
 }, {
   install = { colorscheme = { 'kanagawa', 'habamax' } },
 })
