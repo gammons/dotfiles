@@ -1,189 +1,14 @@
--- This config was based upon the following resources:
--- https://oroques.dev/notes/neovim-init/
--- https://crispgm.com/page/neovim-is-overpowering.html
-
--------------------- HELPERS -------------------------------
-local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
-local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
-local g = vim.g      -- a table to access global variables
-local opt = vim.opt  -- to set options
-
-local function map(mode, lhs, rhs, opts)
-  local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
+-------------------- LEADER & GLOBALS ----------------------
+-- Set before lazy.nvim loads so plugin mappings and settings see them
+vim.g.mapleader = ','
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-
--------------------- PLUGINS -------------------------------
-require('packer').startup(function()
-  use 'wbthomason/packer.nvim'
-
-  -- Colors - load all theme plugins from ~/.config/themes
-  use 'RRethy/nvim-base16'
-  local themes_dir = vim.fn.expand('~/.config/themes')
-  local loaded_plugins = {}
-  local loaded_dirs = {}
-  for _, theme_name in ipairs(vim.fn.readdir(themes_dir)) do
-    local theme_path = themes_dir .. '/' .. theme_name .. '/neovim.lua'
-    if theme_name ~= 'current' and vim.fn.filereadable(theme_path) == 1 then
-      local file = io.open(theme_path, 'r')
-      if file then
-        local content = file:read('*all')
-        file:close()
-        -- Check for local dir-based themes (e.g., dir = "~/.config/themes/frost/frost.nvim")
-        for dir_path, dir_name in content:gmatch('dir%s*=%s*["\']([^"\']+)["\'].-name%s*=%s*["\']([%w%-_]+)["\']') do
-          if not loaded_dirs[dir_path] then
-            loaded_dirs[dir_path] = true
-            local expanded_path = vim.fn.expand(dir_path)
-            use { expanded_path, name = dir_name }
-          end
-        end
-        -- Extract plugin repos using pattern matching (e.g., "user/repo")
-        for repo in content:gmatch('["\']([%w%-_]+/[%w%-_.]+)["\']') do
-          if not loaded_plugins[repo] then
-            loaded_plugins[repo] = true
-            -- Check if it has a custom name
-            local name_pattern = repo:gsub('%-', '%%-') .. '["\'].-name%s*=%s*["\']([%w%-_]+)["\']'
-            local custom_name = content:match(name_pattern)
-            if custom_name then
-              use { repo, name = custom_name }
-            else
-              use(repo)
-            end
-          end
-        end
-      end
-    end
-  end
-
-  -- autocompletion
-  use 'hrsh7th/nvim-compe'
-
-  -- tree sitter
-  use { 'nvim-treesitter/nvim-treesitter', branch = 'master', run = ':TSUpdate' }
-  use 'neovim/nvim-lspconfig'
-
-  -- telescope for finding things
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
-
-  -- Essential plugins
-  use 'nvim-tree/nvim-web-devicons'
-  use 'nvim-tree/nvim-tree.lua'
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-  }
-
-
-  -- Tpope things
-  use 'tpope/vim-fugitive'
-  use 'tpope/vim-surround'
-  use 'tpope/vim-endwise'
-  use 'tpope/vim-rails'
-
-  -- For commenting out code
-  use 'preservim/nerdcommenter'
-
-  -- highlight whitesace
-  use 'ntpeters/vim-better-whitespace'
-
-  -- testing made easy
-  use 'janko-m/vim-test'
-
-  use { 'prettier/vim-prettier', run = 'yarn install' }
-
-  use 'othree/html5.vim'
-  use 'pangloss/vim-javascript'
-  use 'leafgarland/typescript-vim'
-  use 'evanleck/vim-svelte'
-  use 'jkramer/vim-checkbox'
-
-  use 'github/copilot.vim'
-
-  use { 'kkoomen/vim-doge', run = ':call doge#install()' }
-
-  use {
-    'CopilotC-Nvim/CopilotChat.nvim',
-    branch = 'main',
-    requires = {
-      'github/copilot.vim',
-      'nvim-lua/plenary.nvim',
-    }
-  }
-
-  -- copilot chat
-  require("CopilotChat").setup({
-    debug = true,
-  })
-end)
-
--- lualine
-require('lualine').setup {
-  options = {
-    theme = 'auto',
-    section_separators = {'', ''},
-    component_separators = {'', ''},
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', {'diagnostics', sources = {'nvim_lsp'}}},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'},
-  },
-}
-
--- nvim tree
-require "nvim_tree_on_attach"
-require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  on_attach = nvim_tree_on_attach,
-  view = {
-    adaptive_size = true,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = false,
-  },
-})
-
--- prettier config
-g["prettier#autoformat_config_present"] = 1
-g["prettier#autoformat_require_pragma"] = 0
-g["prettier#trailing_comma"] = "all"
-g["prettier#single_quote"] = 1
-
-cmd "au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json,*.vue PrettierAsync"
+vim.g.strip_whitespace_on_save = 1
 
 -------------------- OPTIONS -------------------------------
--- Load colorscheme from theme config
-local theme_file = dofile(vim.fn.expand('~/.config/themes/current/neovim.lua'))
-for _, plugin in ipairs(theme_file) do
-  -- Add local dir-based themes to runtimepath
-  if plugin.dir then
-    local expanded_dir = vim.fn.expand(plugin.dir)
-    vim.opt.runtimepath:prepend(expanded_dir)
-  end
-  if plugin.opts and plugin.opts.colorscheme then
-    vim.schedule(function()
-      local cs = plugin.opts.colorscheme
-      if type(cs) == 'function' then
-        cs()
-      else
-        vim.cmd('colorscheme ' .. cs)
-      end
-    end)
-  end
-end
-opt.completeopt = "menuone,noselect"
+local opt = vim.opt
+opt.autocomplete = true             -- Built-in completion menu as you type
+opt.completeopt = 'menuone,noselect'
 opt.expandtab = true                -- Use spaces instead of tabs
 opt.hidden = true                   -- Enable background buffers
 opt.backup = false
@@ -202,214 +27,133 @@ opt.splitbelow = true               -- Put new windows below current
 opt.splitright = true               -- Put new windows right of current
 opt.tabstop = 2                     -- Number of spaces tabs count for
 opt.termguicolors = true            -- True color support
-opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
-opt.wrap = true                    -- Disable line wrap
-
--------------------- Completion ------------------------------
-
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = false;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    vsnip = true;
-    ultisnips = true;
-  };
-}
-
-cmd("autocmd FileType markdown call compe#setup({'enabled': v:false})")
-cmd("autocmd FileType gitcommit call compe#setup({'enabled': v:false})")
-cmd("command! Wq wq")
+opt.wildmode = 'list:longest'       -- Command-line completion mode
+opt.wrap = true                     -- Wrap long lines
 
 -------------------- MAPPINGS ------------------------------
+local function map(mode, lhs, rhs, opts)
+  local options = { noremap = true }
+  if opts then options = vim.tbl_extend('force', options, opts) end
+  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
 
-vim.g.mapleader = ","
+-- Must exist before copilot.vim loads: it wraps this map as its <Tab> fallback
+map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', { expr = true })
+map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true })
 
-map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
-map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
-
-map('', '<C-p>', "<cmd>Telescope find_files<cr>")
+map('', '<C-p>', '<cmd>Telescope find_files<cr>')
 map('', '<cr>', ':nohlsearch<cr>')
-map('', '<C-_>', ":call nerdcommenter#Comment('x','toggle')<cr>")
+map('n', '<C-_>', 'gcc', { noremap = false })
+map('x', '<C-_>', 'gc', { noremap = false })
 
 map('', '<Leader>e', ":e <C-R>=expand(\"%:p:h\") . '/'<CR>")
 map('', '<Leader>s', ":split <C-R>=expand(\"%:p:h\") . '/'<CR>")
+map('', '<Leader>n', '<cmd>NvimTreeToggle<cr>')
+map('', '<Leader>w', '<cmd>wq!<cr>')
+map('n', 'Y', 'Y')
+map('t', '<Esc>', '<C-\\><C-n>')
 
--- testing
-map('', '<Leader>r', ":TestFile<CR>")
-map('', '<Leader>a', ":TestSuite<CR>")
-map('', '<Leader>t', ":TestNearest<CR>")
-cmd("nnoremap Y Y")
-cmd("tnoremap <Esc> <C-\\><C-n>")
+vim.cmd('command! Wq wq')
 
-vim.api.nvim_set_keymap('', '<leader>n', "<cmd>NvimTreeToggle<cr>", {noremap = true, silent = false})
-vim.api.nvim_set_keymap('', '<leader>w', "<cmd>wq!<cr>", {noremap = true, silent = false})
-
--------------------- TREE-SITTER ---------------------------
-local ok, nts = pcall(require, 'nvim-treesitter')
-if ok and type(nts.install) == 'function' then
-  nts.setup()
-  nts.install({
-    'lua', 'vim', 'vimdoc', 'query',
-    'markdown', 'markdown_inline',
-    'ruby', 'javascript', 'typescript', 'tsx',
-    'html', 'css', 'scss',
-    'json', 'yaml', 'toml',
-    'bash', 'python', 'go', 'rust',
-    'dockerfile', 'gitcommit', 'gitignore', 'diff',
-    'regex', 'sql',
-  })
+-------------------- AUTOCMDS ------------------------------
+local function toggle_checkbox()
+  local line = vim.api.nvim_get_current_line()
+  local new = line:gsub('%[ %]', '[x]', 1)
+  if new == line then new = line:gsub('%[[xX]%]', '[ ]', 1) end
+  vim.api.nvim_set_current_line(new)
 end
 
+local group = vim.api.nvim_create_augroup('config', { clear = true })
+
 vim.api.nvim_create_autocmd('FileType', {
+  group = group,
+  callback = function(ev) pcall(vim.treesitter.start, ev.buf) end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = group,
+  pattern = { 'markdown', 'gitcommit' },
+  callback = function() vim.bo.autocomplete = false end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = group,
+  pattern = 'markdown',
   callback = function(ev)
-    pcall(vim.treesitter.start, ev.buf)
+    vim.keymap.set('n', '<Leader>tt', toggle_checkbox, { buffer = ev.buf, desc = 'Toggle checkbox' })
   end,
 })
 
--------------------- Markdown options ------------------------
-vim.cmd("let g:vim_markdown_folding_disabled = 1")
-
--------------------- Whitespace ------------------------------
-vim.cmd("let g:strip_whitespace_on_save=1")
-
--------------------- testing options ------------------------
-vim.cmd("let test#strategy ='neovim'")
-
-if string.match(vim.fn.getcwd(), "musashi") then
-  vim.cmd("let test#ruby#rspec#executable = 'docker exec -it musashi-web-1 bundle exec rspec'")
+-------------------- PLUGINS -------------------------------
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable',
+    'https://github.com/folke/lazy.nvim.git', lazypath })
 end
+vim.opt.rtp:prepend(lazypath)
 
--------------------- Telescope ---------------------------
-require('telescope').setup{
-  defaults = {
-    file_sorter = require'telescope.sorters'.get_fzy_sorter
-  }
-}
-
--------------------- LSP -----------------------------------
--- For ccls we use the default settings
-vim.lsp.config('ccls', {
-  cmd = { 'ccls' },
-  filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
-  root_markers = { '.ccls', 'compile_commands.json', '.git' },
-})
--- root_dir is where the LSP server will start: here at the project root otherwise in current folder
-
-vim.lsp.config('diagnosticls', {
-  cmd = { 'diagnostic-languageserver', '--stdio' },
-  filetypes = {"javascript", "javascriptreact", "typescript", "typescriptreact", "css", "svelte", "vue"},
-  root_markers = { '.git' },
-  init_options = {
-    filetypes = {
-      javascript = "eslint",
-      typescript = "eslint",
-      javascriptreact = "eslint",
-      typescriptreact = "eslint",
-      vue = "eslint"
+require('lazy').setup({
+  {
+    'rebelot/kanagawa.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function() vim.cmd.colorscheme('kanagawa') end,
+  },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    lazy = false,
+    build = ':TSUpdate',
+    config = function()
+      require('nvim-treesitter').install({
+        'markdown', 'markdown_inline', 'lua', 'vim', 'vimdoc', 'query',
+        'bash', 'json', 'yaml', 'toml', 'gitcommit', 'diff',
+        'html', 'css', 'javascript', 'typescript', 'ruby', 'go', 'python', 'sql',
+      })
+    end,
+  },
+  {
+    'nvim-telescope/telescope.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('telescope').setup({
+        defaults = { file_sorter = require('telescope.sorters').get_fzy_sorter },
+      })
+    end,
+  },
+  {
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      sort = { sorter = 'case_sensitive' },
+      view = { width = { min = 30 } },
+      renderer = { group_empty = true },
+      filters = { dotfiles = false },
     },
-    linters = {
-      eslint = {
-	sourceName = "eslint",
-	command = "./node_modules/.bin/eslint",
-	rootPatterns = {
-	  ".eslitrc.js",
-	  ".eslitrc.json",
-	  "package.json"
-	},
-	debounce = 100,
-	args = {
-	  "--cache",
-	  "--stdin",
-	  "--stdin-filename",
-	  "%filepath",
-	  "--format",
-	  "json"
-	},
-	parseJson = {
-	  errorsRoot = "[0].messages",
-	  line = "line",
-	  column = "column",
-	  endLine = "endLine",
-	  endColumn = "endColumn",
-	  message = "${message} [${ruleId}]",
-	  security = "severity"
-	},
-	securities = {
-	  [2] = "error",
-	  [1] = "warning"
-	}
-      }
-    }
-  }
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      options = {
+        theme = 'auto',
+        section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
+      },
+      sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
+      },
+    },
+  },
+  'tpope/vim-fugitive',
+  'tpope/vim-surround',
+  'ntpeters/vim-better-whitespace',
+  'github/copilot.vim',
+}, {
+  install = { colorscheme = { 'kanagawa', 'habamax' } },
 })
-
-vim.diagnostic.config({
-  underline = true, -- show that there is a problem
-  virtual_text = false, -- I can't deal with virtual text
-})
-
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local opts = { noremap=true, silent=true }
-
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float({scope="line"})<CR>', opts)
-  buf_set_keymap('n', '<Leader>d', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-
-  --if client.server_capabilities.documentFormattingProvider then
-    vim.api.nvim_command [[augroup Format]]
-    vim.api.nvim_command [[autocmd! * <buffer>]]
-    vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
-    vim.api.nvim_command [[augroup END]]
-  --end
-end
-
-
--- Configure multiple LSP servers
-local server_configs = {
-  gopls = {
-    cmd = { 'gopls' },
-    filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-    root_markers = { 'go.work', 'go.mod', '.git' },
-  },
-  ts_ls = {
-    cmd = { 'typescript-language-server', '--stdio' },
-    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
-    root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
-  },
-  solargraph = {
-    cmd = { 'solargraph', 'stdio' },
-    filetypes = { 'ruby' },
-    root_markers = { 'Gemfile', '.git' },
-  },
-  eslint = {
-    cmd = { 'vscode-eslint-language-server', '--stdio' },
-    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx', 'vue' },
-    root_markers = { '.eslintrc', '.eslintrc.js', '.eslintrc.json', 'package.json', '.git' },
-  },
-}
-
-for server_name, config in pairs(server_configs) do
-  config.on_attach = on_attach
-  config.flags = {
-    debounce_text_changes = 150,
-  }
-  vim.lsp.config(server_name, config)
-end
