@@ -65,6 +65,7 @@ end
 
 local group = vim.api.nvim_create_augroup('config', { clear = true })
 
+-- Use treesitter highlighting where nvim ships a parser (markdown, lua, vim, ...)
 vim.api.nvim_create_autocmd('FileType', {
   group = group,
   callback = function(ev) pcall(vim.treesitter.start, ev.buf) end,
@@ -98,19 +99,6 @@ require('lazy').setup({
     lazy = false,
     priority = 1000,
     config = function() vim.cmd.colorscheme('kanagawa') end,
-  },
-  {
-    'nvim-treesitter/nvim-treesitter',
-    branch = 'main',
-    lazy = false,
-    build = ':TSUpdate',
-    config = function()
-      require('nvim-treesitter').install({
-        'markdown', 'markdown_inline', 'lua', 'vim', 'vimdoc', 'query',
-        'bash', 'json', 'yaml', 'toml', 'gitcommit', 'diff',
-        'html', 'css', 'javascript', 'typescript', 'ruby', 'go', 'python', 'sql',
-      })
-    end,
   },
   {
     'nvim-telescope/telescope.nvim',
