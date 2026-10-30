@@ -1,0 +1,144 @@
+# Noctalia v5 config, ported from the v4 settings.json in this directory.
+# Only deliberate choices are set here; everything else uses v5 defaults.
+# GUI changes land in ~/.local/state/noctalia/settings.toml and override this file.
+
+[shell]
+font_family = "Sans Serif"
+avatar_path = "~/.config/noctalia/me.jpeg"
+clipboard_enabled = false
+setup_wizard_enabled = false
+
+    [shell.shadow]
+    direction = "down_right"
+
+    [shell.launcher]
+    pinned = [ "slack.desktop" ]
+
+[theme]
+mode = "dark"
+source = "builtin"
+builtin = "Tokyo-Night"
+
+[location]
+address = "Conshohocken, PA"
+
+[weather]
+enabled = true
+unit = "imperial"
+effects = true
+
+[brightness]
+enable_ddcutil = true
+
+[nightlight]
+enabled = true
+temperature_day = 6500
+temperature_night = 4666
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+pre_action_fade_seconds = 5.0
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 250.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 300.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = true
+    timeout = 600.0
+
+[lockscreen]
+fingerprint = true
+lock_before_suspend = true
+
+[osd]
+position = "top_right"
+
+[notification]
+position = "top_right"
+
+[dock]
+enabled = true
+position = "bottom"
+auto_hide = true
+
+[wallpaper]
+enabled = false
+
+[plugins]
+enabled = [ "thepunkoff/pomodoro" ]
+
+# Floating top bar
+[bar.default]
+position = "top"
+margin_edge = 10
+margin_ends = 10
+concave_edge_corners = false
+background_opacity = 0.93
+capsule = true
+widget_spacing = 6
+start = [ "launcher", "workspaces", "active_window" ]
+center = [ "media", "weather" ]
+end = [
+    "cpu",
+    "temp",
+    "ram",
+    "pomodoro",
+    "notifications",
+    "battery",
+    "volume",
+    "brightness",
+    "control-center",
+    "clock",
+    "tray",
+]
+
+[widget.launcher]
+glyph = "rocket"
+
+[widget.workspaces]
+hide_when_empty = true
+labels_only_when_occupied = true
+
+[widget.active_window]
+max_length = 145.0
+
+[widget.media]
+max_length = 145.0
+
+[widget.pomodoro]
+type = "thepunkoff/pomodoro:widget"
+
+[widget.battery]
+display_mode = "graphic"
+label_content = "time"
+
+[widget.volume]
+show_label = false
+
+[widget.brightness]
+show_label = false
+
+[widget.clock]
+format = "{:%a, %b %d    %H:%M}"
+tooltip_format = "{:%H:%M %a, %b %d}"
+
+# CPU stat desktop widget on DP-2 (v4 had it near the top-left corner)
+[desktop_widgets]
+enabled = true
+
+    [desktop_widgets.widget.cpu_stat]
+    type = "sysmon"
+    output = "DP-2"
+    cx = 120.0
+    cy = 160.0
+
+        [desktop_widgets.widget.cpu_stat.settings]
+        stat = "cpu_usage"

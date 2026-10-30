@@ -56,7 +56,7 @@ input "type:pointer" {
 
 set $mod Mod1
 set $term ghostty
-set $menu qs ipc -c noctalia-shell call launcher toggle
+set $menu noctalia msg panel-toggle launcher
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -256,7 +256,7 @@ for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 for_window [app_id="org.pulseaudio.pavucontrol"] move scratchpad
 
 # Keybinding to show/hide noctalia volume panel
-bindsym $mod+i exec qs ipc -c noctalia-shell call volume togglePanel
+bindsym $mod+i exec noctalia msg panel-toggle control-center audio
 
 # Google Messages scratchpad configuration
 for_window [app_id="chrome-messages.google.com__web.*"] floating enable

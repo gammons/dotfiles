@@ -7,12 +7,6 @@
 # Called from sway config via exec_always, so it runs on both initial startup
 # and sway reload.
 
-# Clean up stale quickshell state from previous sessions
-rm -rf "/run/user/$(id -u)/quickshell/by-shell" \
-       "/run/user/$(id -u)/quickshell/by-id" \
-       "/run/user/$(id -u)/quickshell/by-pid" \
-       "/run/user/$(id -u)/quickshell/by-path" 2>/dev/null
-
 # Wait for the D-Bus session bus to be available. On fresh login, sway's
 # exec_always can fire before the user bus is ready, causing
 # dbus-update-activation-environment to fail silently.
