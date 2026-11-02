@@ -23,3 +23,5 @@ name = "Grant Ammons"
 	helper = !/usr/bin/gh auth git-credential
 [submodule]
 	recurse = true
+[credential "https://git.heroku.com"]
+	helper = !heroku git:credentials
