@@ -216,6 +216,8 @@ exec swaybg --color=#000000
 # exec_always ensures env is refreshed on sway reload and when switching between user sessions.
 exec_always ~/.config/sway/scripts/start_noctalia
 
+exec gnome-keyring-daemon --start --components=secrets
+
 ############################
 # Further customization
 ############################
