@@ -56,6 +56,9 @@ base/.local/share/applications/mimeapps.list
 base/.local/share/applications/mimeinfo.cache
 !base/.local/share/applications/slack.desktop
 
+# Created by changetheme
+base/.config/swaylock/config
+
 # Nvim plugin directory (plugins are managed by package manager)
 base/.config/nvim/plugin/
 user_credentials.json

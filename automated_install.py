@@ -563,7 +563,7 @@ service = "greetd-greeter"
             f"su - {username} -c '"
             "git clone https://github.com/gammons/dotfiles ~/dotfiles && "
             "cd ~/dotfiles && "
-            "stow -d ~/dotfiles -t ~ base"
+            "stow --no-folding -d ~/dotfiles -t ~ base"
             "'"
         )
 
